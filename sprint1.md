@@ -25,11 +25,11 @@ Write initial README (project overview + setup)
 
 ✅ README with project description and setup instructions
 
-✅ Scrum board with:
+✅ Scrum board with: 
 
-# Backlog
+Backlog
 
-# Sprint Backlog
+Sprint Backlog
 
 In Progress / Review / Done
 

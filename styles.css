@@ -1,0 +1,19 @@
+:root {
+  /* Backgrounds */
+  --bg-page: #0b0f1a;        /* page background */
+  --bg-app: #111726;         /* app container */
+
+  /* Cards / surfaces */
+  --card-primary: #151c2e;   /* main cards */
+  --card-secondary: #1c2640; /* elevated cards */
+  --card-hover: #243052;     /* hover / active */
+
+  /* Buttons */
+  --btn-success: #22c55e;    /* green */
+  --btn-danger: #ef4444;     /* red */
+
+  /* Text colors */
+  --text-primary: #e5e7eb;   /* main text */
+  --text-secondary: #a1a7b5; /* secondary text */
+  --text-muted: #6b7280;     /* muted / labels */
+}

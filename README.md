@@ -49,9 +49,17 @@ src/
 ├── pages/          # Application views
 ├── hooks/          # Custom React hooks
 ├── types/          # TypeScript interfaces and models
-├── styles/         # Global styles and CSS variables
 ├── App.tsx
 └── main.tsx
+
+css/
+├── main.css/       # Main styling and root
+
+assets/
+├── img/            # Images
+├── svg/            # Icons
+
+index.hmtl
 ```
 
 The structure follows a clear separation of concerns to ensure maintainability and scalability.

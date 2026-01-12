@@ -43,6 +43,7 @@ CSS (custom variables & dark theme)
 Vite (or CRA – adjust if needed)
 
 # 📁 Project Structure
+```
 src/
 ├── components/     # Reusable UI components
 ├── pages/          # Application views
@@ -51,7 +52,7 @@ src/
 ├── styles/         # Global styles and CSS variables
 ├── App.tsx
 └── main.tsx
-
+```
 
 The structure follows a clear separation of concerns to ensure maintainability and scalability.
 

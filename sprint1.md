@@ -151,7 +151,7 @@ F6: React with state & interactivity
 
 Builds on v2: useState, useEffect, controlled components
 
-## Sprint 1 – Definition of Done (sammanfattning)
+# Sprint 1 – Definition of Done (sammanfattning)
 
 App starts without errors
 

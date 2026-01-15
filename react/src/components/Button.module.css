@@ -1,0 +1,17 @@
+.btnBase {
+    color: white;
+}
+
+.start {
+    background-color: green;
+}
+
+.pause {
+    background-color: yellow;
+    color: black;
+}
+
+.stop {
+    background-color: red;
+    color: white;
+}

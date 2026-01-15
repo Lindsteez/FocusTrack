@@ -20,7 +20,7 @@
   z-index: 1000;
 }
 
-.nav-item {
+.navItem {
   flex: 1;
   min-width: 0;
 
@@ -40,28 +40,28 @@
 }
 
 /* Icon */
-.nav-item svg {
+.navItem svg {
   width: 22px;
   height: 22px;
 }
 
 /* Label */
-.nav-item span {
+.navItem span {
   font-size: 12px;
   line-height: 1;
   color: inherit;
 }
 
-.nav-item:active {
+.navItem:active {
   transform: scale(0.98);
   background: rgba(255, 255, 255, 0.04);
 }
 
-.nav-item.active {
+.navItem.active {
   color: var(--text-primary);
 }
 
-.nav-item.active svg {
+.navItem.active svg {
   background: var(--card-secondary);
   border-radius: 10px;
   padding: 8px;

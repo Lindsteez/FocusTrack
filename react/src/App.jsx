@@ -3,8 +3,11 @@ import './App.css'
 import Button from './components/Button'
 import Card from './components/Card'
 import MobileLayout from './components/MobileLayout'
+import Timer from './components/Timer'
 
 function App() {
+
+  const [isRunning, setIsRunning] = useState(false);
 
   return (
     <>
@@ -13,14 +16,22 @@ function App() {
         
 
       <Card title="Timer">
-        <Button 
-            label = "Start ►"
-            variant = "start"
-        />
-         <Button 
-            label = "Stop ■"
-            variant = "stop"
-        />
+        <Timer isRunning={isRunning} />
+        
+        <div className="buttonRow">
+          <Button 
+              label = "► Start"
+              variant = "start"
+              onClick = {() => setIsRunning(true)}
+              disabled = {isRunning}
+          />
+          <Button 
+              label = "■ Stop"
+              variant = "stop"
+              onClick = {() => setIsRunning(false)}
+              disabled = {!isRunning}
+          />
+        </div>
       </Card>
 
 

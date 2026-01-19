@@ -1,0 +1,30 @@
+@media screen and (min-width: 768px) {
+    
+    .navbar {
+        display: flex;
+        align-items: center;
+        background-color: var(--bg-page);
+        padding: 1rem 2rem;
+    }
+
+    .navbar a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 1.1rem;
+        margin: 0 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+        color: #3498db;
+    }
+
+    .navbar img {
+        margin-left: 0px;
+    }
+
+    .navbar a:first-of-type {
+        margin-left: 450px;
+    }
+
+}    

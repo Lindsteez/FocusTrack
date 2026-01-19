@@ -1,18 +1,22 @@
-import { startTransition, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import Navbar from './components/Navbar'
-import NavbarMobile from './components/NavbarMobile'
+import DesktopLayout from './components/DesktopLayout'
 import Button from './components/Button'
 import Card from './components/Card'
 import MobileLayout from './components/MobileLayout'
 
 function App() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+  useEffect(() => {
+  const onResize = () => setIsMobile(window.innerWidth < 768);
+  window.addEventListener("resize", onResize);
+  return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const Layout = isMobile ? MobileLayout : DesktopLayout;
   return (
-    <>
-  
-      <MobileLayout />
-        
+    <Layout>
 
       <Card title="Timer">
         <Button 
@@ -24,9 +28,7 @@ function App() {
             variant = "stop"
         />
       </Card>
-
-
-    </>
+    </Layout>
   )
 }
 

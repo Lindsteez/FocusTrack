@@ -44,7 +44,7 @@ function App() {
 
       <h2>Active mode: {activeMode}</h2>
 
-      <p>Focus modes:</p>
+      <p>Focus modes:</p> 
       <div>
         {focusmodes.map((mode) => (
          <button
@@ -52,12 +52,12 @@ function App() {
         onClick={() => setActiveMode(mode)}
          style={{
       fontWeight: activeMode === mode ? "bold" : "normal",
-      border: activeMode === mode ? "2px solid black" : "1px solid gray"
+      border: activeMode === mode ? "2px solid Gray" : "2px solid black"
     }}
   >
     {mode}
   </button>
-))}
+))} 
 
       </div>
     </div>

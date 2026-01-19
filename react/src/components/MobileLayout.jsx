@@ -1,0 +1,16 @@
+import NavbarMobile from "./NavbarMobile";
+import LogoImport from "./LogoMobile";
+
+function MobileLayout({ children }) {
+    return (
+        <div className="mobile-layout">
+            <LogoImport />
+            <main>
+                {children}
+            </main>
+            <NavbarMobile />
+        </div>
+    );
+}
+
+export default MobileLayout;

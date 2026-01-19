@@ -4,11 +4,15 @@ import Navbar from './components/Navbar'
 import NavbarMobile from './components/NavbarMobile'
 import Button from './components/Button'
 import Card from './components/Card'
+import MobileLayout from './components/MobileLayout'
 
 function App() {
 
   return (
     <>
+  
+      <MobileLayout />
+        
 
       <Card title="Timer">
         <Button 
@@ -21,9 +25,6 @@ function App() {
         />
       </Card>
 
-      <div className="App">
-        <NavbarMobile />
-      </div>
 
     </>
   )

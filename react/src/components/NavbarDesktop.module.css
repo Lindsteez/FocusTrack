@@ -27,4 +27,8 @@
         margin-left: 450px;
     }
 
-}    
+    .navbar a:active {
+        transform: scale(0.98);
+        background: rgba(255, 255, 255, 0.04);
+    }
+}   

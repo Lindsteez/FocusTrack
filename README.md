@@ -62,7 +62,7 @@ Node.js (v18 or later recommended)
 npm or yarn
 
 Installation
-git clone https://github.com/your-username/focustrack.git
+git clone https://github.com/lindsteez/focustrack.git
 cd focustrack
 npm install
 

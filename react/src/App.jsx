@@ -21,7 +21,7 @@ function App() {
         onClick={() => setActiveMode(mode)}
          style={{
       fontWeight: activeMode === mode ? "bold" : "normal",
-      border: activeMode === mode ? "2px solid Gray" : "2px solid black"
+      border: activeMode === mode ? "2px solid Black" : "1px solid Gray"
     }}
   >
     {mode}

@@ -1,7 +1,5 @@
 import { startTransition, useState } from 'react'
 import './App.css'
-import Navbar from './components/Navbar'
-import NavbarMobile from './components/NavbarMobile'
 import Button from './components/Button'
 import Card from './components/Card'
 import MobileLayout from './components/MobileLayout'

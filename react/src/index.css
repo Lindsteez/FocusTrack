@@ -17,3 +17,7 @@
   --text-secondary: #a1a7b5; /* secondary text */
   --text-muted: #6b7280;     /* muted / labels */
 }
+
+body {
+  margin: 0;
+}

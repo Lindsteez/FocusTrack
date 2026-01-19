@@ -1,0 +1,46 @@
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+/* App-layout */
+.App {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Huvudinnehåll */
+.appMain {
+  flex: 1;
+  overflow-y: auto;
+
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+
+  /* Plats för navbar längst ner */
+  padding-bottom: 96px;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .appMain {
+    padding: 32px;
+    padding-bottom: 96px;
+  }
+}
+
+/* Större skärmar */
+@media (min-width: 1440px) {
+  .appMain {
+    max-width: 1200px;
+  }
+}

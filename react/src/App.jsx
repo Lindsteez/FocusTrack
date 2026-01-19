@@ -9,11 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavbarMobile
-        focusmodes={focusmodes}
-        activeMode={activeMode}
-        setActiveMode={setActiveMode}
-      />
+      <NavbarMobile/>
 
       <h2>Active mode: {activeMode}</h2>
 

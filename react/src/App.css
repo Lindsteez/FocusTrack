@@ -20,3 +20,9 @@
   gap: 12px;
   margin-top: 12px;
 }
+
+.dashboardStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* adjust to taste */
+}

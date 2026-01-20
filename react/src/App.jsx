@@ -5,10 +5,14 @@ import Card from "./components/Card";
 import MobileLayout from "./components/MobileLayout";
 import Timer from "./components/Timer";
 import SaveTimeModal from "./components/SaveTimeModal";
+import RecentSessions from "./components/RecentSessions";
+import { loadSessions, saveSessions, makeSessionEntry } from "./utils/sessionsStore";
+
 
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const [sessions, setSessions] = useState(() => loadSessions());
 
   // controls ONLY whether the modal is open or not
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,6 +36,7 @@ function App() {
     <>
       <MobileLayout />
 
+    <div className="dashboardStack">
       <Card title="Timer">
         <Timer seconds={seconds} isRunning={isRunning} onTick={tick} />
 
@@ -52,6 +57,9 @@ function App() {
         </div>
       </Card>
 
+      <RecentSessions sessions={sessions} />
+    </div>
+
       <SaveTimeModal
         isOpen={isModalOpen}
         seconds={seconds}
@@ -61,12 +69,22 @@ function App() {
           resetTimer();
         }}
         onSaveConfirm={(payload) => {
-          // payload = { description, category }
-          // Next step: store payload + seconds in localStorage for the History page.
-          console.log(payload);
+          const entry = makeSessionEntry({
+            seconds,
+            description: payload.description,
+            category: payload.category,
+          });
+
+          setSessions((prev) => {
+            const next = [entry, ...prev].slice(0, 10);
+            saveSessions(next);
+            return next;
+          });
+
           setIsModalOpen(false);
           resetTimer();
         }}
+
       />
     </>
   );

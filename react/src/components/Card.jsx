@@ -17,4 +17,4 @@ function Card({title, children}) {
 }
 
 
-export default Card
+export default Card;

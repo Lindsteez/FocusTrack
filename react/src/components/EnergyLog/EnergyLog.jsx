@@ -1,14 +1,18 @@
-import { useState } from "react"
+import { useState } from "react";
+import Card from '../Card';
 import RateEnergy from "./EnergyBtn";
-import styles from './EnergyBtn.module.css'
+import styles from './EnergyBtn.module.css';
+
 
 function EnergyLog() {
     const [selected, setSelected] = useState(null)
+
     return(
-        <div className={`${styles.EnergyDiv}`}>
-            <h1>Energy Level</h1>
+        <Card title = 'Energy Level'> 
+
             <h2>How's your Energy?</h2>
-            <div>
+
+            <div className = {styles.buttons}>
                 {[1,2,3,4,5].map(n => (
                     <RateEnergy 
                     key = {n}
@@ -18,7 +22,7 @@ function EnergyLog() {
                     />
                 ))}
             </div>
-        </div>
+        </Card>
     )
 }
 

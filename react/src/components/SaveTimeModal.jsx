@@ -93,7 +93,7 @@ export default function SaveTimeModal({
                 <option value="hobby">Hobby</option>
                 <option value="sports">Sports</option>
                 <option value="cooking">Cooking</option>
-                <option value="cooking">Cleaning</option>
+                <option value="study">Study</option>
               </select>
             </label>
 

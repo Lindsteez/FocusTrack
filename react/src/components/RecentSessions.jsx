@@ -5,15 +5,14 @@ import { formatDuration } from "../utils/sessionsStore";
 function categoryDotStyle(category) {
   // Uses no custom colors. Just varies opacity via different preset shades.
   // If you later want real colors per category, say so and we’ll do it cleanly.
-  const map = {
-    work: 0.55,
-    hobby: 0.45,
-    sports: 0.65,
-    cooking: 0.4,
-    cleaning: 0.6,
+   const map = {
+    work: "#3B82F6",    // blue
+    hobby: "#A855F7",   // purple
+    sports: "#22C55E",  // green
+    cooking: "#F97316", // orange
   };
-  const a = map[category] ?? 0.35;
-  return { background: `rgba(255, 255, 255, ${a})` };
+  const color = map[category] ?? "#94A3BB";
+  return { background: color };
 }
 
 export default function RecentSessions({ sessions }) {

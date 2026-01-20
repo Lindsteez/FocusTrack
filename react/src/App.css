@@ -1,0 +1,71 @@
+.app {
+    min-height: 100vh;
+    padding-bottom: 90px;
+}
+.settings {
+  padding: 1rem;
+  max-width: 520px;
+}
+
+.settings__title {
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+}
+
+.settings__card {
+  background: var(--card-primary);
+  padding: 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.settings__label {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.settings__hint {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Segmented control */
+.segmented {
+  display: inline-flex;
+  background: var(--card-secondary);
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+}
+
+.segmented__btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 0.45rem 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease, color 150ms ease, opacity 150ms ease;
+}
+
+.segmented__btn:hover {
+  background: var(--card-hover);
+  color: var(--text-primary);
+  opacity: 0.95;
+}
+
+.segmented__btn.active {
+  background: var(--card-hover);
+  color: var(--text-primary);
+  transform: scale(0.98);
+}
+
+.segmented__btn:focus-visible {
+  outline: 2px solid var(--btn-success); 
+  outline-offset: 2px;
+}

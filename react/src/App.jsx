@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import './App.css'
 import Button from './components/Button'
 import Card from './components/Card'
@@ -16,7 +15,9 @@ function App() {
             label = "Stop ■"
             variant = "stop"
         />
+
       </Card>
+
     </AppLayout>
   )
 }

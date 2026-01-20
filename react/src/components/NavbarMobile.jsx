@@ -37,5 +37,7 @@ function NavbarMobile() {
             </a>
         </nav>
     );
+
 }
-export default NavbarMobile;
+
+export default NavbarMobile

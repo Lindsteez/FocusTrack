@@ -16,6 +16,8 @@ h2 {
 
 .btnBase {
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 8vh;
     height: 7vh;
     background-color: var(--card-secondary);
@@ -43,20 +45,28 @@ h2 {
     .btnBase {
         width: 6vh;
         height: 6vh;
+        margin: 0;
         font-size: 2vh;
+    }
 }
+
+@media (max-width: 425px) {
+    .btnBase {
+        width: 7vh;
+        height: 7vh;
+        margin: 0;
+        font-size: 2vh;
+    }
 }
 
 @media (min-width: 768px) {
     .EnergyDiv {
         width: 60%;
-    }
-    
+    } 
 }
 
 @media (min-width: 1024px) {
     .EnergyDiv {
         width: 40%;
-    }
-    
+    }  
 }

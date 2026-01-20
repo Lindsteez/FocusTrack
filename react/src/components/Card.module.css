@@ -1,0 +1,33 @@
+.card {
+  background-color: var(--card-primary);
+  border-radius: 12px;
+  /* padding: 16px; */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* Titel */
+.header {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  padding: 16px 16px 0 16px;
+}
+
+/* Inre ruta */
+.content {
+  background-color: var(--card-secondary);
+  border-radius: 8px;
+  min-height: 100px;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card:hover {
+  background-color: var(--card-hover);
+}

@@ -30,7 +30,7 @@ h2 {
     width: 8vh;
     height: 7vh;
     background-color: var(--card-secondary);
-    border-radius: 10px;
+    border-radius: 5px;
     color: var(--text-primary);
     font-size: 2.5vh;
     font-weight: bold;
@@ -47,6 +47,14 @@ h2 {
 
 .active {
     background-color: var(--btn-visited);
+}
+
+@media (max-width: 390px) {
+    .btnBase {
+        width: 6vh;
+        height: 6vh;
+        font-size: 2vh;
+}
 }
 
 @media (min-width: 768px) {

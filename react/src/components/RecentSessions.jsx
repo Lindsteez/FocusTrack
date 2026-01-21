@@ -1,21 +1,22 @@
 import Card from "./Card";
 import styles from "./RecentSessions.module.css";
+import useSessions from "../hooks/useSessions";
 import { formatDuration } from "../utils/sessionsStore";
 
 function categoryDotStyle(category) {
-  // Uses no custom colors. Just varies opacity via different preset shades.
-  // If you later want real colors per category, say so and we’ll do it cleanly.
-   const map = {
-    work: "#3B82F6",    // blue
-    hobby: "#A855F7",   // purple
-    sports: "#22C55E",  // green
-    cooking: "#F97316", // orange
+  const map = {
+    work: "#3B82F6",
+    hobby: "#A855F7",
+    sports: "#22C55E",
+    cooking: "#F97316",
+    study: "#ff00c8",
   };
-  const color = map[category] ?? "#94A3BB";
-  return { background: color };
+  return { background: map[category] ?? "#94A3B8" };
 }
 
-export default function RecentSessions({ sessions }) {
+export default function RecentSessions() {
+  const sessions = useSessions();
+
   return (
     <Card title="Recent Sessions">
       {sessions.length === 0 ? (
@@ -25,9 +26,7 @@ export default function RecentSessions({ sessions }) {
           {sessions.slice(0, 5).map((s) => (
             <div key={s.id} className={styles.row}>
               <div className={styles.left}>
-                <div className={styles.title}>
-                  {s.description || "(no name)"}
-                </div>
+                <div className={styles.title}>{s.description || "(no name)"}</div>
 
                 <div className={styles.metaRow}>
                   <span

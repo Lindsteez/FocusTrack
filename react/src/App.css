@@ -25,4 +25,5 @@
   display: flex;
   flex-direction: column;
   gap: 16px; /* adjust to taste */
+  padding-top: 90px;
 }

@@ -1,23 +1,12 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import DesktopLayout from './components/DesktopLayout'
 import Button from './components/Button'
 import Card from './components/Card'
-import MobileLayout from './components/MobileLayout'
+import AppLayout from './components/AppLayout'
 
 function App() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-  const onResize = () => setIsMobile(window.innerWidth < 768);
-  window.addEventListener("resize", onResize);
-  return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  const Layout = isMobile ? MobileLayout : DesktopLayout;
   return (
-    <Layout>
-
+    <AppLayout>
       <Card title="Timer">
         <Button 
             label = "Start ►"
@@ -28,7 +17,7 @@ function App() {
             variant = "stop"
         />
       </Card>
-    </Layout>
+    </AppLayout>
   )
 }
 

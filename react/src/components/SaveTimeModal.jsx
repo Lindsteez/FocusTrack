@@ -63,13 +63,13 @@ export default function SaveTimeModal({
         {mode === "saveForm" && (
           <Card title="Save entry">
             <label style={{ display: "block", marginBottom: "12px" }}>
-              What was it?
+              What where you doing?
               <input
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder='e.g. "Dusting"'
+                placeholder='e.g. "Reading"'
                 style={{
-                  width: "100%",
+                  width: "93%",
                   marginTop: "6px",
                   padding: "10px",
                   borderRadius: "8px",
@@ -78,7 +78,7 @@ export default function SaveTimeModal({
             </label>
 
             <label style={{ display: "block", marginBottom: "12px" }}>
-              Category
+              In what category?
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}

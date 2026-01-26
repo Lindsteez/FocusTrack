@@ -1,7 +1,9 @@
 import Card from "./Card";
 import styles from "./RecentSessions.module.css";
 import useSessions from "../hooks/useSessions";
-import { formatDuration } from "../utils/sessionsStore";
+import { formatDuration, formatDate } from "../utils/sessionsStore";
+
+
 
 function categoryDotStyle(category) {
   const map = {
@@ -38,7 +40,10 @@ export default function RecentSessions() {
                 </div>
               </div>
 
-              <div className={styles.time}>{formatDuration(s.seconds)}</div>
+              <div className={styles.timeBlock}>
+                <div className={styles.time}>{formatDuration(s.seconds)}</div>
+                <div className={styles.date}>{formatDate(s.createdAt)}</div>
+              </div>
             </div>
           ))}
         </div>

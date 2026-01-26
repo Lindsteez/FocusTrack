@@ -66,3 +66,14 @@ export function formatDuration(seconds) {
   if (m > 0) return `${m}m ${s}s`;
   return `${s}s`;
 }
+
+export function formatDate(isoString) {
+  const d = new Date(isoString);
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+  }).format(d);
+}
+

@@ -1,0 +1,72 @@
+h2 {
+    margin: 2vh 0;
+    text-align: center;
+    color: var(--text-primary);
+    width: 100%
+    
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-bottom: 5vh;
+}
+
+.btnBase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8vh;
+    height: 7vh;
+    background-color: var(--card-secondary);
+    border-radius: 5px;
+    color: var(--text-primary);
+    font-size: 2.5vh;
+    font-weight: bold;
+    margin: 0 7px;
+    flex-wrap: wrap;
+}
+
+.btnBase:hover {
+    background-color: var(--card-hover);
+}
+
+.btnBase:active {
+    transform: scale(0.95)
+}
+
+.active {
+    background-color: var(--btn-visited);
+}
+
+@media (max-width: 390px) {
+    .btnBase {
+        width: 6vh;
+        height: 6vh;
+        margin: 0;
+        font-size: 2vh;
+    }
+}
+
+@media (max-width: 425px) {
+    .btnBase {
+        width: 7vh;
+        height: 7vh;
+        margin: 0;
+        font-size: 2vh;
+    }
+}
+
+@media (min-width: 768px) {
+    .EnergyDiv {
+        width: 60%;
+    } 
+}
+
+@media (min-width: 1024px) {
+    .EnergyDiv {
+        width: 40%;
+    }  
+}

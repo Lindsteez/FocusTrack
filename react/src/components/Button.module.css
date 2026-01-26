@@ -1,5 +1,9 @@
 .btnBase {
     color: white;
+    padding: 10px 50px;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin: 0 10px;
 }
 
 .start {

@@ -1,0 +1,29 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 9999;
+  color: white
+}
+
+.modalBox {
+  width: min(420px, 100%);
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.dashboardStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 90px;
+}

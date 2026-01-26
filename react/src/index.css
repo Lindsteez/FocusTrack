@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
   /* Backgrounds */
   --bg-page: #0b0f1a;        /* page background */
@@ -11,9 +17,15 @@
   /* Buttons */
   --btn-success: #22c55e;    /* green */
   --btn-danger: #ef4444;     /* red */
+  --btn-visited: #678b87;    /* green */
 
   /* Text colors */
   --text-primary: #e5e7eb;   /* main text */
   --text-secondary: #a1a7b5; /* secondary text */
   --text-muted: #6b7280;     /* muted / labels */
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-page);
 }

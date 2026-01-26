@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import MobileLayout from "./MobileLayout";
-import DesktopLayout from "./DesktopLayout";
+import MobileLayout from "./NavbarMobile/MobileLayout";
+import DesktopLayout from "./NavbarDesktop/DesktopLayout";
 
 export default function AppLayout({ children }) {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);

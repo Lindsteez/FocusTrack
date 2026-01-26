@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import Logo from '../assets/svg/focustrack-logo.svg';
+import Logo from '../../assets/svg/focustrack-logo.svg';
 import styles from './NavbarDesktop.module.css';
 
 function NavbarDesktop() {

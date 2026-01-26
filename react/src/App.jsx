@@ -1,24 +1,14 @@
-// import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
-import AppLayout from './components/AppLayout'
-import EnergyLog from './components/EnergyLog/EnergyLog'
-import TimerSection from "./components/TimerSection";
-import RecentSessions from "./components/RecentSessions";
+import Navbar from './components/Navbar'
+import NavbarMobile from './components/NavbarMobile'
 
 function App() {
-  return (    
-  
-  <div className="App">
-    <AppLayout>
-      
-      <div className="dashboardStack">
-        <TimerSection />
-        <RecentSessions />
-        <EnergyLog />
-      </div>
-    
-    </AppLayout>
-  </div>
+
+  return (
+    <div className="App">
+      <NavbarMobile />
+    </div>
   )
 }
 

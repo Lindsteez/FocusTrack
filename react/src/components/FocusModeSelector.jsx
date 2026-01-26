@@ -1,32 +1,33 @@
-import { useState } from "react";
+import { useState } from "react"
+import "./FocusModeSelector.css"
 
-const focusModes = ["Deep work", "Meeting", "Break"];
+const focusModes = ["Deep work", "Meeting", "Break"]
 
 export default function FocusModeSelector() {
-  const [activeMode, setActiveMode] = useState("Deep work");
+  const [activeMode, setActiveMode] = useState("Deep work")
 
   return (
-    <div>
-      <h2>Active mode: {activeMode}</h2>
+    <div className="focusMode">
+      <p className="focusMode__label">Focus modes</p>
 
-      <p>Focus modes:</p>
-      <div>
+      <div className="focusMode__group" role="tablist" aria-label="Focus modes">
         {focusModes.map((mode) => (
           <button
             key={mode}
+            type="button"
+            className={`focusMode__btn ${
+              activeMode === mode ? "is-active" : ""
+            }`}
             onClick={() => setActiveMode(mode)}
-            style={{
-              fontWeight: activeMode === mode ? "bold" : "normal",
-              border:
-                activeMode === mode
-                  ? "2px solid black"
-                  : "1px solid gray",
-            }}
           >
             {mode}
           </button>
         ))}
       </div>
+
+      <p className="focusMode__active">
+        Active mode: <span>{activeMode}</span>
+      </p>
     </div>
-  );
+  )
 }

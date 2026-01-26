@@ -1,11 +1,16 @@
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
 import './App.css'
 import Button from './components/Button'
 import Card from './components/Card'
 import AppLayout from './components/AppLayout'
+// import Navbar from './components/Navbar'
+import NavbarMobile from './components/NavbarMobile'
+import EnergyLog from './components/EnergyLog/EnergyLog'
 
 function App() {
-  return (
+  return (    
+  
+  <div className="App">
     <AppLayout>
       <Card title="Timer">
         <Button 
@@ -18,6 +23,10 @@ function App() {
         />
       </Card>
     </AppLayout>
+
+    <EnergyLog />
+    <NavbarMobile />
+  </div>
   )
 }
 

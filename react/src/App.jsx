@@ -1,25 +1,21 @@
-import './App.css'
-import Button from './components/Button'
-import Card from './components/Card'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from './components/AppLayout'
 
-function App() {
+import Dashboard from './pages/Dashboard'
+import History from './pages/History'
+import Stats from './pages/Stats'
+import Settings from './pages/Settings'
+
+export default function App() {
   return (
-    <AppLayout>
-      <Card title="Timer">
-        <Button 
-            label = "Start ►"
-            variant = "start"
-        />
-         <Button 
-            label = "Stop ■"
-            variant = "stop"
-        />
-
-      </Card>
-
-    </AppLayout>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/stats" element={<Stats />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
   )
 }
-
-export default App

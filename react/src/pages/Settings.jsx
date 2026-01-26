@@ -5,12 +5,23 @@ import './Settings.css'
 function Settings() {
   const [theme, setTheme] = useLocalStorage('theme', 'dark') // dark | light | auto
 
+  // Apply theme + listen to system changes when auto
   useEffect(() => {
+    const applyTheme = () => {
+      if (theme === 'auto') {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.body.dataset.theme = prefersDark ? 'dark' : 'light'
+      } else {
+        document.body.dataset.theme = theme
+      }
+    }
+
+    applyTheme()
+
     if (theme === 'auto') {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      document.body.dataset.theme = prefersDark ? 'dark' : 'light'
-    } else {
-      document.body.dataset.theme = theme
+      const mq = window.matchMedia('(prefers-color-scheme: dark)')
+      mq.addEventListener('change', applyTheme)
+      return () => mq.removeEventListener('change', applyTheme)
     }
   }, [theme])
 
@@ -20,29 +31,29 @@ function Settings() {
 
       <div className="settings__card">
         <div className="settings__row">
-          <p className="settings__label">Theme</p>
+          <span className="settings__label">Theme</span>
 
           <div className="segmented">
             <button
+              type="button"
               className={`segmented__btn ${theme === 'dark' ? 'is-active' : ''}`}
               onClick={() => setTheme('dark')}
-              type="button"
             >
               🌙 Dark
             </button>
 
             <button
+              type="button"
               className={`segmented__btn ${theme === 'light' ? 'is-active' : ''}`}
               onClick={() => setTheme('light')}
-              type="button"
             >
               🌞 Light
             </button>
 
             <button
+              type="button"
               className={`segmented__btn ${theme === 'auto' ? 'is-active' : ''}`}
               onClick={() => setTheme('auto')}
-              type="button"
             >
               ✨ Auto
             </button>

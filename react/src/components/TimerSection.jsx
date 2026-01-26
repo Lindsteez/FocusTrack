@@ -3,6 +3,7 @@ import Card from "./Card";
 import Button from "./Button";
 import Timer from "./Timer";
 import SaveTimeModal from "./SaveTimeModal";
+import FocusModeSelector from "./FocusModeSelector";
 import { addSession } from "../utils/sessionsStore";
 import { clearTimerState, loadTimerState, saveTimerState } from "../utils/timerStore";
 
@@ -79,6 +80,8 @@ export default function TimerSection() {
   return (
     <>
       <Card title="Timer">
+        <FocusModeSelector />
+        
         <Timer seconds={seconds} />
 
         <div className="buttonRow">

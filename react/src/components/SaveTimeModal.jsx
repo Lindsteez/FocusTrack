@@ -23,14 +23,14 @@ export default function SaveTimeModal({
 
             <div className="modalButtons">
               <Button
-                label="No"
-                variant="stop"
-                onClick={() => setMode("confirmDiscard")}
-              />
-              <Button
                 label="Yes"
                 variant="start"
                 onClick={() => setMode("saveForm")}
+              />
+              <Button
+                label="No"
+                variant="stop"
+                onClick={() => setMode("confirmDiscard")}
               />
             </div>
           </Card>
@@ -41,20 +41,21 @@ export default function SaveTimeModal({
             <p>This will discard the time.</p>
 
             <div className="modalButtons">
-              <Button
-                label="No"
-                variant="start"
-                onClick={() => setMode("confirmSave")}
-              />
+              
               <Button
                 label="Yes"
-                variant="stop"
+                variant="start"
                 onClick={() => {
                   setMode("confirmSave");
                   setDescription("");
                   setCategory("work");
                   onDiscardConfirm();
                 }}
+              />
+              <Button
+                label="No"
+                variant="stop"
+                onClick={() => setMode("confirmSave")}
               />
             </div>
           </Card>
@@ -98,11 +99,7 @@ export default function SaveTimeModal({
             </label>
 
             <div className="modalButtons">
-              <Button
-                label="Cancel"
-                variant="stop"
-                onClick={() => setMode("confirmSave")}
-              />
+              
               <Button
                 label="Save"
                 variant="start"
@@ -117,6 +114,12 @@ export default function SaveTimeModal({
                   setCategory("work");
                   onSaveConfirm(payload);
                 }}
+              />
+
+              <Button
+                label="Cancel"
+                variant="stop"
+                onClick={() => setMode("confirmSave")}
               />
             </div>
           </Card>

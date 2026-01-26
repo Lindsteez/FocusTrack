@@ -1,5 +1,5 @@
 import NavbarMobile from "./NavbarMobile";
-import LogoImport from "./LogoMobile";
+import LogoImport from "../Logo/LogoMobile";
 
 function MobileLayout({ children }) {
     return (

@@ -4,7 +4,7 @@ import Button from './components/Button'
 import Card from './components/Card'
 import AppLayout from './components/AppLayout'
 // import Navbar from './components/Navbar'
-import NavbarMobile from './components/NavbarMobile'
+import NavbarMobile from './components/NavbarMobile/NavbarMobile'
 import EnergyLog from './components/EnergyLog/EnergyLog'
 
 function App() {

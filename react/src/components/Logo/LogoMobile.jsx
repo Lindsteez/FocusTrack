@@ -1,4 +1,4 @@
-import Logo from '../assets/svg/focustrack-logo.svg';
+import Logo from '../../assets/svg/focustrack-logo.svg';
 import styles from './LogoMobile.module.css';
 
 function LogoImport() {

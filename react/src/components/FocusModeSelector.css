@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  color: white;
 }
 
 .focusMode__label {
@@ -27,6 +28,7 @@
   border-radius: 999px;
   cursor: pointer;
   font-size: 14px;
+  color: white;
 }
 
 .focusMode__btn.is-active {

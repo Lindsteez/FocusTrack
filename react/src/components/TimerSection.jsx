@@ -80,17 +80,26 @@ export default function TimerSection() {
   return (
     <>
       <Card title="Timer">
-        <FocusModeSelector />
         
         <Timer seconds={seconds} />
 
         <div className="buttonRow">
           <Button
-            label="► Start"
-            variant="start"
-            onClick={start}
-            disabled={isRunning}
+            label={isRunning ? "⏸ Pause" : "► Start"}
+            variant={isRunning ? "pause" : "start"}
+            onClick={() => {
+              if (isRunning) {
+                // PAUSE
+                setAccumulatedSeconds(seconds);
+                setIsRunning(false);
+              } else {
+                // START / RESUME
+                setStartedAt(Date.now());
+                setIsRunning(true);
+              }
+            }}
           />
+
 
           <Button
             label="■ Stop"
@@ -99,6 +108,7 @@ export default function TimerSection() {
             disabled={!isRunning || seconds === 0}
           />
         </div>
+        <FocusModeSelector />
       </Card>
 
       <SaveTimeModal

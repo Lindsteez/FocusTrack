@@ -27,3 +27,9 @@
   gap: 16px;
   padding-top: 90px;
 }
+
+.app {
+    min-height: 100vh;
+    padding-bottom: 90px;
+}
+

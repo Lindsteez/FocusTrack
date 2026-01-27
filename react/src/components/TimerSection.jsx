@@ -54,12 +54,6 @@ export default function TimerSection() {
     saveTimerState({ isRunning, startedAt, accumulatedSeconds });
   }, [isRunning, startedAt, accumulatedSeconds]);
 
-  function start() {
-    // Start counting from "now", keep any accumulated time
-    setStartedAt(Date.now());
-    setIsRunning(true);
-  }
-
   function stopAndOpenModal() {
     if (seconds === 0) return;
 

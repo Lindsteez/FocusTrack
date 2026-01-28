@@ -8,7 +8,7 @@ export default function Dashboard() {
     <div className="dashboardStack">
       <TimerSection />
       <RecentSessions />
-      <EnergyLog />
+      {/* <EnergyLog /> */}
     </div>
   )
 }

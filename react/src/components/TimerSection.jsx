@@ -3,10 +3,11 @@ import Card from "./Card";
 import Button from "./Button";
 import Timer from "./Timer";
 import SaveTimeModal from "./SaveTimeModal";
-import FocusModeSelector from "./FocusModeSelector";
+import StartSessionModal from "./StartSessionModal";
 import { addSession } from "../utils/sessionsStore";
 import { clearTimerState, loadTimerState, saveTimerState } from "../utils/timerStore";
 
+// Calculate total seconds based on timestamps
 function computeSeconds({ isRunning, startedAt, accumulatedSeconds }, nowMs) {
   if (!isRunning) return accumulatedSeconds;
   const elapsed = Math.floor((nowMs - startedAt) / 1000);
@@ -22,6 +23,11 @@ export default function TimerSection() {
   const [accumulatedSeconds, setAccumulatedSeconds] = useState(stored?.accumulatedSeconds ?? 0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // State for start-session modal
+  const [isStartModalOpen, setIsStartModalOpen] = useState(false);
+  const [focusMode, setFocusMode] = useState("Deep work");
+  const [energyLevel, setEnergyLevel] = useState(null);
 
   // "now" is only for re-rendering the UI; correctness comes from timestamps.
   const [nowMs, setNowMs] = useState(() => Date.now());
@@ -54,14 +60,21 @@ export default function TimerSection() {
     saveTimerState({ isRunning, startedAt, accumulatedSeconds });
   }, [isRunning, startedAt, accumulatedSeconds]);
 
-  function stopAndOpenModal() {
-    if (seconds === 0) return;
+function stopAndOpenModal() {
+  // Calculate seconds (avoid waiting for UI tick)
+  const snapSeconds = computeSeconds(
+    { isRunning, startedAt, accumulatedSeconds },
+    Date.now()
+  );
 
-    // Freeze time into accumulatedSeconds and stop
-    setAccumulatedSeconds(seconds);
-    setIsRunning(false);
-    setIsModalOpen(true);
-  }
+  if (snapSeconds === 0) return;
+
+  // Freeze time into accumulatedSeconds and stop
+  setAccumulatedSeconds(snapSeconds);
+  setIsRunning(false);
+  setIsModalOpen(true);
+}
+
 
   function resetTimer() {
     setIsRunning(false);
@@ -74,7 +87,6 @@ export default function TimerSection() {
   return (
     <>
       <Card title="Timer">
-        
         <Timer seconds={seconds} />
 
         <div className="buttonRow">
@@ -86,23 +98,35 @@ export default function TimerSection() {
                 // PAUSE
                 setAccumulatedSeconds(seconds);
                 setIsRunning(false);
-              } else {
-                // START / RESUME
+                return;
+              }
+
+              if (seconds > 0) {
+                // RESUME paused timer
                 setStartedAt(Date.now());
                 setIsRunning(true);
+                return;
               }
+
+              // NEW session → open start modal
+              setEnergyLevel(null);
+              setIsStartModalOpen(true);
             }}
           />
-
 
           <Button
             label="■ Stop"
             variant="stop"
             onClick={stopAndOpenModal}
-            disabled={!isRunning || seconds === 0}
+            disabled={seconds === 0} // allow stop even if paused
+
           />
         </div>
-        <FocusModeSelector />
+
+        {/* Show selected mode and energy while running */}
+        <div style={{ marginTop: 8, opacity: 0.8 }}>
+          Mode: <b>{focusMode}</b> • Energy: <b>{energyLevel ?? "-"}</b>
+        </div>
       </Card>
 
       <SaveTimeModal
@@ -116,12 +140,26 @@ export default function TimerSection() {
         onSaveConfirm={(payload) => {
           addSession({
             seconds,
-            description: payload.description,
+            description: `${payload.description} • Mode: ${focusMode} • Energy: ${energyLevel ?? "-"}`,
             category: payload.category,
           });
 
           setIsModalOpen(false);
           resetTimer();
+        }}
+      />
+
+      <StartSessionModal
+        isOpen={isStartModalOpen}
+        focusMode={focusMode}
+        energyLevel={energyLevel}
+        onChangeFocusMode={setFocusMode}
+        onChangeEnergyLevel={setEnergyLevel}
+        onCancel={() => setIsStartModalOpen(false)}
+        onConfirm={() => {
+          setIsStartModalOpen(false);
+          setStartedAt(Date.now());
+          setIsRunning(true);
         }}
       />
     </>

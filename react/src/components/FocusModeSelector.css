@@ -36,3 +36,16 @@
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.25);
 }
+
+/* Ändrar färg på knapparna så de syns i modalen (vit just nu) */
+
+.focusMode__btn {
+  color: #111;              
+  background: #f2f2f2;      
+  border: 1px solid #ccc;
+}
+
+.focusMode__btn.is-active {
+  background: #ddd;
+  border-color: #999;
+}

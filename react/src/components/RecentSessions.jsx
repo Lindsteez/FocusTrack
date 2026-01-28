@@ -38,6 +38,10 @@ export default function RecentSessions() {
                   />
                   <span className={styles.category}>{s.category}</span>
                 </div>
+
+                    {(s.note ?? '') && (
+                    <div className={styles.note}>{s.note}</div>
+                    )}
               </div>
 
               <div className={styles.timeBlock}>

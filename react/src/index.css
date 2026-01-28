@@ -45,9 +45,10 @@ body[data-theme="light"] {
   --text-muted: #64748b;
 }
 
-body {
+body, html {
   margin: 0;
   background-color: var(--bg-page);
   font-family: var(--font-main);
   color: var(--text-primary);
+  padding-bottom: 2em;
 }

@@ -65,6 +65,14 @@
   font-size: 0.9rem;
 }
 
+.note {
+  font-size: 0.9rem;
+  margin-left: 1.5em;
+  max-width: 90%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
 /* Right side (duration) */
 .time {
   font-weight: 800;

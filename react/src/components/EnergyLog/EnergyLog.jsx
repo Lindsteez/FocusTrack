@@ -1,56 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Card from '../Card';
 import RateEnergy from "./EnergyBtn";
 import styles from './EnergyBtn.module.css';
+import { addSession } from '../../utils/sessionsStore';
 
-
-function EnergyLog() {
+export default function EnergyLog() {
     const [selected, setSelected] = useState(null);
 
     // Modal
     const [isOpen, setIsOpen] = useState(false);
     const [note, setNote] = useState('');
 
-    // History
-    const [history, setHistory] = setState([]);
-
-    useEffect(() => {
-        try {
-            const raw = localStorage.getItem(LS_KEY);
-            if(raw) setHistory(JSON.parse(raw));
-        } catch {
-            //ignore parse errors
-        }
-    }, []);
-
-    function openModal (level) {
-        setSelected(level);
-        setNote('');
-        setIsOpen(true);
-    }
-
-    function closeModal() {
-        setIsOpen(false);
-    }
-
     function handleSave() {
-        const entry = {
-            id: crypto?.randomUUID?.() ?? String(Date.now()),
-            level: selected,
-            note: note.trim(),
+        addSession({
+            seconds: '',
+            category: "Energy",
+            description: `Energy level: ${selected}`,
+            note: note.trim().slice(0, 100) || '',
             createdAt: new Date().toISOString(),
-        };
+        });
 
-        const next = [entry, ...history];
-        setHistory(next);
-        localStorage.setItem(LS_KEY, JSON.stringify(next));
-
-        closeModal();
+        setIsOpen(false);
     }
 
     function handleCancel() {
         const ok = window.confirm('Are you sure? Your text will not be saved.')
-        if (ok) closeModal();
+        if (ok) setIsOpen(false);
     }
 
     return(
@@ -64,7 +39,12 @@ function EnergyLog() {
                     key = {n}
                     rateEnergy= {n}
                     isActive= {selected === n}
-                    onClick={() => setSelected(n)} 
+                    onClick={() => {
+                        setSelected(n);
+                        setNote('');
+                        setIsOpen(true);
+                        } 
+                    }
                     />
                 ))}
             </div>
@@ -77,19 +57,36 @@ function EnergyLog() {
                         <label className= {styles.label}>
                             Note
                             <input 
-                            className= {styles.input
-                            value= 
-                            }
-                            >
-                            </input>
+                            className={styles.input}
+                            value={note}
+                            onChange={(e) => setNote(e.target.value)}
+                            maxLength={100}
+                            placeholder='Write a note'
+                            autoFocus
+                            />
                         </label>
 
-                    </div>
+                        <div className={styles.counter}>
+                            {note.length/100*100}
+                        </div>
 
+                        <div className={styles.modalActions}>
+                            <button 
+                                className={styles.saveBtn} 
+                                onClick={handleSave} 
+                                disabled={selected == null}>
+                                Save
+                            </button>
+                            <button 
+                                className={styles.cancelBtn} 
+                                onClick={handleCancel}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </Card>
     )
 }
 
-export default EnergyLog;

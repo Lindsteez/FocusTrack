@@ -30,21 +30,22 @@ function emitSessionsChanged() {
   window.dispatchEvent(new Event(EVENT_NAME));
 }
 
-export function makeSessionEntry({ seconds, description, category }) {
+export function makeSessionEntry({ seconds, description, category, note }) {
   return {
     id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
     seconds,
     description,
     category,
+    note: note ?? "",
     createdAt: new Date().toISOString(),
   };
 }
 
-export function addSession({ seconds, description, category }) {
-  const entry = makeSessionEntry({ seconds, description, category });
+export function addSession({ seconds, description, category, note }) {
+  const entry = makeSessionEntry({ seconds, description, category, note });
 
   const prev = loadSessions();
-  const next = [entry, ...prev].slice(0, 10);
+  const next = [entry, ...prev].slice(0, 200);
 
   saveSessions(next);
   emitSessionsChanged();

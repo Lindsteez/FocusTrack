@@ -81,13 +81,3 @@ body, html {
 }
 
 
-@media (max-width: 800px) {
-  .grid {
-    display: flex;
-    flex-direction: column;
-    /* gap: 16px; */
-    padding-top: 90px;
-}
-}
-
-

@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 56% 36%;
+    }
+}
+
+@media (max-width: 425px) {
+    .grid {
+        display: flex;
+        flex-direction: column;
+        padding-top: 90px;
+    }
+}

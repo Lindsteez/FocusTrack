@@ -26,8 +26,11 @@ export default function TimerSection() {
 
   // State for start-session modal
   const [isStartModalOpen, setIsStartModalOpen] = useState(false);
-  const [focusMode, setFocusMode] = useState("Deep work");
+  const [focusMode, setFocusMode] = useState("-");
   const [energyLevel, setEnergyLevel] = useState(null);
+
+  // NEW: label set at start-popup (what you did this session)
+  const [sessionLabel, setSessionLabel] = useState("");
 
   // "now" is only for re-rendering the UI; correctness comes from timestamps.
   const [nowMs, setNowMs] = useState(() => Date.now());
@@ -60,21 +63,16 @@ export default function TimerSection() {
     saveTimerState({ isRunning, startedAt, accumulatedSeconds });
   }, [isRunning, startedAt, accumulatedSeconds]);
 
-function stopAndOpenModal() {
-  // Calculate seconds (avoid waiting for UI tick)
-  const snapSeconds = computeSeconds(
-    { isRunning, startedAt, accumulatedSeconds },
-    Date.now()
-  );
+  function stopAndOpenModal() {
+    // Calculate seconds (avoid waiting for UI tick)
+    const snapSeconds = computeSeconds({ isRunning, startedAt, accumulatedSeconds }, Date.now());
+    if (snapSeconds === 0) return;
 
-  if (snapSeconds === 0) return;
-
-  // Freeze time into accumulatedSeconds and stop
-  setAccumulatedSeconds(snapSeconds);
-  setIsRunning(false);
-  setIsModalOpen(true);
-}
-
+    // Freeze time into accumulatedSeconds and stop
+    setAccumulatedSeconds(snapSeconds);
+    setIsRunning(false);
+    setIsModalOpen(true);
+  }
 
   function resetTimer() {
     setIsRunning(false);
@@ -82,6 +80,10 @@ function stopAndOpenModal() {
     setStartedAt(Date.now());
     clearTimerState();
     setNowMs(Date.now());
+
+    // Reset session metadata for next NEW session
+    setEnergyLevel(null);
+    setSessionLabel("");
   }
 
   return (
@@ -110,6 +112,7 @@ function stopAndOpenModal() {
 
               // NEW session → open start modal
               setEnergyLevel(null);
+              setSessionLabel("");
               setIsStartModalOpen(true);
             }}
           />
@@ -118,8 +121,7 @@ function stopAndOpenModal() {
             label="■ Stop"
             variant="stop"
             onClick={stopAndOpenModal}
-            disabled={seconds === 0} // allow stop even if paused
-
+            disabled={seconds === 0}
           />
         </div>
 
@@ -132,16 +134,20 @@ function stopAndOpenModal() {
       <SaveTimeModal
         isOpen={isModalOpen}
         seconds={seconds}
-        onClose={() => setIsModalOpen(false)}
         onDiscardConfirm={() => {
           setIsModalOpen(false);
           resetTimer();
         }}
-        onSaveConfirm={(payload) => {
+        onSaveConfirm={() => {
+          const label = sessionLabel.trim();
+
           addSession({
             seconds,
-            description: `${payload.description} • Mode: ${focusMode} • Energy: ${energyLevel ?? "-"}`,
-            category: payload.category,
+            description: label.length > 0 ? label : "(no label)",
+            note: `Energy: ${energyLevel ?? "-"}`,
+            focusMode,
+            energyLevel,
+            label,
           });
 
           setIsModalOpen(false);
@@ -153,8 +159,10 @@ function stopAndOpenModal() {
         isOpen={isStartModalOpen}
         focusMode={focusMode}
         energyLevel={energyLevel}
+        label={sessionLabel}
         onChangeFocusMode={setFocusMode}
         onChangeEnergyLevel={setEnergyLevel}
+        onChangeLabel={setSessionLabel}
         onCancel={() => setIsStartModalOpen(false)}
         onConfirm={() => {
           setIsStartModalOpen(false);

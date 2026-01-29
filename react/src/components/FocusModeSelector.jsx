@@ -1,6 +1,6 @@
 import "./FocusModeSelector.css";
 
-const focusModes = ["Deep work", "Meeting", "Break"];
+const focusModes = ["Work", "Meeting", "Break"];
 
 export default function FocusModeSelector({ value, onChange }) {
   return (

@@ -3,17 +3,13 @@ import styles from "./RecentSessions.module.css";
 import useSessions from "../hooks/useSessions";
 import { formatDuration, formatDate } from "../utils/sessionsStore";
 
-
-
-function categoryDotStyle(category) {
+function focusDotStyle(focusMode) {
   const map = {
-    work: "#3B82F6",
-    hobby: "#A855F7",
-    sports: "#22C55E",
-    cooking: "#F97316",
-    study: "#ff00c8",
+    Work: "#22C55E",         // green
+    Break: "#EAB308",       // yellow
+    Meeting: "#ff00c8",     // pink
   };
-  return { background: map[category] ?? "#94A3B8" };
+  return { background: map[focusMode] ?? "#94A3B8" };
 }
 
 export default function RecentSessions() {
@@ -30,22 +26,22 @@ export default function RecentSessions() {
               <div className={styles.left}>
                 <div className={styles.title}>{s.description || "(no name)"}</div>
 
+                {/* Dot is now based on focusMode, not category */}
                 <div className={styles.metaRow}>
                   <span
                     className={styles.dot}
-                    style={categoryDotStyle(s.category)}
+                    style={focusDotStyle(s.focusMode)}
                     aria-hidden="true"
                   />
-                  <span className={styles.category}>{s.category}</span>
+                  <span className={styles.category}>{s.focusMode ?? "-"}</span>
                 </div>
 
-                    {(s.note ?? '') && (
-                    <div className={styles.note}>{s.note}</div>
-                    )}
+                {(s.note ?? "") && <div className={styles.note}>{s.note}</div>}
               </div>
 
               <div className={styles.timeBlock}>
                 <div className={styles.time}>{formatDuration(s.seconds)}</div>
+                <div className={styles.timeSpacer} />
                 <div className={styles.date}>{formatDate(s.createdAt)}</div>
               </div>
             </div>

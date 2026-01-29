@@ -2,15 +2,8 @@ import { useState } from "react";
 import Card from "./Card";
 import Button from "./Button";
 
-export default function SaveTimeModal({
-  isOpen,
-  seconds,
-  onDiscardConfirm,
-  onSaveConfirm,
-}) {
-  const [mode, setMode] = useState("confirmSave"); // confirmSave | confirmDiscard | saveForm
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("work");
+export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSaveConfirm }) {
+  const [mode, setMode] = useState("confirmSave"); // confirmSave | confirmDiscard
 
   if (!isOpen) return null;
 
@@ -25,13 +18,13 @@ export default function SaveTimeModal({
               <Button
                 label="Yes"
                 variant="start"
-                onClick={() => setMode("saveForm")}
+                disabled={seconds === 0}
+                onClick={() => {
+                  setMode("confirmSave"); // reset for next open
+                  onSaveConfirm();
+                }}
               />
-              <Button
-                label="No"
-                variant="stop"
-                onClick={() => setMode("confirmDiscard")}
-              />
+              <Button label="No" variant="stop" onClick={() => setMode("confirmDiscard")} />
             </div>
           </Card>
         )}
@@ -41,83 +34,16 @@ export default function SaveTimeModal({
             <p>This will discard the time.</p>
 
             <div className="modalButtons">
-              
               <Button
                 label="Yes"
                 variant="start"
                 onClick={() => {
-                  setMode("confirmSave");
-                  setDescription("");
-                  setCategory("work");
+                  setMode("confirmSave"); // reset for next open
                   onDiscardConfirm();
                 }}
               />
               <Button
                 label="No"
-                variant="stop"
-                onClick={() => setMode("confirmSave")}
-              />
-            </div>
-          </Card>
-        )}
-
-        {mode === "saveForm" && (
-          <Card title="Save entry">
-            <label style={{ display: "block", marginBottom: "12px" }}>
-              What where you doing?
-              <input
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder='e.g. "Reading"'
-                style={{
-                  width: "93%",
-                  marginTop: "6px",
-                  padding: "10px",
-                  borderRadius: "8px",
-                }}
-              />
-            </label>
-
-            <label style={{ display: "block", marginBottom: "12px" }}>
-              In what category?
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                style={{
-                  width: "100%",
-                  marginTop: "6px",
-                  padding: "10px",
-                  borderRadius: "8px",
-                }}
-              >
-                <option value="work">Work</option>
-                <option value="hobby">Hobby</option>
-                <option value="sports">Sports</option>
-                <option value="cooking">Cooking</option>
-                <option value="study">Study</option>
-              </select>
-            </label>
-
-            <div className="modalButtons">
-              
-              <Button
-                label="Save"
-                variant="start"
-                disabled={seconds === 0 || description.trim().length === 0}
-                onClick={() => {
-                  const payload = {
-                    description: description.trim(),
-                    category,
-                  };
-                  setMode("confirmSave");
-                  setDescription("");
-                  setCategory("work");
-                  onSaveConfirm(payload);
-                }}
-              />
-
-              <Button
-                label="Cancel"
                 variant="stop"
                 onClick={() => setMode("confirmSave")}
               />

@@ -73,6 +73,7 @@
   max-width: 90%;
   word-break: break-word;
   overflow-wrap: anywhere;
+  opacity: 0.5;
 }
 
 /* Right side (duration) */
@@ -92,4 +93,15 @@
   opacity: 0.5;
   font-size: 0.9rem;
   text-align: end;
+}
+
+.timeBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Match height of the dot+focus line (metaRow) */
+.timeSpacer {
+  height: 1.35em;
 }

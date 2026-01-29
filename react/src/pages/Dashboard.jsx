@@ -19,7 +19,7 @@ export default function Dashboard() {
       </div>
 
 
-{/* ========= Vänster kolumn ========= */}
+{/* ========= 'Höger kolumn ========= */}
 
       <div className='box recent'>
         <RecentSessions />

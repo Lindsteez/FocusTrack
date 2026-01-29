@@ -2,15 +2,15 @@ h2 {
     margin: 2vh 0;
     text-align: center;
     color: var(--text-primary);
-    width: 100%
+    /* width: 100% */
     
 }
-
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    /* gap: 10px; */
+    /* flex-wrap: wrap; */
+    /* padding-top: 1rem; */
     padding-bottom: 5vh;
 }
 
@@ -18,7 +18,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 8vh;
+    width: 7vh;
     height: 7vh;
     background-color: var(--card-secondary);
     border-radius: 5px;

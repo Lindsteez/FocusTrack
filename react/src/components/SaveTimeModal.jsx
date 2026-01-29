@@ -1,14 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "./Card";
 import Button from "./Button";
 
 export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSaveConfirm }) {
   const [mode, setMode] = useState("confirmSave"); // confirmSave | confirmDiscard
-
-  // Reset internal mode each time modal opens
-  useEffect(() => {
-    if (isOpen) setMode("confirmSave");
-  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -24,7 +19,10 @@ export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSav
                 label="Yes"
                 variant="start"
                 disabled={seconds === 0}
-                onClick={() => onSaveConfirm()}
+                onClick={() => {
+                  setMode("confirmSave"); // reset for next open
+                  onSaveConfirm();
+                }}
               />
               <Button label="No" variant="stop" onClick={() => setMode("confirmDiscard")} />
             </div>
@@ -40,11 +38,15 @@ export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSav
                 label="Yes"
                 variant="start"
                 onClick={() => {
-                  setMode("confirmSave");
+                  setMode("confirmSave"); // reset for next open
                   onDiscardConfirm();
                 }}
               />
-              <Button label="No" variant="stop" onClick={() => setMode("confirmSave")} />
+              <Button
+                label="No"
+                variant="stop"
+                onClick={() => setMode("confirmSave")}
+              />
             </div>
           </Card>
         )}

@@ -4,7 +4,7 @@ import styles from "./EnergyBtn.module.css";
 export default function EnergyLevelSelector({ value, onChange }) {
   return (
     <div>
-      <p>Energy level</p>
+      <h2>Energy Level</h2>
 
       <div className={styles.buttons}>
         {[1, 2, 3, 4, 5].map((n) => (

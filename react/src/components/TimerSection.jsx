@@ -26,7 +26,7 @@ export default function TimerSection() {
 
   // State for start-session modal
   const [isStartModalOpen, setIsStartModalOpen] = useState(false);
-  const [focusMode, setFocusMode] = useState("Deep work");
+  const [focusMode, setFocusMode] = useState("-");
   const [energyLevel, setEnergyLevel] = useState(null);
 
   // NEW: label set at start-popup (what you did this session)
@@ -143,14 +143,8 @@ export default function TimerSection() {
 
           addSession({
             seconds,
-            // Keep RecentSessions compatible: title uses description
             description: label.length > 0 ? label : "(no label)",
-            // Keep existing UI compatible (dot uses category). You can change later if you want.
-            category: "work",
-            // Optional display line under title:
-            note: `Mode: ${focusMode} • Energy: ${energyLevel ?? "-"}`,
-
-            // New structured fields saved to localStorage:
+            note: `Energy: ${energyLevel ?? "-"}`,
             focusMode,
             energyLevel,
             label,

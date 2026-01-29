@@ -32,9 +32,15 @@
 }
 
 .focusMode__btn.is-active {
-  font-weight: 700;
+  font-weight: 600;
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.25);
+  color: var(--btn-success);
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;;
 }
 
 /* Ändrar färg på knapparna så de syns i modalen (vit just nu) */

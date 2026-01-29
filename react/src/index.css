@@ -52,3 +52,42 @@ body, html {
   color: var(--text-primary);
   padding-bottom: 2em;
 }
+
+
+/* ========== Grid layout ========== */
+
+.grid {
+  display: grid;
+  grid-template-columns: 50% 30%;
+  justify-content: center;
+  row-gap: 20px;
+}
+
+.timer {
+  grid-column: 1;
+  /* border: 2px solid red; */
+  align-self: start;
+}
+
+.recent {
+  grid-column: 2;
+  /* border: 2px solid green; */
+}
+
+.stats {
+  grid-column: 1;
+  /* border: 2px solid blue; */
+  align-self: start;
+}
+
+
+@media (max-width: 800px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+    /* gap: 16px; */
+    padding-top: 90px;
+}
+}
+
+

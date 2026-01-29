@@ -29,7 +29,7 @@ export default function EnergyLog() {
     }
 
     return(
-        <Card title = 'Energy Level'> 
+        <Card title='Energy Level'> 
 
             <h2>How's your Energy?</h2>
 

@@ -21,15 +21,17 @@
   margin-top: 12px;
 }
 
-.dashboardStack {
+/* .dashboardStack {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding-top: 90px;
-}
+} */
 
 .app {
     min-height: 100vh;
     padding-bottom: 90px;
 }
+
+
 

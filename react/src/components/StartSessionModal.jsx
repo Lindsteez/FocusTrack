@@ -6,8 +6,10 @@ export default function StartSessionModal({
   isOpen,
   focusMode,
   energyLevel,
+  label,
   onChangeFocusMode,
   onChangeEnergyLevel,
+  onChangeLabel,
   onCancel,
   onConfirm,
 }) {
@@ -22,6 +24,22 @@ export default function StartSessionModal({
 
         <FocusModeSelector value={focusMode} onChange={onChangeFocusMode} />
         <EnergyLevelSelector value={energyLevel} onChange={onChangeEnergyLevel} />
+
+        <label style={{ display: "block", marginTop: 12 }}>
+          What did you do?
+          <input
+            value={label}
+            onChange={(e) => onChangeLabel(e.target.value)}
+            placeholder='e.g. "Reading"'
+            style={{
+              width: "100%",
+              marginTop: 6,
+              padding: "10px",
+              borderRadius: "8px",
+              boxSizing: "border-box",
+            }}
+          />
+        </label>
 
         <div className={styles.actions}>
           <button onClick={onConfirm} disabled={!canStart}>

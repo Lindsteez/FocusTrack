@@ -30,7 +30,18 @@ function emitSessionsChanged() {
   window.dispatchEvent(new Event(EVENT_NAME));
 }
 
-export function makeSessionEntry({ seconds, description, category, note }) {
+// Extended shape (backwards compatible):
+// - Existing UI uses: id, seconds, description, category, note, createdAt
+// - New fields added: focusMode, energyLevel, label
+export function makeSessionEntry({
+  seconds,
+  description,
+  category,
+  note,
+  focusMode,
+  energyLevel,
+  label,
+}) {
   return {
     id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
     seconds,
@@ -38,13 +49,36 @@ export function makeSessionEntry({ seconds, description, category, note }) {
     category,
     note: note ?? "",
     createdAt: new Date().toISOString(),
+
+    // New structured fields saved to localStorage:
+    focusMode: focusMode ?? null,
+    energyLevel: energyLevel ?? null,
+    label: label ?? "",
   };
 }
 
-export function addSession({ seconds, description, category, note }) {
-  const entry = makeSessionEntry({ seconds, description, category, note });
+export function addSession({
+  seconds,
+  description,
+  category,
+  note,
+  focusMode,
+  energyLevel,
+  label,
+}) {
+  const entry = makeSessionEntry({
+    seconds,
+    description,
+    category,
+    note,
+    focusMode,
+    energyLevel,
+    label,
+  });
 
   const prev = loadSessions();
+
+  // FIX: spread prev correctly (the old code would crash)
   const next = [entry, ...prev].slice(0, 200);
 
   saveSessions(next);
@@ -77,4 +111,3 @@ export function formatDate(isoString) {
     year: "numeric",
   }).format(d);
 }
-

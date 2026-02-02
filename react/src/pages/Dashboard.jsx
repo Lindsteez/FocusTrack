@@ -2,9 +2,11 @@ import TimerSection from '../components/Timer/TimerSection'
 import RecentSessions from '../components/RecentSessions'
 import EnergyLog from '../components/EnergyLog/EnergyLog'
 import '../App.css'
+import Last5DaysBarChart from '../components/Last5DaysBarChart'
 
 export default function Dashboard() {
   return (
+    
     <div className="dashboardStack grid">
 
 {/* ========= Vänster kolumn ========= */}
@@ -13,9 +15,6 @@ export default function Dashboard() {
           <TimerSection />
         </div>
 
-        <div className='box stats'>
-          <h1>stat</h1>
-        </div>
       </div>
 
 
@@ -25,8 +24,9 @@ export default function Dashboard() {
         <RecentSessions />
       </div>
 
-
-      {/* <EnergyLog /> */}
+      <div className="box chart">
+        <Last5DaysBarChart />
+      </div>
     </div>
   )
 }

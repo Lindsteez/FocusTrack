@@ -142,12 +142,17 @@ export default function TimerSection() {
           const label = sessionLabel.trim();
 
           addSession({
-            seconds,
+            seconds, 
             description: label.length > 0 ? label : "(no label)",
             note: `Energy: ${energyLevel ?? "-"}`,
             focusMode,
             energyLevel,
             label,
+
+            energyLevel: energyLevel ?? 0,
+            description: `${payload.description} • Mode: ${focusMode} • Energy: ${energyLevel ?? "-"}`,
+            category: payload.category,
+        
           });
 
           setIsModalOpen(false);

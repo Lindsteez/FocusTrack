@@ -10,5 +10,9 @@ export default function useSessions() {
     });
   }, []);
 
-  return sessions;
+  function deleteSession(id) {
+    setSessions(prev => )
+  }
+
+  return {sessions, deleteSession};
 }

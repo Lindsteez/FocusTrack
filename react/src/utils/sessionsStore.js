@@ -30,7 +30,7 @@ function emitSessionsChanged() {
   window.dispatchEvent(new Event(EVENT_NAME));
 }
 
-export function makeSessionEntry({ seconds, description, category, note }) {
+export function makeSessionEntry({ seconds, description, category, note, energyLevel }) {
   return {
     id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
     seconds,
@@ -38,11 +38,12 @@ export function makeSessionEntry({ seconds, description, category, note }) {
     category,
     note: note ?? "",
     createdAt: new Date().toISOString(),
+    energyLevel: energyLevel ?? 0,
   };
 }
 
-export function addSession({ seconds, description, category, note }) {
-  const entry = makeSessionEntry({ seconds, description, category, note });
+export function addSession({ seconds, description, category, note, energyLevel }) {
+  const entry = makeSessionEntry({ seconds, description, category, note, energyLevel });
 
   const prev = loadSessions();
   const next = [entry, ...prev].slice(0, 200);

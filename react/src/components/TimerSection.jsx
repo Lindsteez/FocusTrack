@@ -140,6 +140,7 @@ function stopAndOpenModal() {
         onSaveConfirm={(payload) => {
           addSession({
             seconds,
+            energyLevel: energyLevel ?? 0,
             description: `${payload.description} • Mode: ${focusMode} • Energy: ${energyLevel ?? "-"}`,
             category: payload.category,
           });

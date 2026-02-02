@@ -1,4 +1,4 @@
-import TimerSection from '../components/TimerSection'
+import TimerSection from '../components/Timer/TimerSection'
 import RecentSessions from '../components/RecentSessions'
 import EnergyLog from '../components/EnergyLog/EnergyLog'
 import '../App.css'

@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import Card from "./Card";
-import Button from "./Button";
+import Card from "../Card";
+import Button from "../Button";
 import Timer from "./Timer";
 import SaveTimeModal from "./SaveTimeModal";
 import StartSessionModal from "./StartSessionModal";
-import { addSession } from "../utils/sessionsStore";
-import { clearTimerState, loadTimerState, saveTimerState } from "../utils/timerStore";
+import { addSession } from "../../utils/sessionsStore";
+import { clearTimerState, loadTimerState, saveTimerState } from "../../utils/timerStore";
 
 // Calculate total seconds based on timestamps
 function computeSeconds({ isRunning, startedAt, accumulatedSeconds }, nowMs) {

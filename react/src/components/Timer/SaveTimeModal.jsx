@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Card from "./Card";
-import Button from "./Button";
+import Card from "../Card";
+import Button from "../Button";
 
 export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSaveConfirm }) {
   const [mode, setMode] = useState("confirmSave"); // confirmSave | confirmDiscard

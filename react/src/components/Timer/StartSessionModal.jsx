@@ -1,5 +1,5 @@
-import FocusModeSelector from "./FocusModeSelector";
-import EnergyLevelSelector from "./EnergyLog/EnergyLevelSelector";
+import FocusModeSelector from "../FocusModeSelector";
+import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
 
 export default function StartSessionModal({

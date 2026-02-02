@@ -22,7 +22,7 @@ function formatDuration(seconds) {
   const m = Math.floor((whole % 3600) / 60);
   const sec = whole % 60;
 
-  // Visa sekunder när det är korta pass (så dina 8s/65s inte blir "0m")
+  // Visa sekunder när det är korta pass
   if (h > 0) return `${h}h ${m}m`;
   if (m > 0) return `${m}m ${sec}s`;
   return `${sec}s`;

@@ -30,6 +30,7 @@ function emitSessionsChanged() {
   window.dispatchEvent(new Event(EVENT_NAME));
 }
 
+
 // Extended shape (backwards compatible):
 // - Existing UI uses: id, seconds, description, category, note, createdAt
 // - New fields added: focusMode, energyLevel, label
@@ -75,6 +76,7 @@ export function addSession({
     energyLevel,
     label,
   });
+
 
   const prev = loadSessions();
 

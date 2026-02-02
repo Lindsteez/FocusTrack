@@ -141,14 +141,14 @@ export default function TimerSection() {
         onSaveConfirm={() => {
           const label = sessionLabel.trim();
 
-        addSession({
-          seconds,
-          label,
-          focusMode,
-          energyLevel: energyLevel ?? 0,
-          category: focusMode, // eller vad du nu vill använda
-          description: `${label || "(no label)"} • Mode: ${focusMode} • Energy: ${energyLevel ?? "-"}`,
-        });
+          addSession({
+            seconds,
+            description: label.length > 0 ? label : "(no label)",
+            note: `Energy: ${energyLevel ?? "-"}`,
+            focusMode,
+            energyLevel,
+            label,
+          });
 
           setIsModalOpen(false);
           resetTimer();

@@ -143,15 +143,13 @@ export default function TimerSection() {
 
           addSession({
             seconds, 
-            description: label.length > 0 ? label : "(no label)",
             note: `Energy: ${energyLevel ?? "-"}`,
             focusMode,
-            energyLevel,
             label,
 
             energyLevel: energyLevel ?? 0,
-            description: `${payload.description} • Mode: ${focusMode} • Energy: ${energyLevel ?? "-"}`,
-            category: payload.category,
+            description: `${label} • Mode: ${focusMode} • Energy: ${energyLevel ?? "-"}`,
+            category: label.category,
         
           });
 

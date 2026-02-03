@@ -3,9 +3,10 @@ import styles from './EnergyBtn.module.css'
 function RateEnergy({ rateEnergy, onClick, isActive }) {
   return (
     <button
-      onClick={onClick}
-      className={`${styles.btnBase} ${isActive ? styles.active : ""}`}>
-      {rateEnergy}
+        type='button'
+        onClick={onClick}
+        className={`${styles.btnBase} ${isActive ? styles.active : ""}`}>
+        {rateEnergy}
     </button>
   )
 }

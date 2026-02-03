@@ -3,6 +3,7 @@ import styles from "./RecentSessions.module.css";
 import useSessions from "../hooks/useSessions";
 import { formatDuration, formatDate } from "../utils/sessionsStore";
 import penIcon from '../assets/imgs/pen.png';
+import StartSessionModal from "./Timer/StartSessionModal";
 
 function focusDotStyle(focusMode) {
   const map = {
@@ -13,8 +14,15 @@ function focusDotStyle(focusMode) {
   return { background: map[focusMode] ?? "#94A3B8" };
 }
 
-export default function RecentSessions({onDelete, onEdit}) {
-  const sessions = useSessions();
+export default function RecentSessions() {
+  const {sessions, 
+    deleteSession, 
+    editOpen,
+    editingSession,
+    openEdit,
+    closeEdit,
+    saveEdit
+  } = useSessions();
 
   return (
     <Card title="Recent Sessions">
@@ -39,9 +47,13 @@ export default function RecentSessions({onDelete, onEdit}) {
                     aria-hidden="true"
                   />
                   <span className={styles.category}>{s.focusMode ?? "-"}</span>
-                </div>
 
-                {(s.note ?? "") && <div className={styles.note}>{s.note}</div>}
+                   
+                </div>
+                  <span className={styles.note}>
+                      Energy: {s.energyLevel ?? "-"}
+                  </span>
+
               </div>
               
 
@@ -50,10 +62,12 @@ export default function RecentSessions({onDelete, onEdit}) {
                 
               {/* Edit and delete session */}
                 <div className={styles.editDelete}>
-                    <button onClick={() => onEdit(sessions.id)}
-                      className={styles.editBtn}><img src={penIcon} alt='Edit' /></button>                
+                    <button onClick={() => openEdit(s.id)}
+                      className={styles.editBtn}>
+                        <img src={penIcon} alt='Edit' />
+                    </button>                
 
-                    <button onClick={() => onDelete(sessions.id)}
+                    <button onClick={() => deleteSession(s.id)}
                       className={styles.deleteBtn}>✕</button>                
                   </div>
 
@@ -67,6 +81,30 @@ export default function RecentSessions({onDelete, onEdit}) {
           ))}
         </div>
 
+      )}
+
+      
+
+      {editOpen && editingSession && ( 
+        <StartSessionModal 
+        key = {editingSession.id}
+        isOpen={editOpen}
+        mode ='edit'
+        initialValues = {{
+          description: editingSession.description ?? '',
+          note: editingSession.note ?? '',
+          focusMode: editingSession.focusMode ?? 'Work',
+          energyLevel: editingSession.energyLevel ?? null,
+        }}
+        onCancel = {closeEdit}
+        onSave = {(values) => {
+          saveEdit({
+            description: values.description,
+            focusMode: values.focusMode,
+            energyLevel: values.energyLevel,
+          })
+        }}
+        />
       )}
     </Card>
   );

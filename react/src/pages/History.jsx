@@ -1,8 +1,11 @@
+// src/components/History.jsx
+import Card from "../components/Card";
+import SessionsList from "../components/SessionList";
+
 export default function History() {
   return (
-    <div style={{ padding: 24 }}>
-      <h2>History</h2>
-      <p>Coming soon</p>
-    </div>
-  )
+    <Card title="History">
+      <SessionsList limit={200} emptyText="No sessions in history yet." />
+    </Card>
+  );
 }

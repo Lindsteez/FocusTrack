@@ -3,6 +3,8 @@ import RecentSessions from '../components/RecentSessions'
 import EnergyLog from '../components/EnergyLog/EnergyLog'
 import '../App.css'
 import Last5DaysBarChart from '../components/Last5DaysBarChart'
+import ToDo from "../components/ToDo/ToDo";
+import ToDoDesktopOnly from "../components/ToDo/ToDoDesktopOnly"
 
 export default function Dashboard() {
   return (
@@ -27,6 +29,13 @@ export default function Dashboard() {
       <div className="box chart">
         <Last5DaysBarChart />
       </div>
+
+      <ToDoDesktopOnly>
+        <div className="box todo">
+          <ToDo />
+        </div>
+      </ToDoDesktopOnly>
+
     </div>
   )
 }

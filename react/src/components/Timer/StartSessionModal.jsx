@@ -1,6 +1,7 @@
 import FocusModeSelector from "../FocusModeSelector";
 import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
+import { useState } from "react";
 
 export default function StartSessionModal({
   isOpen,
@@ -12,24 +13,59 @@ export default function StartSessionModal({
   onChangeLabel,
   onCancel,
   onConfirm,
+
+  // Edit mode
+  mode = 'start',
+  initialValues = {},
+  onSave,
 }) {
+
+  // Edit mode
+  const isEdit = mode === 'edit';
+  const [editLabel, setEditLabel] = useState(initialValues.description ?? initialValues.label ?? '');
+  const [editFocusMode, setEditFocusMode] = useState(initialValues.focusMode ?? 'Work');
+  const [editEnergyLevel, setEditEnergyLevel] = useState(initialValues.energyLevel == null ? null : Number(initialValues.energyLevel));
+
   if (!isOpen) return null;
 
-  const canStart = Boolean(focusMode) && energyLevel != null;
+  const uiFocusMode = isEdit ? editFocusMode : focusMode;
+  const uiEnergyLevel = isEdit ? editEnergyLevel : energyLevel;
+  const uiLabel = isEdit ? editLabel : label;
+
+  const uiSetFocusMode = isEdit ? setEditFocusMode : onChangeFocusMode;
+  const uiSetEnergyLevel = isEdit ? (n) => setEditEnergyLevel(Number(n)) : onChangeEnergyLevel;
+  console.log("editEnergyLevel", editEnergyLevel);
+  const uiSetLabel = isEdit ? setEditLabel : onChangeLabel;
+
+  const canSubmit = Boolean(uiFocusMode) && uiEnergyLevel != null;
+
+  function handlePrimaryAction() {
+    if (!canSubmit) return;
+
+    if (isEdit) {
+      onSave?.({
+        description: editLabel, // sparar description i sessions
+        focusMode: editFocusMode,
+        energyLevel: editEnergyLevel,
+      });
+    } else {
+      onConfirm?.();
+    }
+  }
 
   return (
     <div className={styles.backdrop} onClick={onCancel}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2>Start session</h2>
+        <h2>{isEdit ? 'Edit session' : 'Start session'}</h2>
 
-        <FocusModeSelector value={focusMode} onChange={onChangeFocusMode} />
-        <EnergyLevelSelector value={energyLevel} onChange={onChangeEnergyLevel} />
+        <FocusModeSelector value={uiFocusMode} onChange={uiSetFocusMode} />
+        <EnergyLevelSelector value={uiEnergyLevel} onChange={uiSetEnergyLevel} />
 
         <label style={{ display: "block", marginTop: 12 }}>
           What did you do?
           <input
-            value={label}
-            onChange={(e) => onChangeLabel(e.target.value)}
+            value={uiLabel}
+            onChange={(e) => uiSetLabel(e.target.value)}
             placeholder='e.g. "Reading"'
             style={{
               width: "100%",
@@ -37,15 +73,14 @@ export default function StartSessionModal({
               padding: "10px",
               borderRadius: "8px",
               boxSizing: "border-box",
+              minHeight: 80,
             }}
           />
         </label>
 
         <div className={styles.actions}>
-          <button onClick={onConfirm} disabled={!canStart}>
-            Start
-          </button>
-          <button onClick={onCancel}>Cancel</button>
+          <button type="button" onClick={handlePrimaryAction} disabled={!canSubmit}>{isEdit ? 'Save' : 'start'}</button>
+          <button type="button" onClick={onCancel}>Cancel</button>
         </div>
       </div>
     </div>

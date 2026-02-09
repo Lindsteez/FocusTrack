@@ -22,7 +22,7 @@
   justify-content: space-between;
   gap: 12px;
 
-  padding: 12px 14px;
+  padding: 0 14px 12px 14px;
   border-radius: 12px;
 
   background: var(--card-secondary);
@@ -35,6 +35,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-top: 2rem;
 }
 
 .title {
@@ -105,3 +106,45 @@
 .timeSpacer {
   height: 1.35em;
 }
+
+
+/* Edit and Delete */
+
+.editDelete {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+}
+
+.editBtn, .deleteBtn {
+  background-color: var(--card-secondary);
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+}
+
+.editBtn img {
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
+.deleteBtn:hover {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.editBtn img:hover {
+  width: 16px;
+  height: 16px;
+}
+
+

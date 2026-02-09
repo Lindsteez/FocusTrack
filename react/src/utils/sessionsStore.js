@@ -113,3 +113,22 @@ export function formatDate(isoString) {
     year: "numeric",
   }).format(d);
 }
+
+
+/* Tar bort från localstorage */
+export function deleteSessionById(id) {
+  const sessions = getSessions();
+  const updated = sessions.filter( s => s.id !== id)
+  saveSessions(updated);
+  emitSessionsChanged();
+  return(updated);
+}
+
+/* Redigera en sparad session */ 
+export function updateSessionById(id, patch) {
+  const sessions = getSessions();
+  const updated = sessions.map(s => s.id === id ? { ...s, ...patch } : s);
+  saveSessions(updated);
+  emitSessionsChanged();
+return updated;
+}

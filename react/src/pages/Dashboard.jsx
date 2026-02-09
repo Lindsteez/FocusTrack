@@ -11,11 +11,14 @@ export default function Dashboard() {
 
 {/* ========= Vänster kolumn ========= */}
     <div className="leftGrid">
-        <div className='box timer'>
-          <TimerSection />
-        </div>
-
+      <div className='box timer'>
+        <TimerSection /> 
+      </div>     
+        
+      <div className="box chart">
+        <Last5DaysBarChart />
       </div>
+    </div>
 
 
 {/* ========= 'Höger kolumn ========= */}
@@ -24,9 +27,7 @@ export default function Dashboard() {
         <RecentSessions />
       </div>
 
-      <div className="box chart">
-        <Last5DaysBarChart />
-      </div>
+
     </div>
   )
 }

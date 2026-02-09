@@ -1,33 +1,36 @@
-import TimerSection from '../components/Timer/TimerSection'
-import RecentSessions from '../components/RecentSessions'
-import EnergyLog from '../components/EnergyLog/EnergyLog'
-import '../App.css'
-import Last5DaysBarChart from '../components/Last5DaysBarChart'
+import TimerSection from "../components/Timer/TimerSection";
+import RecentSessions from "../components/RecentSessions";
+import EnergyLog from "../components/EnergyLog/EnergyLog";
+import "../App.css";
+import Last5DaysBarChart from "../components/Last5DaysBarChart";
+import ToDo from "../components/ToDo/ToDo";
+import ToDoDesktopOnly from "../components/ToDo/ToDoDesktopOnly";
 
 export default function Dashboard() {
   return (
-    
     <div className="dashboardStack grid">
+      {/* ========= Vänster kolumn ========= */}
+      <div className="leftGrid">
+        <div className="box timer">
+          <TimerSection />
+        </div>
 
-{/* ========= Vänster kolumn ========= */}
-    <div className="leftGrid">
-      <div className='box timer'>
-        <TimerSection /> 
-      </div>     
-        
-      <div className="box chart">
-        <Last5DaysBarChart />
+        <div className="box chart">
+          <Last5DaysBarChart />
+        </div>
       </div>
-    </div>
 
+      {/* ========= 'Höger kolumn ========= */}
 
-{/* ========= 'Höger kolumn ========= */}
-
-      <div className='box recent'>
+      <div className="box recent">
         <RecentSessions />
       </div>
 
-
+      <ToDoDesktopOnly>
+        <div className="box todo">
+          <ToDo />
+        </div>
+      </ToDoDesktopOnly>
     </div>
-  )
+  );
 }

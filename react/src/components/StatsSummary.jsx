@@ -10,12 +10,17 @@ function formatSeconds(sec) {
 }
 
 export default function StatsSummary() {
-  const { todayDuration, totalDuration, totalSessions } = useStatsData();
+  const {
+    last30DaysDuration,
+    last30DaysSessions,
+    totalDuration,
+   
+  } = useStatsData();
 
   const items = [
-    { label: "Today", value: formatSeconds(todayDuration) },
+    { label: "Last 30 days", value: formatSeconds(last30DaysDuration) },
     { label: "Total time", value: formatSeconds(totalDuration) },
-    { label: "Sessions", value: String(totalSessions ?? 0) },
+    { label: "Sessions", value: String(last30DaysSessions ?? 0) },
   ];
 
   return (

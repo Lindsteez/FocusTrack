@@ -1,13 +1,13 @@
 .btnBase {
-    color: white;
-    padding: 10px 50px;
+    color: var(--text-primary);
+    padding: 10px 30px;
     border-radius: 10px;
     font-size: 1rem;
     margin: 0 10px;
 }
 
 .start {
-    background-color: green;
+    background-color: var(--btn-success);
 }
 
 .pause {
@@ -16,6 +16,6 @@
 }
 
 .stop {
-    background-color: red;
+    background-color: var(--btn-danger);
     color: white;
 }

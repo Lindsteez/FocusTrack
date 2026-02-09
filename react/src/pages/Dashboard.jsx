@@ -1,33 +1,32 @@
-import TimerSection from '../components/Timer/TimerSection'
-import RecentSessions from '../components/RecentSessions'
-import EnergyLog from '../components/EnergyLog/EnergyLog'
-import '../App.css'
-import Last5DaysBarChart from '../components/Last5DaysBarChart'
+import TimerSection from "../components/Timer/TimerSection";
+import RecentSessions from "../components/RecentSessions";
+import EnergyLog from "../components/EnergyLog/EnergyLog";
+import Last5DaysBarChart from "../components/Last5DaysBarChart";
+import StatsSummary from "../components/StatsSummary";
+import "../App.css";
 
 export default function Dashboard() {
   return (
-    
     <div className="dashboardStack grid">
+      {/* ======== Vänster kolumn ======== */}
+      <div className="leftGrid">
+        <div className="box timer">
+          <TimerSection />
+        </div>
 
-{/* ========= Vänster kolumn ========= */}
-    <div className="leftGrid">
-      <div className='box timer'>
-        <TimerSection /> 
-      </div>     
-        
-      <div className="box chart">
-        <Last5DaysBarChart />
+        <div className="box stats">
+          <StatsSummary />
+        </div>
+
+        <div className="box chart">
+          <Last5DaysBarChart />
+        </div>
       </div>
-    </div>
 
-
-{/* ========= 'Höger kolumn ========= */}
-
-      <div className='box recent'>
+      {/* ======== Höger kolumn ======== */}
+      <div className="box recent">
         <RecentSessions />
       </div>
-
-
     </div>
-  )
+  );
 }

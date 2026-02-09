@@ -2,6 +2,7 @@ import FocusModeSelector from "../FocusModeSelector";
 import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
 import { useState } from "react";
+import Button from "../Button"
 
 export default function StartSessionModal({
   isOpen,
@@ -56,13 +57,13 @@ export default function StartSessionModal({
   return (
     <div className={styles.backdrop} onClick={onCancel}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2>{isEdit ? 'Edit session' : 'Start session'}</h2>
+        <h2>{isEdit ? 'Edit session' : 'Start Session'}</h2>
 
         <FocusModeSelector value={uiFocusMode} onChange={uiSetFocusMode} />
         <EnergyLevelSelector value={uiEnergyLevel} onChange={uiSetEnergyLevel} />
 
         <label style={{ display: "block", marginTop: 12 }}>
-          What did you do?
+          <h2>What will you do?</h2>
           <input
             value={uiLabel}
             onChange={(e) => uiSetLabel(e.target.value)}
@@ -79,8 +80,16 @@ export default function StartSessionModal({
         </label>
 
         <div className={styles.actions}>
-          <button type="button" onClick={handlePrimaryAction} disabled={!canSubmit}>{isEdit ? 'Save' : 'start'}</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <Button 
+          label="Start"
+          variant="start"
+          onClick={handlePrimaryAction}
+          />
+
+          <Button 
+          label="Cancel"
+          variant="stop"
+          onClick={onCancel}/>
         </div>
       </div>
     </div>

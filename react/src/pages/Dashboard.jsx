@@ -20,17 +20,17 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ========= 'Höger kolumn ========= */}
+      {/* ========= Höger kolumn ========= */}
 
       <div className="box recent">
         <RecentSessions />
       </div>
 
-      <ToDoDesktopOnly>
-        <div className="box todo">
-          <ToDo />
+      <div className="box todo">
+        <ToDoDesktopOnly>  
+            <ToDo />
+        </ToDoDesktopOnly>
         </div>
-      </ToDoDesktopOnly>
     </div>
   );
 }

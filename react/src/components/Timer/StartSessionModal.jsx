@@ -70,17 +70,17 @@ export default function StartSessionModal({
             style={{
               width: "100%",
               marginTop: 6,
-              padding: "10px",
+              padding: "7px",
               borderRadius: "8px",
               boxSizing: "border-box",
-              minHeight: 80,
+              minHeight: 40,
             }}
           />
         </label>
 
         <div className={styles.actions}>
-          <button type="button" onClick={handlePrimaryAction} disabled={!canSubmit}>{isEdit ? 'Save' : 'start'}</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" className={`${styles.btnBase} ${styles.editSave}`} onClick={handlePrimaryAction} disabled={!canSubmit}>{isEdit ? 'Save' : 'Start'}</button>
+          <button type="button"className={`${styles.btnBase} ${styles.cancel}`} onClick={onCancel}>Cancel</button>
         </div>
       </div>
     </div>

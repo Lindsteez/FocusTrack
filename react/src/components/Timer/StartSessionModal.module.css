@@ -20,4 +20,21 @@
   gap: 8px;
   justify-content: center;
   margin-top: 16px;
+
+}
+
+.btnBase {
+    color: var(--text-primary);
+    padding: 5px 18px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    margin: 0 10px;
+}
+
+.editSave {
+  background-color: var(--btn-success);
+}
+
+.cancel {
+  background-color: var(--btn-danger);
 }

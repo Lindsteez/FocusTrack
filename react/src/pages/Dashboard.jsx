@@ -30,11 +30,11 @@ export default function Dashboard() {
         <RecentSessions />
       </div>
 
-      <ToDoDesktopOnly>
-        <div className="box todo">
-          <ToDo />
+      <div className="box todo">
+        <ToDoDesktopOnly>  
+            <ToDo />
+        </ToDoDesktopOnly>
         </div>
-      </ToDoDesktopOnly>
     </div>
   );
 }

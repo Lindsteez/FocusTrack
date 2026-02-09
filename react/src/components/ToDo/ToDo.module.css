@@ -1,6 +1,6 @@
 
 .page {
-  padding-top: 90px; /* same offset as Dashboard uses */
+  /* padding-top: 90px; */ /* same offset as Dashboard uses */
   display: flex;
   flex-direction: column;
   gap: 16px;

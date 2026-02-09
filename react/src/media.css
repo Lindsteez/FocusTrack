@@ -3,5 +3,10 @@
         display: flex;
         flex-direction: column;
         padding-top: 90px;
+        width: 100%;
     }
+
+    .recent {
+        width: 100%;
     }
+        }

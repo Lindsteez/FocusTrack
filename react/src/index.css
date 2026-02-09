@@ -50,7 +50,6 @@ body, html {
   background-color: var(--bg-page);
   font-family: var(--font-main);
   color: var(--text-primary);
-  padding-bottom: 5em;
 }
 
 
@@ -59,15 +58,16 @@ body, html {
 
 .grid {
   display: grid;
-  grid-template-columns: 50% 30%;
+  grid-template-columns: 40% 20% 20%;
   justify-content: center;
 }
 
 .box {  
   margin-bottom: 2em;
+  align-self: start;
 }
 
-.timer {
+.timer, .chart {
   grid-column: 1;
   /* border: 2px solid red; */
   align-self: start;
@@ -78,10 +78,8 @@ body, html {
   /* border: 2px solid green; */
 }
 
-.chart {
-  grid-column: 1;
-  /* border: 2px solid blue; */
-  align-self: start;
+.todo {
+  grid-column: 3;
 }
 
 

@@ -69,7 +69,7 @@ const data = useMemo(() => {
 }, []);
 
 return (
-  <Card title="Senaste 5 dagarna">
+  <Card title="Previous 5 days">
     <div style={{ width: "100%", height: 260 }}>
       <ResponsiveContainer>
         <BarChart

@@ -52,6 +52,10 @@ body, html {
   color: var(--text-primary);
 }
 
+body {
+  padding-bottom: 5em;
+}
+
 
 
 /* ========== Grid layout ========== */

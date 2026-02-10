@@ -30,6 +30,16 @@
   padding: 20px;
 }
 
+
+/* @media(max-width: 768px) {
+  .header {
+    margin-top: 3em;
+    padding: 16px 16px 0 16px;
+}
+
+} */
+
+
 /* .card:hover {
   background-color: var(--card-hover);
 } */

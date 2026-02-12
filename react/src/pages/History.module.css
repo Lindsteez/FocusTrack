@@ -1,0 +1,153 @@
+.history {
+    margin-top: 2em;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: white;
+  width: 98%;
+  height: auto;
+}
+
+/* Empty state */
+.empty {
+  opacity: 0.7;
+  text-align: center;
+  padding: 10px 0;
+  color: white;
+}
+
+/* One session row */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 0 14px 12px 14px;
+  border-radius: 12px;
+
+  background: var(--card-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Left side (title + category) */
+.left {
+  min-width: 0; /* allows ellipsis */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2rem;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1rem;
+
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  overflow-wrap: anywhere;
+}
+
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  opacity: 0.9;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.category {
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+
+.note {
+  font-size: 0.9rem;
+  margin-left: 1.5em;
+  max-width: 90%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  opacity: 0.5;
+}
+
+/* Right side (duration) */
+.time {
+  font-weight: 800;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+/* Optional: subtle hover */
+.row:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.date {
+  opacity: 0.5;
+  font-size: 0.9rem;
+  text-align: end;
+}
+
+.timeBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Match height of the dot+focus line (metaRow) */
+.timeSpacer {
+  height: 1.35em;
+}
+
+
+/* Edit and Delete */
+
+.editDelete {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+}
+
+.editBtn, .deleteBtn {
+  background-color: var(--card-secondary);
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+}
+
+.editBtn img {
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
+.deleteBtn:hover {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.editBtn img:hover {
+  width: 16px;
+  height: 16px;
+}
+

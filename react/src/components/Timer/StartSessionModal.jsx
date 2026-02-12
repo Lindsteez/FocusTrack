@@ -2,6 +2,7 @@ import FocusModeSelector from "../FocusModeSelector";
 import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
 import { useState } from "react";
+import Button from "../Button"
 
 export default function StartSessionModal({
   isOpen,
@@ -56,13 +57,13 @@ export default function StartSessionModal({
   return (
     <div className={styles.backdrop} onClick={onCancel}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2>{isEdit ? 'Edit session' : 'Start session'}</h2>
+        <h2>{isEdit ? 'Edit session' : 'Start Session'}</h2>
 
         <FocusModeSelector value={uiFocusMode} onChange={uiSetFocusMode} />
         <EnergyLevelSelector value={uiEnergyLevel} onChange={uiSetEnergyLevel} />
 
         <label style={{ display: "block", marginTop: 12 }}>
-          What did you do?
+          <h2>What will you do?</h2>
           <input
             value={uiLabel}
             onChange={(e) => uiSetLabel(e.target.value)}
@@ -70,17 +71,17 @@ export default function StartSessionModal({
             style={{
               width: "100%",
               marginTop: 6,
-              padding: "10px",
+              padding: "7px",
               borderRadius: "8px",
               boxSizing: "border-box",
-              minHeight: 80,
+              minHeight: 40,
             }}
           />
         </label>
 
         <div className={styles.actions}>
-          <button type="button" onClick={handlePrimaryAction} disabled={!canSubmit}>{isEdit ? 'Save' : 'start'}</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" className={`${styles.btnBase} ${styles.editSave}`} onClick={handlePrimaryAction} disabled={!canSubmit}>{isEdit ? 'Save' : 'Start'}</button>
+          <button type="button"className={`${styles.btnBase} ${styles.cancel}`} onClick={onCancel}>Cancel</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,10 @@
 .card {
-  background-color: var(--card-primary);
-  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   /* padding: 16px; */
   display: flex;
   flex-direction: column;
@@ -20,7 +24,9 @@
 /* Inre ruta */
 .content {
   background-color: var(--card-secondary);
-  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   min-height: 100px;
   display: flex;
   flex-direction: column;
@@ -29,6 +35,16 @@
   gap: 15px;
   padding: 20px;
 }
+
+
+/* @media(max-width: 768px) {
+  .header {
+    margin-top: 3em;
+    padding: 16px 16px 0 16px;
+}
+
+} */
+
 
 /* .card:hover {
   background-color: var(--card-hover);

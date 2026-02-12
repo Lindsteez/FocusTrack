@@ -1,10 +1,11 @@
 .settings {
   padding: 24px;
+  padding-top: 75px;
 }
 
 .settings__title {
   margin: 0 0 16px;
-  font-size: 44px;
+  font-size: 2rem;
   letter-spacing: -0.02em;
   color: var(--text-primary);
 }
@@ -34,7 +35,7 @@ body[data-theme="light"] .settings__card {
 
 .settings__label {
   margin: 0;
-  font-size: 26px;
+  font-size: 1.5rem;
   color: var(--text-secondary);
 }
 

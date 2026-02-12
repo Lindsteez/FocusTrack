@@ -8,9 +8,9 @@ function pad2(n) {
   return String(n).padStart(2, "0");
 }
 
-function labelYYYYMMDD(ms) {
+function labelMMDD(ms) {
   const d = new Date(ms);
-  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  return `${pad2(d.getDate())}/${pad2(d.getMonth() + 1)}`;
 }
 
 function formatDuration(seconds) {
@@ -34,7 +34,6 @@ function toMs(createdAt) {
 
   const str = String(createdAt);
 
-  // om det är en siffersträng "170..."
   if (/^\d+$/.test(str)) return Number(str);
 
   // ISO eller annat datumformat
@@ -50,7 +49,7 @@ export function buildLast5DaysData(sessions) {
     const dayMs = today - (4 - i) * 24 * 60 * 60 * 1000;
     return {
       dayMs,
-      dayKey: labelYYYYMMDD(dayMs),
+      dayKey: labelMMDD(dayMs),
       totalSeconds: 0,
       weightedEnergySum: 0,
       energyWeightSeconds: 0,
@@ -63,7 +62,7 @@ export function buildLast5DaysData(sessions) {
     const createdAtMs = toMs(s.createdAt);
     if (!createdAtMs) continue;
 
-    const key = labelYYYYMMDD(startOfDayMs(createdAtMs));
+    const key = labelMMDD(startOfDayMs(createdAtMs));
     const row = byKey.get(key);
     if (!row) continue;
 
@@ -72,7 +71,7 @@ export function buildLast5DaysData(sessions) {
     // Energi: ta från fältet (nya sessions)
     let e = Number(s.energyLevel) || 0;
 
-    // Fallback: plocka från "Energy: X" i description (gamla sessions)
+    // Fallback
     if (!e) {
       const m = String(s.description ?? "").match(/Energy:\s*([1-5])/i);
       if (m) e = Number(m[1]);

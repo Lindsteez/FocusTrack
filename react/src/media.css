@@ -1,7 +1,10 @@
-@media (max-width: 768px) {
-    .grid {
-        display: flex;
-        flex-direction: column;
-        padding-top: 90px;
-    }
-    }
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 40% 20% 20%;
+    justify-content: center;
+  }
+
+  .timer { grid-column: 1; }
+  .recent { grid-column: 2; }
+  .stats { grid-column: 1; }
+}

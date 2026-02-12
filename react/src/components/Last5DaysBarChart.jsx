@@ -70,7 +70,7 @@ const data = useMemo(() => {
 
 return (
   <Card title="Previous 5 days">
-    <div style={{ width: "100%", height: 260 }}>
+    <div style={{ width: "100%", height: 347 }}>
       <ResponsiveContainer>
         <BarChart
           data={data}

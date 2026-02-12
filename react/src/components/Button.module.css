@@ -1,21 +1,33 @@
 .btnBase {
-    color: white;
+    color: var(--text-primary);
     padding: 10px 50px;
     border-radius: 10px;
     font-size: 1rem;
     margin: 0 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 120ms ease, opacity 120ms ease;
+}
+
+.btnBase:hover {
+  opacity: 0.95;
+}
+
+.btnBase:active {
+  transform: scale(0.98);
 }
 
 .start {
-    background-color: green;
+  background-color: var(--btn-success);
+  color: white;
 }
 
 .pause {
-    background-color: yellow;
-    color: black;
+  background-color: var(--card-hover);
+  color: var(--text-primary);
 }
 
 .stop {
-    background-color: red;
-    color: white;
+  background-color: var(--btn-danger);
+  color: white;
 }

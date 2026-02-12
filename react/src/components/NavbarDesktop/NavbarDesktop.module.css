@@ -1,10 +1,17 @@
 @media screen and (min-width: 768px) {
+
   .navbar {
     display: flex;
     align-items: center;
     background-color: var(--bg-page);
     padding: 1rem 2rem;
     gap: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Light mode navbar border */
+  body[data-theme="light"] .navbar {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   }
 
   .navbar img {
@@ -21,10 +28,18 @@
   }
 
   .navbar a:hover {
-    background: rgba(255,255,255,0.04);
+    background: var(--card-hover);
   }
 
   .navbar a:active {
     transform: scale(0.98);
   }
+
+  /* Optional active state if using NavLink */
+  .navbar a.active {
+    background: var(--card-secondary);
+  }
+
+  
+  
 }

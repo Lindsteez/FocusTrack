@@ -45,14 +45,16 @@ body[data-theme="light"] {
   --text-muted: #64748b;
 }
 
-body, html {
-  margin: 0;
-  background-color: var(--bg-page);
-  font-family: var(--font-main);
-  color: var(--text-primary);
-  padding-bottom: 5em;
+html, body, #root {
+  min-height: 100vh;
+  background: var(--bg-page);
 }
 
+body, html {
+  margin: 0;
+  font-family: var(--font-main);
+  color: var(--text-primary);
+}
 
 /* ========== Grid layout ========== */
 

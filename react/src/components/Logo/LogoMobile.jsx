@@ -1,14 +1,32 @@
-import Logo from '../../assets/svg/focustrack-logo.svg';
-import styles from './LogoMobile.module.css';
+import { useEffect, useState } from "react";
+
+import LogoDark from "../../assets/svg/focustrack-logo.svg";
+import LogoLight from "../../assets/svg/focustrack-logo-light.svg";
+
+import styles from "./LogoMobile.module.css";
 
 function LogoImport() {
-    console.log(Logo);
-    return (
+  const [theme, setTheme] = useState(() => document.body.dataset.theme || "dark");
 
-        <div className={styles.img}>
-            <img src={Logo} alt="FocusTrack Logo" />
-        </div>
-    );
+  useEffect(() => {
+    const body = document.body;
+
+    const observer = new MutationObserver(() => {
+      setTheme(body.dataset.theme || "dark");
+    });
+
+    observer.observe(body, { attributes: true, attributeFilter: ["data-theme"] });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const logoSrc = theme === "light" ? LogoLight : LogoDark;
+
+  return (
+    <div className={styles.img}>
+      <img src={logoSrc} alt="FocusTrack Logo" />
+    </div>
+  );
 }
 
 export default LogoImport;

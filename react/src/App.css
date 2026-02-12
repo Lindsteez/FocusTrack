@@ -7,11 +7,24 @@
   justify-content: center;
   padding: 16px;
   z-index: 9999;
-  color: white
+  color: var(--text-primary);
+}
+
+/* Light mode overlay softer */
+body[data-theme="light"] .modalOverlay {
+  background: rgba(15, 23, 42, 0.35);
 }
 
 .modalBox {
   width: min(420px, 100%);
+  background: var(--card-primary);
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme="light"] .modalBox {
+  border: 1px solid rgba(15, 23, 42, 0.12);
 }
 
 .modalButtons {
@@ -29,9 +42,7 @@
 } */
 
 .app {
-    min-height: 100vh;
-    padding-bottom: 90px;
+  min-height: 100vh;
+  padding-bottom: 90px;
+  background: var(--bg-page);
 }
-
-
-

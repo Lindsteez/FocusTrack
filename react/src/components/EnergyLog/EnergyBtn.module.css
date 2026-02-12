@@ -5,6 +5,7 @@ h2 {
     /* width: 100% */
     
 }
+
 .buttons {
     display: flex;
     justify-content: center;
@@ -27,6 +28,13 @@ h2 {
     font-weight: bold;
     margin: 0 7px;
     flex-wrap: wrap;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    transition: background 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+
+body[data-theme="light"] .btnBase {
+    border: 1px solid rgba(15, 23, 42, 0.12);
 }
 
 .btnBase:hover {
@@ -37,8 +45,14 @@ h2 {
     transform: scale(0.95)
 }
 
+.btnBase:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--btn-success) 55%, transparent);
+    outline-offset: 2px;
+}
+
 .active {
     background-color: var(--btn-visited);
+    border-color: color-mix(in srgb, var(--btn-visited) 55%, transparent);
 }
 
 /* =============== MEDIA =============== */
@@ -81,10 +95,3 @@ h2 {
         font-size: 1.5vh;
     }
 }
-
-
-
-
-
-
-

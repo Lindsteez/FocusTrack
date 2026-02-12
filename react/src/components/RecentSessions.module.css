@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  color: white;
+  color: var(--text-primary);
   width: 98%;
   height: auto;
 }
@@ -12,7 +12,7 @@
   opacity: 0.7;
   text-align: center;
   padding: 10px 0;
-  color: white;
+  color: var(--text-secondary);
 }
 
 /* One session row */
@@ -26,7 +26,7 @@
   border-radius: 12px;
 
   background: var(--card-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
 /* Left side (title + category) */
@@ -46,8 +46,8 @@
   overflow: visible;
   text-overflow: unset;
   overflow-wrap: anywhere;
+  color: var(--text-primary);
 }
-
 
 .metaRow {
   display: flex;
@@ -60,12 +60,13 @@
   height: 12px;
   border-radius: 999px;
   opacity: 0.9;
-  background: rgba(255, 255, 255, 0.35);
+  background: color-mix(in srgb, var(--text-primary) 24%, transparent);
 }
 
 .category {
   opacity: 0.5;
   font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
 .note {
@@ -75,6 +76,7 @@
   word-break: break-word;
   overflow-wrap: anywhere;
   opacity: 0.5;
+  color: var(--text-muted);
 }
 
 /* Right side (duration) */
@@ -83,17 +85,19 @@
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   text-align: end;
+  color: var(--text-primary);
 }
 
 /* Optional: subtle hover */
 .row:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+  border-color: color-mix(in srgb, var(--text-primary) 18%, transparent);
 }
 
 .date {
   opacity: 0.5;
   font-size: 0.9rem;
   text-align: end;
+  color: var(--text-secondary);
 }
 
 .timeBlock {
@@ -107,19 +111,17 @@
   height: 1.35em;
 }
 
-
 /* Edit and Delete */
-
 .editDelete {
   display: flex;
   align-items: center;
   height: 100%;
-
 }
 
 .editBtn, .deleteBtn {
   background-color: var(--card-secondary);
-  color: white;
+  color: var(--text-primary);
+
   border: none;
   cursor: pointer;
 
@@ -129,17 +131,26 @@
 
   width: 20px;
   height: 20px;
+  border-radius: 8px;
+  transition: transform 150ms ease, background 150ms ease, color 150ms ease;
 }
 
 .editBtn img {
   display: block;
   width: 15px;
   height: 15px;
+  filter: brightness(0) saturate(100%) invert(85%);
+}
+
+
+body[data-theme="light"] .editBtn img {
+  filter: brightness(0) saturate(100%) invert(20%);
 }
 
 .deleteBtn:hover {
   font-size: 14px;
   font-weight: bold;
+  color: var(--text-primary);
 }
 
 .editBtn img:hover {
@@ -148,3 +159,15 @@
 }
 
 
+.editBtn:hover, .deleteBtn:hover {
+  background: var(--card-hover);
+}
+
+.editBtn:active, .deleteBtn:active {
+  transform: scale(0.98);
+}
+
+.editBtn:focus-visible, .deleteBtn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--btn-success) 55%, transparent);
+  outline-offset: 2px;
+}

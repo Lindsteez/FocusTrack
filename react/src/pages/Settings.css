@@ -1,7 +1,4 @@
-.settings {
-  padding: 24px;
-  padding-top: 75px;
-}
+
 
 .settings__title {
   margin: 0 0 16px;
@@ -88,4 +85,11 @@ body[data-theme="light"] .segmented {
 
 body[data-theme="light"] .segmented__btn.is-active {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 14%, transparent);
+}
+
+@media (max-width: 767px) {
+  .settings {
+  padding: 24px;
+  padding-top: 75px;
+}
 }

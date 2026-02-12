@@ -1,16 +1,16 @@
 .card {
   background: var(--glass);
-  border: 1px solid var(--stroke);
+  /* border: 1px solid var(--stroke); */
   border-radius: 18px;
   box-shadow: var(--shadow);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  /* padding: 16px; */
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   width: 95%;
   margin: 0 auto;
+  /* border: 2px solid rgba(255,255,255,0.08); */
 }
 
 /* Titel */
@@ -18,13 +18,15 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
-  padding: 16px 16px 0 16px;
+  padding: 16px 16px 16px 16px;
+  background-color: var(--card-secondary);
+  border-radius: 18px 18px 0 0;
 }
 
 /* Inre ruta */
 .content {
-  background-color: var(--card-secondary);
-  border: 1px solid rgba(255,255,255,0.08);
+  background-color: var(--card-primary);
+  border-radius: 0 0 18px 18px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   min-height: 100px;

@@ -4,16 +4,17 @@
   background: rgba(0, 0, 0, 0.5);
   display: grid;
   place-items: center;
-  padding: 16px;
   z-index: 1000;
 }
 
 .modal {
-  width: min(520px, 100%);
+  /* width: min(520px, 100%); */
+  width: 95%;
   background: var(--card-primary);
   border-radius: 12px;
   padding: 16px;
   color: var(--text-primary);
+  
 }
 
 .actions {
@@ -22,3 +23,4 @@
   justify-content: center;
   margin-top: 16px;
 }
+

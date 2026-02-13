@@ -11,6 +11,7 @@
   gap: 15px;
   align-items: stretch;
   flex-direction: column;
+  width: 100%;
 }
 
 .input {
@@ -20,7 +21,9 @@
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(0, 0, 0, 0.15);
-  color: white;
+  color: var(--text-primary);
+  margin: 15px auto;
+  width: 100%;
 }
 
 .input::placeholder {
@@ -29,7 +32,8 @@
 
 .actions {
   display: flex;
-  gap: 10px;
+  /* gap: 10px; */
+  margin: 0 auto;
 }
 
 .addBtn,

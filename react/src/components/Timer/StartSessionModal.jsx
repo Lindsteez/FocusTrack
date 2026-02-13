@@ -2,7 +2,7 @@ import FocusModeSelector from "../FocusModeSelector";
 import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
 import { useState } from "react";
-import Button from "../Button"
+import Button from "../Button";
 
 export default function StartSessionModal({
   isOpen,
@@ -16,16 +16,23 @@ export default function StartSessionModal({
   onConfirm,
 
   // Edit mode
-  mode = 'start',
+  mode = "start",
   initialValues = {},
   onSave,
 }) {
-
   // Edit mode
-  const isEdit = mode === 'edit';
-  const [editLabel, setEditLabel] = useState(initialValues.description ?? initialValues.label ?? '');
-  const [editFocusMode, setEditFocusMode] = useState(initialValues.focusMode ?? 'Work');
-  const [editEnergyLevel, setEditEnergyLevel] = useState(initialValues.energyLevel == null ? null : Number(initialValues.energyLevel));
+  const isEdit = mode === "edit";
+  const [editLabel, setEditLabel] = useState(
+    initialValues.description ?? initialValues.label ?? "",
+  );
+  const [editFocusMode, setEditFocusMode] = useState(
+    initialValues.focusMode ?? "Work",
+  );
+  const [editEnergyLevel, setEditEnergyLevel] = useState(
+    initialValues.energyLevel == null
+      ? null
+      : Number(initialValues.energyLevel),
+  );
 
   if (!isOpen) return null;
 
@@ -34,11 +41,13 @@ export default function StartSessionModal({
   const uiLabel = isEdit ? editLabel : label;
 
   const uiSetFocusMode = isEdit ? setEditFocusMode : onChangeFocusMode;
-  const uiSetEnergyLevel = isEdit ? (n) => setEditEnergyLevel(Number(n)) : onChangeEnergyLevel;
+  const uiSetEnergyLevel = isEdit
+    ? (n) => setEditEnergyLevel(Number(n))
+    : onChangeEnergyLevel;
   console.log("editEnergyLevel", editEnergyLevel);
   const uiSetLabel = isEdit ? setEditLabel : onChangeLabel;
 
-  const canSubmit = Boolean(uiFocusMode) && uiEnergyLevel != null;
+  const canSubmit = Boolean(uiFocusMode) && uiEnergyLevel != null && String(uiLabel).trim().length > 0;
 
   function handlePrimaryAction() {
     if (!canSubmit) return;
@@ -57,10 +66,13 @@ export default function StartSessionModal({
   return (
     <div className={styles.backdrop} onClick={onCancel}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2>{isEdit ? 'Edit session' : 'Start Session'}</h2>
+        <h2>{isEdit ? "Edit session" : "Start Session"}</h2>
 
         <FocusModeSelector value={uiFocusMode} onChange={uiSetFocusMode} />
-        <EnergyLevelSelector value={uiEnergyLevel} onChange={uiSetEnergyLevel} />
+        <EnergyLevelSelector
+          value={uiEnergyLevel}
+          onChange={uiSetEnergyLevel}
+        />
 
         <label style={{ display: "block", marginTop: 12 }}>
           <h2>What will you do?</h2>
@@ -82,18 +94,16 @@ export default function StartSessionModal({
         <div className={styles.actions}>
           <Button
             label={isEdit ? "Save" : "Start"}
-            variant="start"
+            variant={!canSubmit ? "disabledStart" : "start"}
             onClick={handlePrimaryAction}
             disabled={!canSubmit}
           />
 
-          <Button
-            label="Cancel"
-            variant="stop"
-            onClick={onCancel}
-          />
+          <Button 
+          label="Cancel" 
+          variant="stop" 
+          onClick={onCancel} />
         </div>
-
       </div>
     </div>
   );

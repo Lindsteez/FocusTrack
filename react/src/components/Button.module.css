@@ -1,6 +1,6 @@
 .btnBase {
     color: var(--text-primary);
-    padding: 10px 50px;
+    padding: 10px 20px;
     border-radius: 10px;
     font-size: 1rem;
     margin: 0 10px;
@@ -23,11 +23,17 @@
 }
 
 .pause {
-  background-color: var(--card-hover);
-  color: var(--text-primary);
+  background-color: var(--btn-pause);
+  color: var(--bg-page);
 }
 
 .stop {
   background-color: var(--btn-danger);
   color: white;
+}
+
+.disabledStart {
+  background: #999 !important;
+  cursor: not-allowed;
+  opacity: 0.6;
 }

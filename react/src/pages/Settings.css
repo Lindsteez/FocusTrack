@@ -15,7 +15,8 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  max-width: 720px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 body[data-theme="light"] .settings__card {
@@ -90,6 +91,6 @@ body[data-theme="light"] .segmented__btn.is-active {
 @media (max-width: 767px) {
   .settings {
   padding: 24px;
-  padding-top: 75px;
+  padding-top: 90px;
 }
 }

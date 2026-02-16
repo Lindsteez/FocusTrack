@@ -24,8 +24,7 @@
 
   padding: 0 14px 12px 14px;
   border-radius: 12px;
-
-  background: var(--card-secondary);
+  background: var(--card-third);
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 

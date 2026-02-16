@@ -13,11 +13,11 @@ import Card from "./Card";
 
 function energyToColor(energyRounded) {
     switch (energyRounded) {
-        case 1: return "#ef4444"; //röd
-        case 2: return "#f97316"; //orange
-        case 3: return "#eab308"; //gul
-        case 4: return "#22c55e"; //grön
-        case 5: return "#10b981"; //turkos
+        case 1: return "#D36460"; //röd
+        case 2: return "#da9944"; //orange
+        case 3: return "#cfc565"; //gul
+        case 4: return "#76A076"; //grön
+        case 5: return "#0b9265"; //turkos
         default: return "#9ca3af"; //grå
     }
 }

@@ -26,11 +26,9 @@ export default function TimerSection() {
 
   // State for start-session modal
   const [isStartModalOpen, setIsStartModalOpen] = useState(false);
-  const [focusMode, setFocusMode] = useState("-");
-  const [energyLevel, setEnergyLevel] = useState(null);
-
-  // NEW: label set at start-popup (what you did this session)
-  const [sessionLabel, setSessionLabel] = useState("");
+  const [focusMode, setFocusMode] = useState(stored?.focusMode ?? "-");
+  const [energyLevel, setEnergyLevel] = useState(stored?.energyLevel ?? null);
+  const [sessionLabel, setSessionLabel] = useState(stored?.sessionLabel ?? "");
 
   // "now" is only for re-rendering the UI; correctness comes from timestamps.
   const [nowMs, setNowMs] = useState(() => Date.now());
@@ -60,8 +58,8 @@ export default function TimerSection() {
 
   // Persist whenever the core timer state changes
   useEffect(() => {
-    saveTimerState({ isRunning, startedAt, accumulatedSeconds });
-  }, [isRunning, startedAt, accumulatedSeconds]);
+    saveTimerState({ isRunning, startedAt, accumulatedSeconds, focusMode, energyLevel, sessionLabel, });
+  }, [isRunning, startedAt, accumulatedSeconds, focusMode, energyLevel, sessionLabel]);
 
   function stopAndOpenModal() {
     // Calculate seconds (avoid waiting for UI tick)
@@ -84,6 +82,7 @@ export default function TimerSection() {
     // Reset session metadata for next NEW session
     setEnergyLevel(null);
     setSessionLabel("");
+    setFocusMode("-");
   }
 
   return (

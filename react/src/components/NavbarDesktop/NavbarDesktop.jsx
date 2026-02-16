@@ -31,7 +31,7 @@ function NavbarDesktop() {
 
       <NavLink to="/" end className={linkClass}>Dashboard</NavLink>
       <NavLink to="/history" className={linkClass}>History</NavLink>
-      <NavLink to="/todo" className={linkClass}>ToDo</NavLink>
+      {/* <NavLink to="/todo" className={linkClass}>ToDo</NavLink> */}
       <NavLink to="/stats" className={linkClass}>Stats</NavLink>
       <NavLink to="/settings" className={linkClass}>Settings</NavLink>
     </nav>

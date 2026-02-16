@@ -16,10 +16,6 @@ export default function Dashboard() {
           <TimerSection />
         </div>
 
-        <div className="box stats">
-          <StatsSummary />
-        </div>
-
         <div className="box chart">
           <Last5DaysBarChart />
         </div>

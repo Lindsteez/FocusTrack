@@ -21,6 +21,7 @@
   --btn-success: #22c55e;    /* green */
   --btn-danger: #ef4444;     /* red */
   --btn-visited: #678b87;    /* green */
+  --btn-pause: #eab308;      /* yellow */
 
   /* Text colors */
   --text-primary: #e5e7eb;   /* main text */
@@ -39,6 +40,8 @@ body[data-theme="light"] {
 
   --btn-success: #16a34a;
   --btn-danger: #dc2626;
+  --btn-pause: #eab308;      /* yellow */
+
 
   --text-primary: #0f172a;
   --text-secondary: #334155;

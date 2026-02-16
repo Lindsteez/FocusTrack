@@ -8,8 +8,6 @@
 }
 
 .modal {
-  /* width: min(520px, 100%); */
-  width: 95%;
   background: var(--card-primary);
   border-radius: 12px;
   padding: 16px;

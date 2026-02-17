@@ -22,6 +22,7 @@ export default function StatsSummary() {
     { label: "Total time", value: formatSeconds(totalDuration) },
     { label: "Sessions", value: String(last30DaysSessions ?? 0) },
   ];
+  const isLight = document.body.getAttribute("data-theme") === "light";
 
   return (
     <Card title="Stats">
@@ -43,7 +44,7 @@ export default function StatsSummary() {
               padding: "14px 14px 12px",
               borderRadius: 14,
               border: "1px solid color-mix(in srgb, var(--text-primary) 12%, transparent)",
-              background: "#15202e65",
+              background: isLight ? "#E8F1F2" : "#15202e65",
               backdropFilter: "blur(6px)",
               textAlign: "left",
             }}

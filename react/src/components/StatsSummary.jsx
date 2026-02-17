@@ -51,7 +51,7 @@ export default function StatsSummary() {
           >
             <div
               style={{
-                fontSize: 11,
+                fontSize: 12,
                 opacity: 0.7,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
@@ -63,7 +63,7 @@ export default function StatsSummary() {
 
             <div
               style={{
-                fontSize: 22,
+                fontSize: 16,
                 fontWeight: 650,
                 lineHeight: 1.1,
               }}

@@ -17,7 +17,7 @@
 .input {
   flex: 1;
   padding: 14px 16px;
-  font-size: 1rem;
+  font-size: 0.8rem;
   border-radius: 14px;
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
   background: var(--card-third);
@@ -62,6 +62,7 @@
   border-radius: 14px;
   background: var(--card-third);
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
+  font-size: 0.8rem;
 }
 
 

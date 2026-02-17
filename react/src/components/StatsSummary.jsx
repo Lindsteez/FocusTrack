@@ -43,7 +43,7 @@ export default function StatsSummary() {
               padding: "14px 14px 12px",
               borderRadius: 14,
               border: "1px solid color-mix(in srgb, var(--text-primary) 12%, transparent)",
-              background: "#f2f8ff",
+              background: "#15202e65",
               backdropFilter: "blur(6px)",
               textAlign: "left",
             }}

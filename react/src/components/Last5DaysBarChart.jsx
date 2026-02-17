@@ -13,11 +13,11 @@ import Card from "./Card";
 
 function energyToColor(energyRounded) {
     switch (energyRounded) {
-        case 1: return "#ef4444"; //röd
-        case 2: return "#f97316"; //orange
-        case 3: return "#eab308"; //gul
-        case 4: return "#22c55e"; //grön
-        case 5: return "#10b981"; //turkos
+        case 1: return "#D36460"; //röd
+        case 2: return "#da9944"; //orange
+        case 3: return "#ebdf73"; //gul
+        case 4: return "#76A076"; //grön
+        case 5: return "#0b9265"; //turkos
         default: return "#9ca3af"; //grå
     }
 }
@@ -25,10 +25,11 @@ function energyToColor(energyRounded) {
 function CustomTooltip({ active, payload, label }) {
     if (!active || !payload?.length) return null;
     const d = payload[0].payload;
+    const isLight = document.body.getAttribute("data-theme") === "light";
 
     return (
         <div style={{
-            background: "white",
+            background: isLight ? "#E8F1F2" : "#2A2F42",
             border: "1px solid #e5e7eb",
             borderRadius: 10,
             padding: "10px 12px",

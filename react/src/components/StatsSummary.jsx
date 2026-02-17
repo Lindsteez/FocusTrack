@@ -42,8 +42,8 @@ export default function StatsSummary() {
               minWidth: 160,
               padding: "14px 14px 12px",
               borderRadius: 14,
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(10,16,28,0.18)",
+              border: "1px solid color-mix(in srgb, var(--text-primary) 12%, transparent)",
+              background: "#f2f8ff",
               backdropFilter: "blur(6px)",
               textAlign: "left",
             }}

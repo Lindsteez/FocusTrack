@@ -43,12 +43,17 @@
 }
 
 .focusMode__btn:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--btn-success) 55%, transparent);
-  outline-offset: 2px;
+  /* outline: 2px solid color-mix(in srgb, var(--btn-success) 55%, transparent);
+  outline-offset: 2px; */
+
+
 }
 
 .focusMode__btn.is-active {
-  font-weight: 600;
+  background-color: var(--btn-visited);
+  border-color: 1px solid #999;
+
+  /* font-weight: 600;
   background: color-mix(in srgb, var(--card-hover) 75%, transparent);
   border-color: color-mix(in srgb, var(--btn-success) 40%, transparent);
   color: var(--btn-success);
@@ -56,18 +61,18 @@
     -1px -1px 0 #000,
      1px -1px 0 #000,
     -1px  1px 0 #000,
-     1px  1px 0 #000;;
+     1px  1px 0 #000;; */
 }
 
 /* Ändrar färg på knapparna så de syns i modalen (vit just nu) */
 
 .focusMode__btn {
   color: #111;              
-  background: #f2f2f2;      
-  border: 1px solid #ccc;
+  background: #f2f2f2;   
+  border-color: 1px solid #999;   
 }
 
-.focusMode__btn.is-active {
+/* .focusMode__btn.is-active {
   background: #ddd;
   border-color: #999;
-}
+} */

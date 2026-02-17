@@ -9,39 +9,41 @@
   --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, Arial, sans-serif;
 
   /* Backgrounds */
-  --bg-page: #0b0f1a;        /* page background */
-  --bg-app: #111726;         /* app container */
+  --bg-page: #0F1A1F;        /* page background */
+  --bg-app: #2A2F42;         /* app container */
 
   /* Cards / surfaces */
-  --card-primary: #151c2e;   /* main cards */
-  --card-secondary: #1c2640; /* elevated cards */
-  --card-hover: #243052;     /* hover / active */
+  --card-primary: #2A2F42;   /* main cards */
+  --card-secondary: #15202e; /* elevated cards */
+  --card-third: #15202e65;
+  --card-hover: #587074;     /* hover / active */
 
   /* Buttons */
-  --btn-success: #22c55e;    /* green */
-  --btn-danger: #ef4444;     /* red */
-  --btn-visited: #678b87;    /* green */
-  --btn-pause: #eab308;      /* yellow */
+  --btn-success: #76A076;    /* green */
+  --btn-danger: #D36460;     /* red */
+  --btn-pause: #d3c865;
+  --btn-visited: #76A076;    /* green */
 
   /* Text colors */
-  --text-primary: #e5e7eb;   /* main text */
+  --text-primary: #E8F1F2;   /* main text */
   --text-secondary: #a1a7b5; /* secondary text */
   --text-muted: #6b7280;     /* muted / labels */
 }
 
 /* Light mode overrides */
 body[data-theme="light"] {
-  --bg-page: #f6f7fb;
+  --bg-page: #f3f3f3;
   --bg-app: #ffffff;
 
   --card-primary: #ffffff;
-  --card-secondary: #f0f2f7;
-  --card-hover: #e7ebf5;
+  --card-secondary: #d2edffc7;
+  --card-third: #f2f8ff;
+  --card-hover: #b9cbce;
 
-  --btn-success: #16a34a;
-  --btn-danger: #dc2626;
-  --btn-pause: #eab308;      /* yellow */
-
+  --btn-success: #76A076;
+  --btn-danger: #D36460;
+  --btn-pause: #d3c865;
+  --btn-visited: #76A076; 
 
   --text-primary: #0f172a;
   --text-secondary: #334155;

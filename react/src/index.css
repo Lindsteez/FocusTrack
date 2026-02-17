@@ -55,7 +55,7 @@ body[data-theme="light"] {
 
   /* Timetracker colors */
   --timer-background: #cbd5e1;   /* mjuk ljusgrå */
-  --timer-forground: #3b82f6;   /* ren blå */
+  --timer-forground: #81b1ff;   /* ren blå */
 }
 
 html, body, #root {

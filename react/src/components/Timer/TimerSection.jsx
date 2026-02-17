@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Card from "../Card";
 import Button from "../Button";
-import Timer from "./Timer";
+import Timer from "./Timer.tsx";
 import SaveTimeModal from "./SaveTimeModal";
 import StartSessionModal from "./StartSessionModal";
 import { addSession } from "../../utils/sessionsStore";

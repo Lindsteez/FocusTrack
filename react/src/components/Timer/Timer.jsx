@@ -56,7 +56,8 @@ export default function Timer({ seconds }) {
     el.classList.remove(styles.animate);
 
     // 2) tvinga en reflow så att borttagningen “tar”
-    el.getBoundingClientRect();
+    
+    const _ = el.getBoundingClientRect();
 
     // 3) slå på transition igen nästa frame
     requestAnimationFrame(() => {

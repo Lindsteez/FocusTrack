@@ -7,7 +7,7 @@ import StartSessionModal from "./Timer/StartSessionModal";
 
 function focusDotStyle(focusMode) {
   const map = {
-    Work: "#6c94df",
+    Work: "#637fb3",
     Break: "#d1a664",
     Meeting: "#bb67a9",
   };

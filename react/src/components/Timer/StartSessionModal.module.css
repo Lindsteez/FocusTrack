@@ -11,8 +11,7 @@
   background: var(--card-primary);
   border-radius: 12px;
   padding: 16px;
-  color: var(--text-primary);
-  
+  color: var(--text-primary);  
 }
 
 .actions {

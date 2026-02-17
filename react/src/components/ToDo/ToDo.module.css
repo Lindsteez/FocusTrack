@@ -19,7 +19,7 @@
   padding: 14px 16px;
   font-size: 1rem;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
   background: var(--card-third);
   color: var(--text-primary);
   margin: 15px auto;
@@ -47,6 +47,7 @@
   margin-top: 14px;
   display: grid;
   gap: 10px;
+  width: 100%;
 }
 
 .empty {
@@ -59,7 +60,8 @@
   gap: 12px;
   padding: 12px 14px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--card-third);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
 
@@ -92,6 +94,7 @@
   cursor: pointer;
   display: grid;
   place-items: center;
+  transition: background 0.5s ease;
 }
 
 .deleteBtn:hover {

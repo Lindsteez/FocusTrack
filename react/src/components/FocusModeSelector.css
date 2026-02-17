@@ -36,7 +36,6 @@
 
 .focusMode__btn:hover {
   background: var(--card-hover);
-  border: none;
 }
 
 .focusMode__btn:active {
@@ -52,6 +51,7 @@
 
 .focusMode__btn.is-active {
   background-color: var(--btn-visited);
+  border-color: 1px solid #999;
 
   /* font-weight: 600;
   background: color-mix(in srgb, var(--card-hover) 75%, transparent);
@@ -68,7 +68,8 @@
 
 .focusMode__btn {
   color: #111;              
-  background: #f2f2f2;      
+  background: #f2f2f2;   
+  border-color: 1px solid #999;   
 }
 
 /* .focusMode__btn.is-active {

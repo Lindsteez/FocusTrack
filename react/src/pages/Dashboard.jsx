@@ -11,26 +11,28 @@ export default function Dashboard() {
   return (
     <div className="dashboardStack grid">
       {/* ========= Vänster kolumn ========= */}
-      <div className="leftGrid">
         <div className="box timer">
           <TimerSection />
         </div>
 
-        <div className="box chart">
+      {/* ========= Mitten kolumn ========= */}   
+      
+      <div className="box chart">
           <Last5DaysBarChart />
         </div>
-      </div>
-
-      {/* ========= Höger kolumn ========= */}
       <div className="box recent">
         <RecentSessions />
       </div>
 
-      <div className="box todo">
+ 
+
+    {/* ========= Höger kolumn ========= */}   
+      
+         <div className="box todo">
         <ToDoDesktopOnly>  
             <ToDo />
         </ToDoDesktopOnly>
-        </div>
+        </div>   
     </div>
   );
 }

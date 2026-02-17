@@ -65,26 +65,30 @@ body, html {
 
 .grid {
   display: grid;
-  grid-template-columns: 50% 30%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
   justify-content: center;
   row-gap: 20px;
 }
 
 .timer {
-  grid-column: 1;
-  /* border: 2px solid red; */
-  align-self: start;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .recent {
   grid-column: 2;
-  /* border: 2px solid green; */
+  grid-row: 2;
 }
 
-.stats {
+.todo {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.chart
+{
   grid-column: 1;
-  /* border: 2px solid blue; */
-  align-self: start;
+  grid-row: 2;
 }
-
 

@@ -1,13 +1,8 @@
-/* .timer {
-  font-size: 2rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-primary);
-} */
-
 .wrap {
   position: relative;
   display: grid;
   place-items: center;
+  margin: 2.5rem 0;
 }
 
 .svg {

@@ -18,13 +18,13 @@
 
 .track {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.08); /*bakgrundsfärg på t rackern*/
+  stroke: var(--timer-background); /*bakgrundsfärg på t rackern*/
   stroke-linecap: round;
 }
 
 .progress {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.55); /* “fyllfärg” (kan bytas senare) */
+  stroke: var(--timer-forground); /* “fyllfärg” (kan bytas senare) */
   /* stroke: #22c55e; */
   stroke-linecap: round;
 }

@@ -28,6 +28,10 @@
   --text-primary: #E8F1F2;   /* main text */
   --text-secondary: #a1a7b5; /* secondary text */
   --text-muted: #6b7280;     /* muted / labels */
+
+  /* Timetracker colors */
+  --timer-background: rgba(255, 255, 255, 0.08);
+  --timer-forground: rgba(255, 255, 255, 0.55);
 }
 
 /* Light mode overrides */
@@ -48,6 +52,10 @@ body[data-theme="light"] {
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
+
+  /* Timetracker colors */
+  --timer-background: #cbd5e1;   /* mjuk ljusgrå */
+  --timer-forground: #3b82f6;   /* ren blå */
 }
 
 html, body, #root {

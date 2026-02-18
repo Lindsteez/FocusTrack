@@ -6,6 +6,7 @@ import {
     YAxis,
     Tooltip,
     ResponsiveContainer,
+    CartesianGrid,
 } from "recharts";
 import { buildLast5DaysData } from "../utils/chartsData";
 import { getSessions } from "../utils/sessionsStore";
@@ -69,26 +70,31 @@ const data = useMemo(() => {
   return result;
 }, []);
 
-  const yConfig = useMemo(() => {
+    const yConfig = useMemo(() => {
       const max = Math.max(0, ...data.map(d => d.totalSeconds ?? 0));
-      const maxMinutes = max / 60;
 
-      let stepMinutes;
+      let step;
 
-      if (maxMinutes <= 10) stepMinutes = 1;
-      else if (maxMinutes <= 30) stepMinutes = 2;
-      else if (maxMinutes <= 90) stepMinutes = 5;
-      else stepMinutes = 10;
+      if (max >= 24 * 3600) {
+        step = 4 * 3600; // 4h 
+      } else if (max >= 12 * 3600) {
+        step = 2 * 3600; // 2h 
+      } else if (max >= 3600) {
+        step = 3600; // 1h 
+      } else if (max >= 600) {
+        step = 600; // 10m
+      } else {
+        step = 60; // 1m
+      }
 
-      const stepSeconds = stepMinutes * 60;
-      const maxRounded = Math.ceil(max / stepSeconds) * stepSeconds;
+      const maxRounded = Math.ceil(max / step) * step;
 
       const ticks = [];
-      for (let t = 0; t <= maxRounded; t += stepSeconds) {
+      for (let t = 0; t <= maxRounded; t += step) {
         ticks.push(t);
       }
 
-      return { ticks, maxRounded };
+      return { ticks, maxRounded, step };
     }, [data]);
 
 return (
@@ -104,16 +110,19 @@ return (
             domain={[0, yConfig.maxRounded]}
             ticks={yConfig.ticks}
             tickFormatter={(v) => {
-              const total = Math.max(0, Math.floor(Number(v) || 0));
-              const h = Math.floor(total / 3600);
-              const m = Math.floor((total % 3600) / 60);
-
-              if (h > 0) return m > 0 ? `${h}h ${m}m` : `${h}h`;
-              return `${m}m`;
+              if (yConfig.step >= 3600) {
+                return `${Math.floor(v / 3600)}h`;
+              }
+              return `${Math.floor(v / 60)}m`;
             }}
             width={40}
           />
           <Tooltip content={<CustomTooltip />} />
+            <CartesianGrid
+              stroke="rgba(128,128,128,0.2)"
+              strokeDasharray="3 3"
+              vertical={false}
+            />
           <Bar
             dataKey="totalSeconds"
             shape={<EnergyBarShape />}

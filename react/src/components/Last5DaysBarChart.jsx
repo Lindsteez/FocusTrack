@@ -104,9 +104,12 @@ return (
             domain={[0, yConfig.maxRounded]}
             ticks={yConfig.ticks}
             tickFormatter={(v) => {
-              const h = Math.floor(v / 3600);
-              const m = Math.floor((v % 3600) / 60);
-              return h > 0 ? `${h}h` : `${m}m`;
+              const total = Math.max(0, Math.floor(Number(v) || 0));
+              const h = Math.floor(total / 3600);
+              const m = Math.floor((total % 3600) / 60);
+
+              if (h > 0) return m > 0 ? `${h}h ${m}m` : `${h}h`;
+              return `${m}m`;
             }}
             width={40}
           />

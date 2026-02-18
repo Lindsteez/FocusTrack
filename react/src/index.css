@@ -76,7 +76,6 @@ body, html {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto auto;
   justify-content: center;
-  row-gap: 20px;
 }
 
 .timer {

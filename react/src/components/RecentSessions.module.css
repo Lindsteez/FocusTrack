@@ -55,8 +55,8 @@
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 999px;
   opacity: 0.9;
   background: color-mix(in srgb, var(--text-primary) 24%, transparent);
@@ -64,12 +64,12 @@
 
 .category {
   opacity: 0.5;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
 .note {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin-left: 1.5em;
   max-width: 90%;
   word-break: break-word;
@@ -81,6 +81,7 @@
 /* Right side (duration) */
 .time {
   font-weight: 800;
+    font-size: 0.8rem;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   text-align: end;
@@ -94,7 +95,7 @@
 
 .date {
   opacity: 0.5;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-align: end;
   color: var(--text-secondary);
 }

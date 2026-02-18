@@ -29,11 +29,11 @@ function NavbarDesktop() {
     <nav className={styles.navbar}>
       <img className={styles.logo} src={logoSrc} alt="FocusTrack Logo" />
 
-      <NavLink to="/" end className={linkClass}>Dashboard</NavLink>
-      <NavLink to="/history" className={linkClass}>History</NavLink>
-      {/* <NavLink to="/todo" className={linkClass}>ToDo</NavLink> */}
-      <NavLink to="/stats" className={linkClass}>Stats</NavLink>
-      <NavLink to="/settings" className={linkClass}>Settings</NavLink>
+      <NavLink to="/" end className={linkClass}>DASHBOARD</NavLink>
+      <NavLink to="/history" className={linkClass}>HISTORY</NavLink>
+      {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
+      <NavLink to="/stats" className={linkClass}>STATS</NavLink>
+      <NavLink to="/settings" className={linkClass}>SETTINGS</NavLink>
     </nav>
   );
 }

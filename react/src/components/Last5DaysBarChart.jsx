@@ -69,6 +69,28 @@ const data = useMemo(() => {
   return result;
 }, []);
 
+  const yConfig = useMemo(() => {
+      const max = Math.max(0, ...data.map(d => d.totalSeconds ?? 0));
+      const maxMinutes = max / 60;
+
+      let stepMinutes;
+
+      if (maxMinutes <= 10) stepMinutes = 1;
+      else if (maxMinutes <= 30) stepMinutes = 2;
+      else if (maxMinutes <= 90) stepMinutes = 5;
+      else stepMinutes = 10;
+
+      const stepSeconds = stepMinutes * 60;
+      const maxRounded = Math.ceil(max / stepSeconds) * stepSeconds;
+
+      const ticks = [];
+      for (let t = 0; t <= maxRounded; t += stepSeconds) {
+        ticks.push(t);
+      }
+
+      return { ticks, maxRounded };
+    }, [data]);
+
 return (
   <Card title="Previous 5 days">
     <div style={{ width: "100%", height: 347 }}>
@@ -79,6 +101,8 @@ return (
         >
           <XAxis dataKey="date" tickMargin={8} />
           <YAxis
+            domain={[0, yConfig.maxRounded]}
+            ticks={yConfig.ticks}
             tickFormatter={(v) => {
               const h = Math.floor(v / 3600);
               const m = Math.floor((v % 3600) / 60);

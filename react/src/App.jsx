@@ -7,7 +7,7 @@ import AppLayout from "./components/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Stats from "./pages/Stats";
-import Settings from "./pages/Settings";
+import Settings from "./pages/settings/Settings";
 import ToDo from "./pages/ToDo";
 
 export default function App() {

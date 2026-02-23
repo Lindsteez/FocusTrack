@@ -137,7 +137,7 @@ export default function TimerSection() {
           setIsModalOpen(false);
           resetTimer();
         }}
-        onSaveConfirm={() => {
+        onSaveConfirm={(rating) => {
           const label = sessionLabel.trim();
 
           addSession({
@@ -147,6 +147,7 @@ export default function TimerSection() {
             focusMode,
             energyLevel,
             label,
+            rating,
           });
 
           setIsModalOpen(false);

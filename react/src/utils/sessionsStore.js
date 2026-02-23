@@ -42,6 +42,7 @@ export function makeSessionEntry({
   focusMode,
   energyLevel,
   label,
+  rating,
 }) {
   return {
     id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
@@ -55,6 +56,7 @@ export function makeSessionEntry({
     focusMode: focusMode ?? null,
     energyLevel: energyLevel ?? null,
     label: label ?? "",
+    rating: rating ?? null,
   };
 }
 

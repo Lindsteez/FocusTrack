@@ -8,11 +8,11 @@
   .recent { grid-column: 2; }
   .stats { grid-column: 1; }
 
-   .dashboardStack {
+  .dashboardStack {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-top: 75px;
+  padding-top: 90px;
   padding-bottom: 90px;
 }
 
@@ -44,4 +44,27 @@
     grid-template-columns: 30% 30% 30%;
     justify-content: center;
   }
+}
+
+@media (max-width: 376px) {
+      .dashboardStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 80px;
+  padding-bottom: 90px;
+}
+
+}
+
+
+@media (max-width: 320px) {
+      .dashboardStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 65px;
+  padding-bottom: 90px;
+}
+
 }

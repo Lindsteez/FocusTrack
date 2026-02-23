@@ -1,11 +1,76 @@
-.img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bg-page);
-    position: fixed;
-    width: 100%;
-    margin-bottom: 10px;
-    z-index: 10000;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  z-index: 10000;
+
+  background-color: var(--bg-page);
+
+  /* spacing */
+  padding: 10px 12px;
+  gap: 12px;
 }
 
+/* Old .img was a fixed full-width bar.
+   Now it's just the left area holding the logo. */
+.logoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.logoImg {
+  display: block;
+  height: 75px;
+  width: auto;
+}
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: right;
+
+  font-size: 12px;
+  line-height: 1.1;
+  opacity: 0.9;
+
+  max-width: 60%;
+}
+
+/* Old css code if needed later */
+/* .img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-page);
+  position: fixed;
+  width: 100%;
+  margin-bottom: 10px;
+  z-index: 10000;
+} */
+
+
+@media (max-width: 376px) {
+    .logoImg {
+        display: block;
+        height: 65px;
+        width: auto;
+}
+}
+
+@media (max-width: 320px) {
+    .logoImg {
+        display: block;
+        height: 52px;
+        width: auto;
+}
+}

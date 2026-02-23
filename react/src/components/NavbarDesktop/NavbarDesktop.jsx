@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import LogoDark from "../../assets/svg/focustrack-logo.svg";
 import LogoLight from "../../assets/svg/focustrack-logo-light.svg";
 
+import Weather from "../Weather/Weather"; // <-- add this
+
 import styles from "./NavbarDesktop.module.css";
 
 function NavbarDesktop() {
@@ -31,9 +33,12 @@ function NavbarDesktop() {
 
       <NavLink to="/" end className={linkClass}>DASHBOARD</NavLink>
       <NavLink to="/history" className={linkClass}>HISTORY</NavLink>
-      {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
       <NavLink to="/stats" className={linkClass}>STATS</NavLink>
       <NavLink to="/settings" className={linkClass}>SETTINGS</NavLink>
+
+       <div className={styles.weather}>
+        <Weather />
+      </div>
     </nav>
   );
 }

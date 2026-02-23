@@ -1,4 +1,4 @@
-// src/components/SessionsList.jsx
+import { useState, useMemo } from "react";
 import styles from "./RecentSessions.module.css"; // återanvänd samma CSS
 import useSessions from "../hooks/useSessions";
 import { formatDuration, formatDate } from "../utils/sessionsStore";
@@ -14,7 +14,12 @@ function focusDotStyle(focusMode) {
   return { background: map[focusMode] ?? "#94A3B8" };
 }
 
-export default function SessionsList({ limit = 5, emptyText = "No sessions yet." }) {
+export default function SessionsList({ 
+  limit = 5, 
+  emptyText = "No sessions yet.",
+  showLoadMore = false,
+  pageSize = 20, 
+}) {  
   const {
     sessions,
     deleteSession,
@@ -25,7 +30,16 @@ export default function SessionsList({ limit = 5, emptyText = "No sessions yet."
     saveEdit,
   } = useSessions();
 
-  const list = sessions.slice(0, limit);
+  const initialCount = showLoadMore ? Math.min(pageSize, limit) : limit;
+  const [visibleCount, setVisibleCount] = useState (initialCount);
+  const safeVisibleCount = Math.min(visibleCount, limit, sessions.length);
+
+  const list = useMemo(
+    () => sessions.slice(0, safeVisibleCount),
+    [sessions, safeVisibleCount]
+  );
+
+  const canLoadMore = showLoadMore && safeVisibleCount < Math.min(limit, sessions.length);
 
   return (
     <>
@@ -67,6 +81,16 @@ export default function SessionsList({ limit = 5, emptyText = "No sessions yet."
               </div>
             </div>
           ))}
+
+          {canLoadMore && (
+            <button 
+            className={styles.loadMoreBtn}
+            onClick={() =>
+              setVisibleCount((c) => Math.min(c + pageSize, limit, sessions.length))
+            }>
+              Load more
+            </button>
+          )}
         </div>
       )}
 

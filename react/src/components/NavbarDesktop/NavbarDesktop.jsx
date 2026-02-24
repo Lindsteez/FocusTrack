@@ -32,9 +32,9 @@ function NavbarDesktop() {
       <img className={styles.logo} src={logoSrc} alt="FocusTrack Logo" />
 
       <NavLink to="/" end className={linkClass}>{t('nav.dashboard')}</NavLink>
-      <NavLink to="/history" className={linkClass}>HISTORY</NavLink>
+      <NavLink to="/history" className={linkClass}>{t('nav.history')}</NavLink>
       {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
-      <NavLink to="/stats" className={linkClass}>STATS</NavLink>
+      <NavLink to="/stats" className={linkClass}>{t('nav.stats')}</NavLink>
       <NavLink to="/settings" className={linkClass}>{t('nav.settings')}</NavLink>
     </nav>
   );

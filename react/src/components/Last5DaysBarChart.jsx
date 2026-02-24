@@ -18,7 +18,7 @@ function energyToColor(energyRounded) {
     case 2: return "#da9944";
     case 3: return "#ebdf73";
     case 4: return "#76A076";
-    case 5: return "#0b9265";
+    case 5: return "#27a525";
     default: return "#9ca3af";
   }
 }

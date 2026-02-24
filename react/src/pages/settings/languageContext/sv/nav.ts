@@ -1,4 +1,6 @@
 export default {
-    'nav.dashboard': 'Dashboard',
-    'nav.settings': 'Inställningar',
+    'nav.dashboard': 'DASHBOARD',
+    'nav.history': 'HISTORIK',
+    'nav.stats': 'STATISTIK',
+    'nav.settings': 'INSTÄLLNINGAR',
 } as const;

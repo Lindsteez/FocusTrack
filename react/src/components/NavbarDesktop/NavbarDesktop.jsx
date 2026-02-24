@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useLanguage } from "../../pages/settings/languageContext/LanguageProvider";
 
 import LogoDark from "../../assets/svg/focustrack-logo.svg";
 import LogoLight from "../../assets/svg/focustrack-logo-light.svg";
@@ -7,6 +8,7 @@ import LogoLight from "../../assets/svg/focustrack-logo-light.svg";
 import styles from "./NavbarDesktop.module.css";
 
 function NavbarDesktop() {
+  const { t } = useLanguage();
   const [theme, setTheme] = useState(() => document.body.dataset.theme || "dark");
 
   useEffect(() => {
@@ -29,11 +31,11 @@ function NavbarDesktop() {
     <nav className={styles.navbar}>
       <img className={styles.logo} src={logoSrc} alt="FocusTrack Logo" />
 
-      <NavLink to="/" end className={linkClass}>DASHBOARD</NavLink>
+      <NavLink to="/" end className={linkClass}>{t('nav.dashboard')}</NavLink>
       <NavLink to="/history" className={linkClass}>HISTORY</NavLink>
       {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
       <NavLink to="/stats" className={linkClass}>STATS</NavLink>
-      <NavLink to="/settings" className={linkClass}>SETTINGS</NavLink>
+      <NavLink to="/settings" className={linkClass}>{t('nav.settings')}</NavLink>
     </nav>
   );
 }

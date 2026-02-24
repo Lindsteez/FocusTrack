@@ -34,7 +34,7 @@ type NominatimReverseResponse = {
 };
 
 function codeToLabel(code: number): string {
-  // Open-Meteo WMO weather interpretation codes. :contentReference[oaicite:6]{index=6}
+  // Open-Meteo WMO weather interpretation codes.
   if (code === 0) return "Clear";
   if (code === 1) return "Mainly clear";
   if (code === 2) return "Partly cloudy";

@@ -38,6 +38,9 @@ function NavbarDesktop() {
       {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
       <NavLink to="/stats" className={linkClass}>{t('nav.stats')}</NavLink>
       <NavLink to="/settings" className={linkClass}>{t('nav.settings')}</NavLink>
+           <div className={styles.weather}>
+        <Weather />
+      </div>
     </nav>
   );
 }

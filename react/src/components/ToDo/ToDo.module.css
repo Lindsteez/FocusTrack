@@ -1,29 +1,36 @@
-
 .page {
-  /* padding-top: 90px; */ /* same offset as Dashboard uses */
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
+
+  height: 100%;
+  min-height: 0;
 }
 
+/* Input + buttons in one row (desktop) */
 .toolbar {
   display: flex;
-  gap: 15px;
-  align-items: stretch;
-  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
   width: 100%;
+  min-height: 0;
 }
 
 .input {
-  flex: 1;
-  padding: 14px 16px;
-  font-size: 0.8rem;
+  flex: 1 1 320px;
+  min-width: 220px;
+
+  height: 44px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+
   border-radius: 14px;
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
   background: var(--card-third);
   color: var(--text-primary);
-  margin: 15px auto;
-  width: 100%;
+
+  outline: none;
 }
 
 .input::placeholder {
@@ -32,22 +39,29 @@
 
 .actions {
   display: flex;
-  /* gap: 10px; */
-  margin: 0 auto;
+  gap: 10px;
+  align-items: center;
+  flex: 0 0 auto;
 }
 
 .addBtn,
 .clearBtn {
   min-width: 96px;
-  height: 48px;
+  height: 44px;
   font-size: 0.95rem;
 }
 
+/* Scroll area inside the card */
 .list {
-  margin-top: 14px;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+
   display: grid;
   gap: 10px;
   width: 100%;
+
+  padding-right: 2px;
 }
 
 .empty {
@@ -58,13 +72,15 @@
   display: flex;
   align-items: center;
   gap: 12px;
+
   padding: 12px 14px;
   border-radius: 14px;
+
   background: var(--card-third);
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
-  font-size: 0.8rem;
-}
 
+  font-size: 0.85rem;
+}
 
 .checkbox {
   width: 18px;
@@ -86,16 +102,20 @@
 .deleteBtn {
   width: 28px;
   height: 28px;
+
   border-radius: 50%;
   border: none;
-  background: rgba(239, 68, 68, 0.15); /* red-500 */
+
+  background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
+
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
+
   display: grid;
   place-items: center;
-  transition: background 0.5s ease;
+  transition: background 0.2s ease, transform 0.05s ease;
 }
 
 .deleteBtn:hover {
@@ -106,4 +126,19 @@
   transform: scale(0.95);
 }
 
+/* Mobile: stack input and buttons */
+@media (max-width: 767px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
+  .actions {
+    justify-content: center;
+  }
+
+  .input {
+    min-width: 0;
+    width: 100%;
+  }
+}

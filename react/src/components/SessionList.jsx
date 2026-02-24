@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import styles from "./RecentSessions.module.css"; // återanvänd samma CSS
+import styles from "./RecentSessions.module.css";
 import useSessions from "../hooks/useSessions";
 import { formatDuration, formatDate } from "../utils/sessionsStore";
 import penIcon from "../assets/imgs/pen.png";
@@ -14,12 +14,7 @@ function focusDotStyle(focusMode) {
   return { background: map[focusMode] ?? "#94A3B8" };
 }
 
-export default function SessionsList({ 
-  limit = 5, 
-  emptyText = "No sessions yet.",
-  showLoadMore = false,
-  pageSize = 20, 
-}) {  
+export default function SessionsList({ limit = 5, emptyText = "No sessions yet." }) {
   const {
     sessions,
     deleteSession,
@@ -30,16 +25,8 @@ export default function SessionsList({
     saveEdit,
   } = useSessions();
 
-  const initialCount = showLoadMore ? Math.min(pageSize, limit) : limit;
-  const [visibleCount, setVisibleCount] = useState (initialCount);
-  const safeVisibleCount = Math.min(visibleCount, limit, sessions.length);
-
-  const list = useMemo(
-    () => sessions.slice(0, safeVisibleCount),
-    [sessions, safeVisibleCount]
-  );
-
-  const canLoadMore = showLoadMore && safeVisibleCount < Math.min(limit, sessions.length);
+  const [visibleCount] = useState(limit);
+  const list = useMemo(() => sessions.slice(0, Math.min(visibleCount, sessions.length)), [sessions, visibleCount]);
 
   return (
     <>
@@ -53,11 +40,7 @@ export default function SessionsList({
                 <div className={styles.title}>{s.description || "(no name)"}</div>
 
                 <div className={styles.metaRow}>
-                  <span
-                    className={styles.dot}
-                    style={focusDotStyle(s.focusMode)}
-                    aria-hidden="true"
-                  />
+                  <span className={styles.dot} style={focusDotStyle(s.focusMode)} aria-hidden="true" />
                   <span className={styles.category}>{s.focusMode ?? "-"}</span>
                 </div>
 
@@ -66,31 +49,20 @@ export default function SessionsList({
 
               <div className={styles.timeBlock}>
                 <div className={styles.editDelete}>
-                  <button onClick={() => openEdit(s.id)} className={styles.editBtn}>
-                    <img src={penIcon} alt="Edit" />
+                  <button type="button" onClick={() => openEdit(s.id)} className={styles.editBtn} aria-label="Edit session">
+                    <img src={penIcon} alt="" />
                   </button>
 
-                  <button onClick={() => deleteSession(s.id)} className={styles.deleteBtn}>
+                  <button type="button" onClick={() => deleteSession(s.id)} className={styles.deleteBtn} aria-label="Delete session">
                     ✕
                   </button>
                 </div>
 
                 <div className={styles.time}>{formatDuration(s.seconds)}</div>
-                <div className={styles.timeSpacer} />
                 <div className={styles.date}>{formatDate(s.createdAt)}</div>
               </div>
             </div>
           ))}
-
-          {canLoadMore && (
-            <button 
-            className={styles.loadMoreBtn}
-            onClick={() =>
-              setVisibleCount((c) => Math.min(c + pageSize, limit, sessions.length))
-            }>
-              Load more
-            </button>
-          )}
         </div>
       )}
 

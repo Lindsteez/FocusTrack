@@ -1,70 +1,116 @@
+/* ============================
+   Responsive layout (Mobile → Desktop)
+   ============================ */
+
+/* Mobile (0–767px) */
 @media (max-width: 767px) {
-  .grid {
-    grid-template-columns: 33% 33% 33%;
-    justify-content: center;
+  body {
+    overflow: auto;
   }
 
-  .timer { grid-column: 1; }
-  .recent { grid-column: 2; }
-  .stats { grid-column: 1; }
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 75px;
+    padding-bottom: 90px;
+    height: auto;
+  }
 
   .dashboardStack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-top: 90px;
-  padding-bottom: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 }
 
-}
-
+/* Tablet (768–1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
+  body {
+    overflow: auto;
+  }
+
   .grid {
-    grid-template-columns: 33% 33% 33%;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 75px;
+    padding-bottom: 90px;
+    height: auto;
   }
 
   .dashboardStack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-bottom: 90px;
-}
-}
-
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .grid {
-    grid-template-columns: 33% 33% 33%;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 }
 
-@media (min-width: 1280px) {
-  .grid {
-    grid-template-columns: 30% 30% 30%;
-    justify-content: center;
+/* Desktop (>=1024px) */
+@media (min-width: 1024px) {
+  body {
+    overflow: hidden;
   }
-}
 
-@media (max-width: 376px) {
-      .dashboardStack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-top: 80px;
-  padding-bottom: 90px;
-}
+  /* 2x2 grid:
+     Left:  Timer / Recent
+     Right: ToDo  / Chart
+  */
+  .grid {
+    height: calc(100vh - 90px);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "timer  todo"
+      "recent chart";
+    gap: 24px;
+    padding: 24px;
+    align-items: stretch;
+    min-height: 0;
+  }
 
-}
+  .timer  { grid-area: timer;  min-height: 0; }
+  .todo   { grid-area: todo;   min-height: 0; }
+  .recent { grid-area: recent; min-height: 0; }
+  .chart  { grid-area: chart;  min-height: 0; }
 
+  /* Critical: wrappers must stretch and allow children to shrink */
+  .box {
+    min-height: 0;
+    height: 100%;
+    display: flex;
+  }
 
-@media (max-width: 320px) {
-      .dashboardStack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-top: 65px;
-  padding-bottom: 90px;
-}
+  /* Card should fill the grid cell */
+  .box > * {
+    flex: 1;
+    min-height: 0;
+  }
 
+  /* Only these can scroll internally */
+  .todo .content,
+  .recent .content {
+    overflow: auto;
+    min-height: 0;
+  }
+
+  /* Chart must NOT scroll; it must get a real height */
+  .chart .content {
+    overflow: hidden;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* The chart wrapper must have a measurable height for Recharts */
+  .chartWrap {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  .app {
+    padding-bottom: 0;
+  }
 }

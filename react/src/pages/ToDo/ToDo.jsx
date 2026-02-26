@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import styles from "./ToDo.module.css";
-import Card from "../Card";
-import Button from "../Button";
+import Card from "../../components/Card";
+import Button from "../../components/Button";
 
 function makeId() {
   if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
@@ -24,7 +24,7 @@ export default function ToDo() {
     try {
       localStorage.setItem("todos_v1", JSON.stringify(todos));
     } catch {
-        //localStorage may be unavailable
+      // localStorage may be unavailable
     }
   }, [todos]);
 
@@ -54,11 +54,11 @@ export default function ToDo() {
   }, [todos]);
 
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} todoPage`}>
       <Card title={`ToDo (${stats.left} left)`}>
-        <div className={styles.toolbar}>
+        <div className={`${styles.toolbar} todoToolbar`}>
           <input
-            className={styles.input}
+            className={`${styles.input} todoInput`}
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Add a task…"
@@ -67,7 +67,7 @@ export default function ToDo() {
             }}
           />
 
-          <div className={styles.actions}>
+          <div className={`${styles.actions} todoActions`}>
             <Button
               label="Add"
               variant="start"
@@ -85,7 +85,7 @@ export default function ToDo() {
           </div>
         </div>
 
-        <div className={styles.list}>
+        <div className={`${styles.list} todoList`}>
           {todos.length === 0 ? (
             <div className={styles.empty}>No tasks yet.</div>
           ) : (

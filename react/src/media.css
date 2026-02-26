@@ -1,6 +1,87 @@
 /* ============================
    Responsive layout (Mobile → Desktop)
    ============================ */
+@media (max-width: 560px) {
+  /* Keep row layout (ring left, controls right) */
+  .timerLayout {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    /* Smaller gap between ring and buttons */
+    gap: 10px;
+
+    /* A bit tighter padding so nothing overflows */
+    padding: 10px 12px;
+  }
+
+  /* Push the ring slightly away from the left edge */
+  .ringCol {
+    padding-left: 10px;
+  }
+
+  /* Make the ring a bit bigger on mobile, but still safe */
+  .wrap {
+    width: clamp(165px, 46vw, 210px);
+  }
+
+  /* Let controls shrink so they stay inside the card */
+  .controlsCol {
+    min-width: 0;
+    flex: 1;
+    gap: 8px;
+  }
+
+  /* Slightly tighter action row */
+  .actions {
+    gap: 10px;
+  }
+
+  /* Make buttons slightly smaller on mobile */
+  .actions :global(button) {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+
+  /* Meta text a bit smaller */
+  .timerMeta {
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+   .todoToolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .todoInput {
+    height: 44px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .todoActions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .todoActions button {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    width: auto;
+    min-width: 96px;
+  }
+
+ 
+  .todoList {
+    max-height: 340px;
+    overflow: auto;
+  }
+  
+}
 
 /* Mobile (0–767px) */
 @media (max-width: 767px) {
@@ -22,6 +103,24 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+
+   .todo textarea {
+  min-height: 110px;
+  max-height: 140px;
+  resize: none;
+  }
+
+  .todo .actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+  }
+
+  .todo button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
   }
 }
 

@@ -14,19 +14,30 @@ import Card from "./Card";
 
 function energyToColor(energyRounded) {
   switch (energyRounded) {
-    case 1:
-      return "#D36460"; // red
-    case 2:
-      return "#da9944"; // orange
-    case 3:
-      return "#ebdf73"; // yellow
-    case 4:
-      return "#76A076"; // green
-    case 5:
-      return "#0b9265"; // teal
-    default:
-      return "#9ca3af"; // gray
+    case 1: return "#D36460"; // red
+    case 2: return "#da9944"; // orange
+    case 3: return "#ebdf73"; // yellow
+    case 4: return "#76A076"; // green
+    case 5: return "#0b9265"; // teal
+    default: return "#9ca3af"; // gray
   }
+}
+
+function formatTimeAxis(seconds, step) {
+  // For very small ranges: show seconds ticks
+  if (step < 60) return `${seconds}s`;
+
+  // Up to 10 minutes: show minutes with 1 decimal for readability
+  if (seconds <= 600) {
+    const m = seconds / 60;
+    return `${m.toFixed(m % 1 === 0 ? 0 : 1)}m`;
+  }
+
+  // Up to 1 hour: integer minutes
+  if (seconds < 3600) return `${Math.round(seconds / 60)}m`;
+
+  // 1h+: hours
+  return `${Math.round(seconds / 3600)}h`;
 }
 
 function CustomTooltip({ active, payload, label }) {
@@ -41,15 +52,15 @@ function CustomTooltip({ active, payload, label }) {
         border: "1px solid rgba(255,255,255,0.10)",
         borderRadius: 10,
         padding: "10px 12px",
-        boxShadow: "0 8px 20px rgba(0,0,0,0.14)",
+        boxShadow: "0 8px 20px rgba(0,0,0,0.18)",
       }}
     >
       <div style={{ fontWeight: 700, marginBottom: 6 }}>{label}</div>
       <div>
-        Total time: <b>{d.totalLabel}</b>
+        Total tid: <b>{d.totalLabel}</b>
       </div>
       <div>
-        Energy: <b>{d.energy > 0 ? d.energy : "-"}</b>
+        Energi: <b>{d.energy > 0 ? d.energy : "-"}</b>
       </div>
     </div>
   );
@@ -65,8 +76,8 @@ function EnergyBarShape(props) {
       y={y}
       width={width}
       height={height}
-      rx={8}
-      ry={8}
+      rx={10}
+      ry={10}
       fill={energyToColor(payload.energyRounded)}
     />
   );
@@ -81,38 +92,35 @@ export default function Last5DaysBarChart() {
   const yConfig = useMemo(() => {
     const max = Math.max(0, ...data.map((d) => d.totalSeconds ?? 0));
 
-    // "Zoom out": always show a meaningful scale even if data is tiny
-    // (prevents the 0m/1m-only axis look)
-    const minVisibleMax = 30 * 60; // 30 minutes
-    const maxForScale = Math.max(max, minVisibleMax);
+    // Add headroom so bars don't stick to the top
+    const padded = max === 0 ? 60 : Math.ceil(max * 1.25);
 
     let step;
-    if (maxForScale >= 24 * 3600) step = 4 * 3600; // 4h
-    else if (maxForScale >= 12 * 3600) step = 2 * 3600; // 2h
-    else if (maxForScale >= 3600) step = 3600; // 1h
-    else if (maxForScale >= 30 * 60) step = 5 * 60; // 5m
-    else if (maxForScale >= 10 * 60) step = 2 * 60; // 2m
-    else step = 60; // 1m
+    if (padded <= 120) step = 15;          // up to 2m -> 15s steps
+    else if (padded <= 300) step = 30;     // up to 5m -> 30s
+    else if (padded <= 600) step = 60;     // up to 10m -> 1m
+    else if (padded <= 1800) step = 300;   // up to 30m -> 5m
+    else if (padded <= 3600) step = 600;   // up to 1h -> 10m
+    else if (padded <= 12 * 3600) step = 3600; // up to 12h -> 1h
+    else step = 2 * 3600;                  // 2h
 
-    const maxRounded = Math.ceil(maxForScale / step) * step;
+    const maxRounded = Math.max(step, Math.ceil(padded / step) * step);
 
+    // Build ticks (aim for ~6)
     const ticks = [];
     for (let t = 0; t <= maxRounded; t += step) ticks.push(t);
 
-    // A bit of headroom so it feels less cramped
-    const domainMax = Math.ceil(maxRounded * 1.15);
-
-    return { ticks, domainMax, step };
+    return { ticks, maxRounded, step };
   }, [data]);
 
   return (
     <Card title="Previous 5 days">
-      <div style={{ width: "100%", height: "100%", minHeight: 220 }}>
-        <ResponsiveContainer width="100%" height="100%">
+      <div style={{ width: "100%", height: 320 }}>
+        <ResponsiveContainer>
           <BarChart
             data={data}
-            margin={{ top: 8, right: 12, left: 0, bottom: 6 }}
-            barCategoryGap="28%"
+            margin={{ top: 8, right: 16, left: 6, bottom: 8 }}
+            barCategoryGap="35%"
           >
             <CartesianGrid
               stroke="rgba(128,128,128,0.18)"
@@ -122,25 +130,20 @@ export default function Last5DaysBarChart() {
 
             <XAxis
               dataKey="date"
-              tickMargin={6}
+              tickMargin={8}
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 11 }}
+              tick={{ fontSize: 12 }}
             />
 
             <YAxis
-              domain={[0, yConfig.domainMax]}
+              domain={[0, yConfig.maxRounded]}
               ticks={yConfig.ticks}
-              interval={0}
-              tickMargin={6}
-              width={40}
+              tickFormatter={(v) => formatTimeAxis(v, yConfig.step)}
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 11 }}
-              tickFormatter={(v) => {
-                if (yConfig.step >= 3600) return `${Math.floor(v / 3600)}h`;
-                return `${Math.floor(v / 60)}m`;
-              }}
+              tick={{ fontSize: 12 }}
+              width={44}
             />
 
             <Tooltip content={<CustomTooltip />} />
@@ -148,7 +151,7 @@ export default function Last5DaysBarChart() {
             <Bar
               dataKey="totalSeconds"
               shape={<EnergyBarShape />}
-              barSize={14} // thinner bars
+              barSize={14}
             />
           </BarChart>
         </ResponsiveContainer>

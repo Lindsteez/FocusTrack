@@ -6,7 +6,7 @@
   justify-content: center;
 
   /* Reduce the gap between ring and controls */
-  gap: 18px;
+  gap: 14px;
 
   /* Keep content nicely centered in the card */
   height: 100%;
@@ -34,7 +34,7 @@
   justify-content: center;
 
   gap: 10px;
-  min-width: 220px;
+  min-width: 0px;
 }
 
 .actions {
@@ -53,24 +53,6 @@
   line-height: 1.2;
 }
 
-/* Mobile: stack ring + controls */
-@media (max-width: 560px) {
-  .timerLayout {
-    flex-direction: column;
-    gap: 14px;
-    padding: 10px 12px;
-  }
-
-  .controlsCol {
-    min-width: 0;
-    width: 100%;
-  }
-
-  .actions {
-    width: 100%;
-  }
-}
-
 /* ===== Ring / SVG ===== */
 
 .wrap {
@@ -80,7 +62,7 @@
   margin: 0;
 
   /* Slightly smaller ring so it fits with buttons + meta */
-  width: min(180px, 26vw);
+  width: min(180px, 40vw);
   aspect-ratio: 1 / 1;
 }
 

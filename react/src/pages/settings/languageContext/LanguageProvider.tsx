@@ -1,6 +1,7 @@
 import { 
     createContext,
     useContext,
+    useEffect,
     useMemo,
     useState
 } from "react";
@@ -16,12 +17,22 @@ const Language = createContext < ContextType | null > (null)
 
 export function LanguageProvider ({
     children,
-    defaultLocale = 'sv',
+    defaultLocale = 'en',
 }: {
     children: React.ReactNode
     defaultLocale?: Locale
 }) {
-    const [locale, setLocale] = useState<Locale>(defaultLocale)
+    const [locale, setLocale] = useState<Locale>(() => {
+        const saved = localStorage.getItem('locale')
+        if (saved === 'en' || saved === 'sv') {
+            return saved;
+        }
+        return defaultLocale
+    })
+
+    useEffect(() => {
+        localStorage.setItem('locale', locale)
+    }, [locale]);
 
     const value = useMemo(() => {
         const dict = Languages[locale]

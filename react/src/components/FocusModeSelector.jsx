@@ -1,11 +1,16 @@
 import "./FocusModeSelector.css";
+import { useLanguage } from "../pages/settings/languageContext/LanguageProvider";
 
-const focusModes = ["Work", "Meeting", "Break"];
+
 
 export default function FocusModeSelector({ value, onChange }) {
+  const { t } = useLanguage();
+  const focusModes = [t('timer.work'), t('timer.meeting'), t('timer.break')];
+
+  
   return (
     <div className="focusMode">
-      <p className="focusMode__label">Focus modes</p>
+      <p className="focusMode__label">{t('timer.focusTitle')}</p>
 
       <div className="focusMode__group" role="tablist" aria-label="Focus modes">
         {focusModes.map((mode) => (
@@ -21,7 +26,7 @@ export default function FocusModeSelector({ value, onChange }) {
       </div>
 
       <p className="focusMode__active">
-        Active mode: <span>{value}</span>
+        {t('timer.activeMode')} <span>{value}</span>
       </p>
     </div>
   );

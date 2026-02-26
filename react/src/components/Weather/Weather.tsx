@@ -41,7 +41,7 @@ function codeToLabel(code: number): string {
   if (code === 3) return "Overcast";
   if (code === 45 || code === 48) return "Fog";
   if (code === 51 || code === 53 || code === 55) return "Drizzle";
-  if (code === 56 || code === 57) return "Freezing drizzle";
+  if (code === 56 || code === 57) return " Freezingdrizzle";
   if (code === 61 || code === 63 || code === 65) return "Rain";
   if (code === 66 || code === 67) return "Freezing rain";
   if (code === 71 || code === 73 || code === 75) return "Snow";

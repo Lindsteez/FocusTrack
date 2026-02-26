@@ -6,6 +6,7 @@ import SaveTimeModal from "./SaveTimeModal";
 import StartSessionModal from "./StartSessionModal";
 import { addSession } from "../../utils/sessionsStore";
 import { clearTimerState, loadTimerState, saveTimerState } from "../../utils/timerStore";
+import { useLanguage } from "../../hooks/useLanguage.tsx";
 
 // Calculate total seconds based on timestamps
 function computeSeconds({ isRunning, startedAt, accumulatedSeconds }, nowMs) {
@@ -17,6 +18,7 @@ function computeSeconds({ isRunning, startedAt, accumulatedSeconds }, nowMs) {
 export default function TimerSection() {
   // Load persisted timer state once
   const stored = loadTimerState();
+  const { t } = useLanguage();
 
   const [isRunning, setIsRunning] = useState(stored?.isRunning ?? false);
   const [startedAt, setStartedAt] = useState(() => stored?.startedAt ?? Date.now());
@@ -92,7 +94,7 @@ export default function TimerSection() {
 
         <div className="buttonRow">
           <Button
-            label={isRunning ? "⏸ Pause" : "► Start"}
+            label={isRunning ? `⏸ ${t('timer.pause')}` : `► ${t('timer.start')}`}
             variant={isRunning ? "pause" : "start"}
             onClick={() => {
               if (isRunning) {
@@ -117,7 +119,7 @@ export default function TimerSection() {
           />
 
           <Button
-            label="■ Stop"
+            label={`■ ${t('timer.stop')}`}
             variant="stop"
             onClick={stopAndOpenModal}
             disabled={seconds === 0}
@@ -126,7 +128,7 @@ export default function TimerSection() {
 
         {/* Show selected mode and energy while running */}
         <div style={{ marginTop: 8, opacity: 0.8 }}>
-          Mode: <b>{focusMode}</b> • Energy: <b>{energyLevel ?? "-"}</b>
+          {t('timer.mode')}: <b>{focusMode}</b> • {t('timer.energy')}: <b>{energyLevel ?? "-"}</b>
         </div>
       </Card>
 

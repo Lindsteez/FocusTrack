@@ -1,5 +1,6 @@
 import Card from "./Card";
 import useStatsData from "../hooks/useStatsData";
+import { useLanguage } from "../hooks/useLanguage";
 
 function formatSeconds(sec) {
   if (!sec) return "0m";
@@ -10,6 +11,7 @@ function formatSeconds(sec) {
 }
 
 export default function StatsSummary() {
+  const { t } = useLanguage();
   const {
     last30DaysDuration,
     last30DaysSessions,
@@ -18,14 +20,14 @@ export default function StatsSummary() {
   } = useStatsData();
 
   const items = [
-    { label: "Last 30 days", value: formatSeconds(last30DaysDuration) },
-    { label: "Total time", value: formatSeconds(totalDuration) },
-    { label: "Sessions", value: String(last30DaysSessions ?? 0) },
+    { label: `${t('stats.lastDays')}`, value: formatSeconds(last30DaysDuration) },
+    { label: `${t('stats.totalTime')}`, value: formatSeconds(totalDuration) },
+    { label: `${t('stats.sessions')}`, value: String(last30DaysSessions ?? 0) },
   ];
   const isLight = document.body.getAttribute("data-theme") === "light";
 
   return (
-    <Card title="Stats">
+    <Card title={`${t('stats.title')}`}>
       <div
         style={{
           display: "flex",

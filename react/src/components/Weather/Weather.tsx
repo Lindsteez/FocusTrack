@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useLanguage } from "../../hooks/useLanguage";
 
 type WeatherState =
   | { status: "idle" }
@@ -41,7 +42,7 @@ function codeToLabel(code: number): string {
   if (code === 3) return "Overcast";
   if (code === 45 || code === 48) return "Fog";
   if (code === 51 || code === 53 || code === 55) return "Drizzle";
-  if (code === 56 || code === 57) return "Freezing drizzle";
+  if (code === 56 || code === 57) return " Freezingdrizzle";
   if (code === 61 || code === 63 || code === 65) return "Rain";
   if (code === 66 || code === 67) return "Freezing rain";
   if (code === 71 || code === 73 || code === 75) return "Snow";
@@ -90,6 +91,7 @@ async function reverseGeocodeCity(latitude: number, longitude: number): Promise<
 }
 
 export default function Weather() {
+  const { t } = useLanguage();
   const [state, setState] = useState<WeatherState>({ status: "idle" });
 
   useEffect(() => {
@@ -174,10 +176,10 @@ export default function Weather() {
     switch (state.status) {
       case "idle":
       case "loading":
-        return { location: "Locating…", temp: "—", label: "—" };
+        return { location: `${t('weather.locating')}`, temp: "—", label: "—" };
 
       case "error":
-        return { location: "Location off", temp: "—", label: "—" };
+        return { location: `${t('weather.off')}`, temp: "—", label: "—" };
 
       case "ready":
         return {

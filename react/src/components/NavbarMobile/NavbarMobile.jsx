@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import styles from './NavbarMobile.module.css'
-import { useLanguage } from '../../pages/settings/languageContext/LanguageProvider'
+import { useLanguage } from '../../hooks/useLanguage'
 
 function NavbarMobile() {
   const { t } = useLanguage();

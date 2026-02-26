@@ -3,8 +3,10 @@ import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
 import { useState } from "react";
 import Button from "../Button";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function StartSessionModal({
+
   isOpen,
   focusMode,
   energyLevel,
@@ -20,6 +22,8 @@ export default function StartSessionModal({
   initialValues = {},
   onSave,
 }) {
+  const { t } = useLanguage();
+
   // Edit mode
   const isEdit = mode === "edit";
   const [editLabel, setEditLabel] = useState(
@@ -66,7 +70,7 @@ export default function StartSessionModal({
   return (
     <div className={styles.backdrop} onClick={onCancel}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2>{isEdit ? "Edit session" : "Start Session"}</h2>
+        <h2>{isEdit ? `${t('timer.editSession')}` : `${t('timer.startSession')}`}</h2>
 
         <FocusModeSelector value={uiFocusMode} onChange={uiSetFocusMode} />
         <EnergyLevelSelector
@@ -75,11 +79,11 @@ export default function StartSessionModal({
         />
 
         <label style={{ display: "block", marginTop: 12 }}>
-          <h2>What will you do?</h2>
+          <h2>{t('timer.wwyd')}</h2>
           <input
             value={uiLabel}
             onChange={(e) => uiSetLabel(e.target.value)}
-            placeholder='e.g. "Reading"'
+            placeholder={t('timer.eg')}
             style={{
               width: "100%",
               marginTop: 6,
@@ -93,14 +97,14 @@ export default function StartSessionModal({
 
         <div className={styles.actions}>
           <Button
-            label={isEdit ? "Save" : "Start"}
+            label={isEdit ? `${t('timer.save')}` : 'Start'}
             variant={!canSubmit ? "disabledStart" : "start"}
             onClick={handlePrimaryAction}
             disabled={!canSubmit}
           />
 
           <Button 
-          label="Cancel" 
+          label={t('timer.cancel')} 
           variant="stop" 
           onClick={onCancel} />
         </div>

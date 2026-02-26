@@ -7,6 +7,7 @@ import StartSessionModal from "./StartSessionModal";
 import { addSession } from "../../utils/sessionsStore";
 import { clearTimerState, loadTimerState, saveTimerState } from "../../utils/timerStore";
 
+
 // Calculate total seconds based on timestamps
 function computeSeconds({ isRunning, startedAt, accumulatedSeconds }, nowMs) {
   if (!isRunning) return accumulatedSeconds;

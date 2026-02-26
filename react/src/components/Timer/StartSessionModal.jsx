@@ -1,8 +1,9 @@
 import FocusModeSelector from "../FocusModeSelector";
 import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Button from "../Button";
+import { buildRecommendations } from "../../utils/recommendations";
 
 export default function StartSessionModal({
   isOpen,
@@ -33,6 +34,10 @@ export default function StartSessionModal({
       ? null
       : Number(initialValues.energyLevel),
   );
+
+  const rec = useMemo(() => {
+  return buildRecommendations({ energyLevel, focusMode });
+  }, [energyLevel, focusMode]);
 
   if (!isOpen) return null;
 
@@ -73,6 +78,13 @@ export default function StartSessionModal({
           value={uiEnergyLevel}
           onChange={uiSetEnergyLevel}
         />
+
+        <div className={styles.recommendation}>
+          Recommended time: <b>{rec.recommendedMinutes} min</b>
+          <span style={{ opacity: 0.7 }}>
+            {" "} (confidence {Math.round(rec.confidence * 100)}%)
+          </span>
+        </div>
 
         <label style={{ display: "block", marginTop: 12 }}>
           <h2>What will you do?</h2>

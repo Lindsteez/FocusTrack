@@ -21,3 +21,8 @@
   margin-top: 16px;
 }
 
+.recommendation {
+  text-align: center;
+  margin-top: 12px;
+  opacity: 0.9;
+}

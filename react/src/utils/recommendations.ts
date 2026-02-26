@@ -21,9 +21,11 @@ export interface Session {
 
 // const all = (getSessions() as Session[]) ?? [];
 
+// rekommenderade minuter som bucketas till närmaste preset
 const PRESET_MINUTES = [5, 10, 15, 20, 25, 30, 40, 50, 60] as const;
 type PresetMinute = typeof PRESET_MINUTES[number];
 
+// hjälpfunktioner
 function clamp(n: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, n));
 }
@@ -40,6 +42,7 @@ function median(nums: number[]): number | null {
     return a.length % 2 ? a[mid] : (a[mid - 1] + a[mid]) / 2;
 }
 
+// bucketa minuter till närmaste preset
 function bucketMinutes(minutes: number): PresetMinute {
     let best: PresetMinute = PRESET_MINUTES[0];
     let bestDiff = Math.abs(minutes - best);
@@ -54,7 +57,7 @@ function bucketMinutes(minutes: number): PresetMinute {
     return best;
 }
 
-
+// filtrerar sessioner som är inom de senaste n dagarna
 function lastNDays(sessions: Session[], days:number): Session[] {
     const now = Date.now();
     const cutoff = now - days * 24 * 60 * 60 * 1000;
@@ -62,6 +65,7 @@ function lastNDays(sessions: Session[], days:number): Session[] {
     return sessions.filter(s => new Date(s.createdAt).getTime() >= cutoff);
 }
 
+// normaliserar energylevel så att "3", 3 och "3.0" behandlas lika
 function normalizeEnergyLevel(energyLevel: EnergyLevel): EnergyLevel {
     if (energyLevel === null || energyLevel === undefined) return null;
     const n = Number(energyLevel);
@@ -81,11 +85,12 @@ export interface Recommendations {
 
 type BucketStats = { sum: number; count: number; recency: number };
 
+// huvudfunktionen som bygger rekommendation baserat på tidigare sessioner, energy level och focus mode
 export function buildRecommendations(
     params: { energyLevel?: EnergyLevel; focusMode?: string | null } = {}
 ): Recommendations {
     const { energyLevel = null, focusMode = null } = params;
-
+    //hämtar och gör kopia av LS, om tom eller inga ratings så generera mockdata
     let all = ((getSessions() as Session[]) ?? []).slice();
         if (all.length === 0 || all.every((s) => s.rating == null)) {
         all = generateMockSessions();
@@ -93,15 +98,16 @@ export function buildRecommendations(
     
     const energy = normalizeEnergyLevel(energyLevel);
 
+    // kollar de senaste 30 dagarna först, annars alla
     const sessions30 = lastNDays(all, 30);
     const sessions = sessions30.length > 0 ? sessions30 : all;
 
+    // filtrerar bort de utan rating och konverterar rating till number
     const rated = sessions
     .map((s) => ({ ...s, rating: s.rating == null ? null : Number(s.rating) }))
     .filter((s): s is Session & { rating: number } => Number.isFinite(s.rating));
 
-// more code incoming in next push
-
+    // filtrerar sessioner baserat på energy level och focus mode i olika steg för att kunna falla tillbaka om det inte finns tillräckligt med data
     const energyRated =
         energy === null 
             ? rated
@@ -117,11 +123,14 @@ export function buildRecommendations(
         ? modeRated
         : modeRated.filter((s) => normalizeEnergyLevel(s.energyLevel) === energy);
 
+
+    // funktion som grupperar sessioner i buckets baserat på duration och räknar ut en score för varje bucket
     function recommendDurationForm(
     dataRated: Array<Session & { rating: number }>
     ): number | null {
     if (dataRated.length === 0) return null;
 
+    // grupperar sessioner i buckets baserat på duration och räknar ut en score för varje bucket
     const buckets = new Map<number, BucketStats>();
     const now = Date.now();
 
@@ -132,6 +141,7 @@ export function buildRecommendations(
         const mins = bucketMinutes(minsRaw);
         const prev = buckets.get(mins) ?? { sum: 0, count: 0, recency: 0 };
 
+        // sessions som är nyligen för högre vikt (recency bonus)
         const hoursAgo = (now - new Date(s.createdAt).getTime()) / 36e5;
         const recencyBonus = 1 / (1 + hoursAgo / 24);
 
@@ -142,21 +152,24 @@ export function buildRecommendations(
         buckets.set(mins, prev);
     }
 
+    // väljer bucket med högst score, där score är en kombination av genomsnittlig rating, recency och antal sessioner i bucketen
     let bestMins: number | null = null;
     let bestScore = -Infinity;
 
+    // kräver minst 2 sessioner i en bucket för att den ska vara relevant
     for (const [mins, v] of buckets.entries()) {
         if (v.count < 2) continue;
-
         const avgRating = v.sum / v.count;
         const score = avgRating * 10 + v.recency + Math.min(3, v.count) * 0.5;
 
+        // om score är lika kan vi välja den med mer data (högre count) för mer stabilitet
         if (score > bestScore) {
         bestScore = score;
         bestMins = mins;
         }
     }
 
+    // om ingen bucket har tillräckligt med data, ta medianen av alla sessioner. Fallback 10 min
     if (bestMins === null) {
         const minsAll = dataRated.map((s) => s.seconds / 60).filter(Boolean);
         return bucketMinutes(median(minsAll) ?? 10);
@@ -177,7 +190,9 @@ export function buildRecommendations(
         recommendedMinutes = recommendDurationForm(rated) ?? 10;
         }
 
-    const confidence = clamp((energyRated.length || 0) / 10, 0.2, 1);
+
+    // confidence hur mycket relevant data vi har (10+ sessions = 100%)  
+    const confidence = clamp((modeEnergyRated.length || 0) / 10, 0.2, 1);
 
     return {
     recommendedMinutes,

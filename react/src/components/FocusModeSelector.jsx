@@ -1,5 +1,5 @@
 import "./FocusModeSelector.css";
-import { useLanguage } from "../pages/settings/languageContext/LanguageProvider";
+import { useLanguage } from "../hooks/useLanguage";
 
 
 

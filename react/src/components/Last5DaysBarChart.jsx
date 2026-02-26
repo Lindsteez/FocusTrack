@@ -11,6 +11,7 @@ import {
 import { buildLast5DaysData } from "../utils/chartsData";
 import { getSessions } from "../utils/sessionsStore";
 import Card from "./Card";
+import { useLanguage } from "../hooks/useLanguage";
 
 function energyToColor(energyRounded) {
     switch (energyRounded) {
@@ -24,9 +25,11 @@ function energyToColor(energyRounded) {
 }
 
 function CustomTooltip({ active, payload, label }) {
+      const { t } = useLanguage()
     if (!active || !payload?.length) return null;
     const d = payload[0].payload;
     const isLight = document.body.getAttribute("data-theme") === "light";
+    
 
     return (
         <div style={{
@@ -37,8 +40,8 @@ function CustomTooltip({ active, payload, label }) {
             boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
         }}>
             <div style={{ fontWeight: 700, marginBottom: 6}}>{label}</div>
-            <div>Total tid: <b>{d.totalLabel}</b></div>
-            <div>Energi: <b>{d.energy > 0 ? d.energy : "-"}</b></div>
+            <div>{t('prev.totalTime')} <b>{d.totalLabel}</b></div>
+            <div>{t('timer.energy')} <b>{d.energy > 0 ? d.energy : "-"}</b></div>
         </div>
     );
 }
@@ -62,6 +65,7 @@ function EnergyBarShape(props) {
 }
 
 export default function Last5DaysBarChart() {
+      const { t } = useLanguage()
 const data = useMemo(() => {
   const sessions = getSessions?.() ?? [];
 
@@ -98,7 +102,7 @@ const data = useMemo(() => {
     }, [data]);
 
 return (
-  <Card title="Previous 5 days">
+<Card title= {`${t('prev.title')}`}>
     <div style={{ width: "100%", height: 347 }}>
       <ResponsiveContainer>
         <BarChart

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import useLocalStorage from '../../hooks/useLocalStorage'
-import { useLanguage } from './languageContext/LanguageProvider'
+import { useLanguage } from '../../hooks/useLanguage'
 import './themeContext.css'
 
 function ThemeContextCard() {

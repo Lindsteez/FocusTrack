@@ -1,6 +1,6 @@
 import RateEnergy from "./EnergyBtn";
 import styles from "./EnergyBtn.module.css";
-import { useLanguage } from "../../pages/settings/languageContext/LanguageProvider";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function EnergyLevelSelector({ value, onChange }) {
   const { t } = useLanguage();

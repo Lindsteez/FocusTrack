@@ -5,7 +5,7 @@ import {
     useMemo,
     useState
 } from "react";
-import { Languages, Locale } from "./LanguageContext";
+import { Languages, Locale } from "../pages/settings/languageContext/LanguageContext";
 
 type ContextType = {
     locale: Locale
@@ -39,7 +39,14 @@ export function LanguageProvider ({
 
         return {
             locale, setLocale,
-            t: (key: string) => (dict as Record<string, string>)[key] ?? key,
+            t: (key: string) => {
+                const translation = (dict as Record<string, string>)[key];
+                if (!translation) {
+                    console.warn(`Missing translation for key: ${key} in locale: ${locale}`);
+                    return key;
+                }
+                return translation;
+            },
         }
     }, [locale])
 

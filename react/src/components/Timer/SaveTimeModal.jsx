@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Card from "../Card";
 import Button from "../Button";
-import { useLanguage } from "../../pages/settings/languageContext/LanguageProvider";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSaveConfirm }) {
   const { t } = useLanguage();

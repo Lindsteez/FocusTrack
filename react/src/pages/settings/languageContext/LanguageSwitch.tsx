@@ -1,4 +1,4 @@
-import { useLanguage } from "./LanguageProvider";
+import { useLanguage } from "../../../hooks/useLanguage";
 import "../themeContext.css";
 
 export default function LanguageSwitch() {

@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import { LanguageProvider } from './pages/settings/languageContext/LanguageProvider'
+import { LanguageProvider } from './hooks/useLanguage.js'
 import './index.css'
 import './media.css'
 import App from './App.jsx'

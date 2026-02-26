@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useLanguage } from "../../hooks/useLanguage"
 import styles from "./ToDo.module.css";
 import Card from "../Card";
 import Button from "../Button";
@@ -9,6 +10,7 @@ function makeId() {
 }
 
 export default function ToDo() {
+      const { t } = useLanguage();
   const [text, setText] = useState("");
 
   const [todos, setTodos] = useState(() => {
@@ -55,13 +57,13 @@ export default function ToDo() {
 
   return (
     <div className={styles.page}>
-      <Card title={`ToDo (${stats.left} left)`}>
+      <Card title={`${t('todo.title')} (${stats.left} ${t('todo.left')})`}>
         <div className={styles.toolbar}>
           <input
             className={styles.input}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Add a task…"
+            placeholder={t('todo.addTask')}
             onKeyDown={(e) => {
               if (e.key === "Enter") addTodo();
             }}
@@ -69,14 +71,14 @@ export default function ToDo() {
 
           <div className={styles.actions}>
             <Button
-              label="Add"
+              label={t('todo.add')}
               variant="start"
               onClick={addTodo}
               disabled={!text.trim()}
               className={styles.addBtn}
             />
             <Button
-              label="Clear"
+              label={t('todo.clear')}
               variant="stop"
               onClick={clearCompleted}
               disabled={stats.done === 0}

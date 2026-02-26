@@ -1,17 +1,43 @@
 import { useState, useMemo } from "react";
+import { useLanguage } from "../hooks/useLanguage";
 import styles from "./RecentSessions.module.css"; // återanvänd samma CSS
 import useSessions from "../hooks/useSessions";
 import { formatDuration, formatDate } from "../utils/sessionsStore";
 import penIcon from "../assets/imgs/pen.png";
 import StartSessionModal from "./Timer/StartSessionModal";
 
-function focusDotStyle(focusMode) {
+type FocusMode = 'work' | 'break' | 'meeting';
+
+type SessionType = {
+  id: string;
+  seconds: number;
+  description?: string;
+  note?: string;
+  focusMode?: FocusMode;
+  energyLevel?: number | null;
+  createdAt: string;
+};
+
+type ValuesType = {
+  description: string;
+  focusMode: FocusMode;
+  energyLevel: number | null;
+};
+
+function focusDotStyle(focusMode: FocusMode) {
   const map = {
-    Work: "#637fb3",
-    Break: "#d1a664",
-    Meeting: "#bb67a9",
+    work: "#637fb3",
+    break: "#d1a664",
+    meeting: "#bb67a9",
   };
   return { background: map[focusMode] ?? "#94A3B8" };
+}
+
+interface SessionsListProps {
+  limit?: number;
+  emptyText?: string;
+  showLoadMore?: boolean;
+  pageSize?: number;
 }
 
 export default function SessionsList({ 
@@ -19,7 +45,7 @@ export default function SessionsList({
   emptyText = "No sessions yet.",
   showLoadMore = false,
   pageSize = 20, 
-}) {  
+}: SessionsListProps) {  
   const {
     sessions,
     deleteSession,
@@ -30,11 +56,13 @@ export default function SessionsList({
     saveEdit,
   } = useSessions();
 
+  const { t } =  useLanguage();
+
   const initialCount = showLoadMore ? Math.min(pageSize, limit) : limit;
   const [visibleCount, setVisibleCount] = useState (initialCount);
   const safeVisibleCount = Math.min(visibleCount, limit, sessions.length);
 
-  const list = useMemo(
+  const list: SessionType[] = useMemo(
     () => sessions.slice(0, safeVisibleCount),
     [sessions, safeVisibleCount]
   );
@@ -47,7 +75,7 @@ export default function SessionsList({
         <p className={styles.empty}>{emptyText}</p>
       ) : (
         <div className={styles.cardBody}>
-          {list.map((s) => (
+          {list.map((s: SessionType) => (
             <div key={s.id} className={styles.row}>
               <div className={styles.left}>
                 <div className={styles.title}>{s.description || "(no name)"}</div>
@@ -55,13 +83,13 @@ export default function SessionsList({
                 <div className={styles.metaRow}>
                   <span
                     className={styles.dot}
-                    style={focusDotStyle(s.focusMode)}
+                    style={focusDotStyle(s.focusMode ?? 'work')}
                     aria-hidden="true"
                   />
-                  <span className={styles.category}>{s.focusMode ?? "-"}</span>
+                  <span className={styles.category}>{s.focusMode ? t(`timer.${s.focusMode.toLowerCase()}`) : "-"}</span>
                 </div>
 
-                <span className={styles.note}>Energy: {s.energyLevel ?? "-"}</span>
+                <span className={styles.note}>{t('timer.energy')}: {s.energyLevel ?? "-"}</span>
               </div>
 
               <div className={styles.timeBlock}>
@@ -102,11 +130,18 @@ export default function SessionsList({
           initialValues={{
             description: editingSession.description ?? "",
             note: editingSession.note ?? "",
-            focusMode: editingSession.focusMode ?? "Work",
+            focusMode: editingSession.focusMode ?? "work",
             energyLevel: editingSession.energyLevel ?? null,
           }}
+          focusMode={editingSession.focusMode ?? "work"}
+          energyLevel={editingSession.energyLevel ?? null}
+          label={editingSession.description ?? ""}
+          onChangeFocusMode={() => {}}
+          onChangeEnergyLevel={() => {}}
+          onChangeLabel={() => {}}
           onCancel={closeEdit}
-          onSave={(values) => {
+          onConfirm={() => {}}
+          onSave={(values: ValuesType) => {
             saveEdit({
               description: values.description,
               focusMode: values.focusMode,

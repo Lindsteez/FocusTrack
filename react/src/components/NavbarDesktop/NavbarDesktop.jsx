@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useLanguage } from "../../pages/settings/languageContext/LanguageProvider";
+import { useLanguage } from "../../hooks/useLanguage";
 
 import LogoDark from "../../assets/svg/focustrack-logo.svg";
 import LogoLight from "../../assets/svg/focustrack-logo-light.svg";

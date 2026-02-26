@@ -3,7 +3,7 @@ import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
 import { useState } from "react";
 import Button from "../Button";
-import { useLanguage } from "../../pages/settings/languageContext/LanguageProvider";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function StartSessionModal({
 

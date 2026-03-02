@@ -190,7 +190,6 @@ export function buildRecommendations(
         recommendedMinutes = recommendDurationForm(rated) ?? 10;
         }
 
-
     // confidence hur mycket relevant data vi har (10+ sessions = 100%)  
     const confidence = clamp((modeEnergyRated.length || 0) / 10, 0.2, 1);
 
@@ -209,40 +208,64 @@ export function buildRecommendations(
 
 function generateMockSessions(): Session[] {
   const now = Date.now();
+  const focusModes = ["Work", "Meeting", "Break"] as const;
+  const energyLevels = [1, 2, 3, 4, 5] as const;
 
-  const mk = (
-    id: string,
-    mins: number,
-    daysAgo: number,
-    rating: number,
-    energyLevel: number,
-    focusMode: "Work" | "Meeting" | "Break"
-  ): Session => ({
-    id,
-    seconds: mins * 60,
-    createdAt: new Date(now - daysAgo * 86400000).toISOString(),
-    rating,
-    energyLevel,
-    focusMode,
-  });
+  // Hur många sessions per (mode, energy)
+  // Tweak:a gärna så den matchar din UI-känsla
+  const COUNTS: Record<(typeof focusModes)[number], Record<number, number>> = {
+    Work:   { 1: 1, 2: 3, 3: 10, 4: 6, 5: 2 },
+    Meeting:{ 1: 0, 2: 2, 3: 8, 4: 4, 5: 1 },
+    Break:  { 1: 6, 2: 9, 3: 4, 4: 1, 5: 0 },
+  };
 
-  return [
-    // Work: brukar funka bäst runt 25 min
-    mk("w1", 25, 1, 5, 4, "Work"),
-    mk("w2", 25, 2, 4, 3, "Work"),
-    mk("w3", 20, 4, 4, 2, "Work"),
-    mk("w4", 30, 6, 3, 5, "Work"),
+  let idCounter = 1;
+  const sessions: Session[] = [];
 
-    // Meeting: ofta längre och lite lägre rating
-    mk("m1", 45, 1, 3, 3, "Meeting"),
-    mk("m2", 50, 3, 2, 2, "Meeting"),
-    mk("m3", 40, 5, 3, 4, "Meeting"),
-    mk("m4", 60, 8, 2, 3, "Meeting"),
+  const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+  const randInt = (min: number, max: number) => Math.floor(rand(min, max + 1));
 
-    // Break: korta pauser med hög rating
-    mk("b1", 5, 1, 5, 2, "Break"),
-    mk("b2", 10, 2, 5, 3, "Break"),
-    mk("b3", 10, 4, 4, 1, "Break"),
-    mk("b4", 15, 6, 3, 4, "Break"),
-  ];
+  const clampNum = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
+
+  for (const mode of focusModes) {
+    for (const energy of energyLevels) {
+      const count = COUNTS[mode][energy];
+
+      for (let i = 0; i < count; i++) {
+        // Basduration per mode
+        const base =
+          mode === "Work" ? 25 :
+          mode === "Meeting" ? 45 :
+          10;
+
+        // Energi påverkar duration lite (hög energi -> lite längre)
+        const minutes = clampNum(
+          Math.round(base + (energy - 3) * 3 + rand(-6, 6)),
+          5,
+          60
+        );
+
+        // Rating påverkas av energi + lite brus
+        const rating = clampNum(
+          Math.round(3 + (energy - 3) * 0.6 + rand(-1.2, 1.2)),
+          1,
+          5
+        );
+
+        // Sprid de senaste 25 dagarna (nyare lite oftare)
+        const daysAgo = Math.pow(Math.random(), 1.6) * 25;
+
+        sessions.push({
+          id: `mock-${idCounter++}`,
+          seconds: minutes * 60,
+          createdAt: new Date(now - daysAgo * 86400000).toISOString(),
+          rating,
+          energyLevel: energy,
+          focusMode: mode,
+        });
+      }
+    }
+  }
+
+  return sessions;
 }

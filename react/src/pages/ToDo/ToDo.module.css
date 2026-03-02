@@ -3,18 +3,19 @@
   flex-direction: column;
   gap: 12px;
 
-  height: 100%;
+  flex: 1;
   min-height: 0;
+  height: 100%;
 }
 
-/* Input + buttons in one row (desktop) */
+/* ===== Toolbar (input + buttons) ===== */
 .toolbar {
   display: flex;
   align-items: center;
   gap: 12px;
 
   width: 100%;
-  min-height: 0;
+  flex: 0 0 auto; 
 }
 
 .input {
@@ -51,16 +52,17 @@
   font-size: 0.95rem;
 }
 
-/* Scroll area inside the card */
+/* ===== Scrollable list area ===== */
 .list {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
+  flex: 1 1 auto;     
+  min-height: 150px;      
+  overflow: auto;     /* scroll only here */
 
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  width: 100%;
 
+  width: 100%;
   padding-right: 2px;
 }
 
@@ -126,7 +128,7 @@
   transform: scale(0.95);
 }
 
-/* Mobile: stack input and buttons */
+/* ===== Mobile ===== */
 @media (max-width: 767px) {
   .toolbar {
     flex-direction: column;
@@ -138,15 +140,6 @@
   }
 
   .input {
-    min-width: 0;
-    width: 100%;
-  }
-
-  .page {
-    padding-top: 110px;
-    padding-bottom: 90px;
-  }
-    .input {
     flex: 1 1 auto;
     min-width: 0;
     width: 100%;

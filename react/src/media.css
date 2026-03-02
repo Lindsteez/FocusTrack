@@ -143,6 +143,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    align-items: stretch;
   }
 }
 
@@ -152,10 +153,6 @@
     overflow: hidden;
   }
 
-  /* 2x2 grid:
-     Left:  Timer / Recent
-     Right: ToDo  / Chart
-  */
   .grid {
     height: calc(100vh - 90px);
     display: grid;
@@ -175,27 +172,34 @@
   .recent { grid-area: recent; min-height: 0; }
   .chart  { grid-area: chart;  min-height: 0; }
 
-  /* Critical: wrappers must stretch and allow children to shrink */
+  /* Every box must stretch fully */
   .box {
     min-height: 0;
     height: 100%;
     display: flex;
   }
 
-  /* Card should fill the grid cell */
+  /* Card must fill the grid cell */
   .box > * {
     flex: 1;
     min-height: 0;
   }
 
-  /* Only these can scroll internally */
-  .todo .content,
+  /* Recent scroll */
   .recent .content {
     overflow: auto;
     min-height: 0;
   }
 
-  /* Chart must NOT scroll; it must get a real height */
+  /* FIX: ToDo must fully stretch */
+  .todo .content {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* Chart */
   .chart .content {
     overflow: hidden;
     min-height: 0;
@@ -203,7 +207,6 @@
     flex-direction: column;
   }
 
-  /* The chart wrapper must have a measurable height for Recharts */
   .chartWrap {
     flex: 1;
     min-height: 0;

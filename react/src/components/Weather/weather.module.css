@@ -1,9 +1,44 @@
 .weather {
-    width: 30px !important;
-    height: auto;
-     filter: brightness(0.6)
+  width: 30px !important;
+  height: auto;
+  filter: brightness(0.6);
 }
 
 .viewTemp {
-    display: flex;
+  display: flex;
+}
+
+.weatherGrid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.weatherLocation {
+  grid-column: 2;
+  text-align: right;
+}
+
+.bottomRow {
+  grid-column: 1 / 3; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weatherIcon {
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+
+.bottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.viewTemp {
+  line-height: 1; /* viktigt */
+  display: flex; /* gör textblocket “tight” */
+  align-items: center;
 }

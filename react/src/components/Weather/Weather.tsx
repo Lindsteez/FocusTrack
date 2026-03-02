@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../../hooks/useLanguage";
-import overcast from '../../assets/imgs/weather/overcast.gif'
-import styles from './weather.module.css'
+import overcast from "../../assets/imgs/weather/overcast.gif";
+import styles from "./weather.module.css";
 
 type WeatherState =
   | { status: "idle" }
@@ -41,7 +41,8 @@ function codeToLabel(code: number): React.ReactNode {
   if (code === 0) return "Clear";
   if (code === 1) return "Mainly clear";
   if (code === 2) return "Partly cloudy";
-  if (code === 3) return <img src={overcast} alt="Overcast" className={styles.weather}/>;
+  if (code === 3)
+    return <img src={overcast} alt="Overcast" className={styles.weather} />;
   if (code === 45 || code === 48) return "Fog";
   if (code === 51 || code === 53 || code === 55) return "Drizzle";
   if (code === 56 || code === 57) return " Freezingdrizzle";
@@ -56,7 +57,17 @@ function codeToLabel(code: number): React.ReactNode {
   return `Code ${code}`;
 }
 
-async function reverseGeocodeCity(latitude: number, longitude: number): Promise<string> {
+function codeToIcon(code) {
+  if (code === 3) {
+    return <img src={overcast} alt="Overcast" className={styles.weatherIcon} />;
+  }
+  return null;
+}
+
+async function reverseGeocodeCity(
+  latitude: number,
+  longitude: number,
+): Promise<string> {
   // Nominatim reverse geocoding docs. :contentReference[oaicite:7]{index=7}
   const url =
     "https://nominatim.openstreetmap.org/reverse" +
@@ -103,7 +114,10 @@ export default function Weather() {
       setState({ status: "loading" });
 
       if (!("geolocation" in navigator)) {
-        setState({ status: "error", message: "Geolocation is not supported in this browser." });
+        setState({
+          status: "error",
+          message: "Geolocation is not supported in this browser.",
+        });
         return;
       }
 
@@ -125,14 +139,19 @@ export default function Weather() {
               `&timezone=auto`;
 
             const weatherRes = await fetch(weatherUrl);
-            if (!weatherRes.ok) throw new Error(`Open-Meteo request failed: ${weatherRes.status}`);
+            if (!weatherRes.ok)
+              throw new Error(
+                `Open-Meteo request failed: ${weatherRes.status}`,
+              );
 
             const weatherData = (await weatherRes.json()) as OpenMeteoResponse;
             const tempC = weatherData.current?.temperature_2m;
             const code = weatherData.current?.weather_code;
 
             if (typeof tempC !== "number" || typeof code !== "number") {
-              throw new Error("Open-Meteo response missing current weather data.");
+              throw new Error(
+                "Open-Meteo response missing current weather data.",
+              );
             }
 
             // 2) Reverse geocode coords -> city name (Nominatim). :contentReference[oaicite:10]{index=10}
@@ -164,7 +183,7 @@ export default function Weather() {
           enableHighAccuracy: false,
           timeout: 10_000,
           maximumAge: 10 * 60 * 1000,
-        }
+        },
       );
     }
 
@@ -178,10 +197,10 @@ export default function Weather() {
     switch (state.status) {
       case "idle":
       case "loading":
-        return { location: `${t('weather.locating')}`, temp: "—", label: "—" };
+        return { location: `${t("weather.locating")}`, temp: "—", label: "—" };
 
       case "error":
-        return { location: `${t('weather.off')}`, temp: "—", label: "—" };
+        return { location: `${t("weather.off")}`, temp: "—", label: "—" };
 
       case "ready":
         return {
@@ -192,11 +211,25 @@ export default function Weather() {
     }
   }, [state]);
 
+  // return (
+  //   <div aria-label="Current weather">
+  //     <div className="weatherLocation">{view.location}</div>
+  //     <div className="viewTemp">
+  //       {view.temp} • {view.label}
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div aria-label="Current weather">
-      <div className="weatherLocation">{view.location}</div>
-      <div className="viewTemp">
-        {view.temp} • {view.label}
+    <div className={styles.weatherGrid} aria-label="Current weather">
+      <div className={styles.weatherLocation}>{view.location}</div>
+
+      <div className={styles.bottomRow}>
+        <div className={styles.viewTemp}>
+          {view.temp} • {view.label}
+        </div>
+
+        <div className={styles.iconSlot}>{codeToIcon(view.code)}</div>
       </div>
     </div>
   );

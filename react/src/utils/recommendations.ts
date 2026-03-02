@@ -211,8 +211,6 @@ function generateMockSessions(): Session[] {
   const focusModes = ["Work", "Meeting", "Break"] as const;
   const energyLevels = [1, 2, 3, 4, 5] as const;
 
-  // Hur många sessions per (mode, energy)
-  // Tweak:a gärna så den matchar din UI-känsla
   const COUNTS: Record<(typeof focusModes)[number], Record<number, number>> = {
     Work:   { 1: 1, 2: 3, 3: 10, 4: 6, 5: 2 },
     Meeting:{ 1: 0, 2: 2, 3: 8, 4: 4, 5: 1 },

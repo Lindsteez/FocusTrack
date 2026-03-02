@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../../hooks/useLanguage";
+import overcast from '../../assets/imgs/weather/overcast.gif'
+import styles from './weather.module.css'
 
 type WeatherState =
   | { status: "idle" }
@@ -34,12 +36,12 @@ type NominatimReverseResponse = {
   display_name?: string;
 };
 
-function codeToLabel(code: number): string {
+function codeToLabel(code: number): React.ReactNode {
   // Open-Meteo WMO weather interpretation codes.
   if (code === 0) return "Clear";
   if (code === 1) return "Mainly clear";
   if (code === 2) return "Partly cloudy";
-  if (code === 3) return "Overcast";
+  if (code === 3) return <img src={overcast} alt="Overcast" className={styles.weather}/>;
   if (code === 45 || code === 48) return "Fog";
   if (code === 51 || code === 53 || code === 55) return "Drizzle";
   if (code === 56 || code === 57) return " Freezingdrizzle";
@@ -192,8 +194,8 @@ export default function Weather() {
 
   return (
     <div aria-label="Current weather">
-      <div>{view.location}</div>
-      <div>
+      <div className="weatherLocation">{view.location}</div>
+      <div className="viewTemp">
         {view.temp} • {view.label}
       </div>
     </div>

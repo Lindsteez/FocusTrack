@@ -1,0 +1,9 @@
+.weather {
+    width: 30px !important;
+    height: auto;
+     filter: brightness(0.6)
+}
+
+.viewTemp {
+    display: flex;
+}

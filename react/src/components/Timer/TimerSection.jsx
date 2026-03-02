@@ -8,6 +8,7 @@ import { addSession } from "../../utils/sessionsStore";
 import { clearTimerState, loadTimerState, saveTimerState } from "../../utils/timerStore";
 import { useLanguage } from "../../hooks/useLanguage.tsx";
 
+
 // Calculate total seconds based on timestamps
 function computeSeconds({ isRunning, startedAt, accumulatedSeconds }, nowMs) {
   if (!isRunning) return accumulatedSeconds;
@@ -139,7 +140,7 @@ export default function TimerSection() {
           setIsModalOpen(false);
           resetTimer();
         }}
-        onSaveConfirm={() => {
+        onSaveConfirm={(rating) => {
           const label = sessionLabel.trim();
 
           addSession({
@@ -149,6 +150,7 @@ export default function TimerSection() {
             focusMode,
             energyLevel,
             label,
+            rating,
           });
 
           setIsModalOpen(false);

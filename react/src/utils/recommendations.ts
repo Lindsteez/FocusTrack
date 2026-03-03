@@ -204,11 +204,11 @@ export function buildRecommendations(
         recommendedMinutes = recommendDurationForm(rated) ?? 10;
         }
 
-    // confidence hur mycket relevant data vi har (10+ sessions = 100%)  
+    // confidence baseras på mängden relevant data (upp till 10 sessioner) och justeras av genomsnittlig rating (lägre rating sänker confidence något).
         const countConf = clamp((modeEnergyRated.length) / 10, 0.2, 1);
 
         const ratingNorm =
-        last10Avg == null ? 0.5 : clamp((last10Avg - 1) / 4, 0, 1); // 1★=>0, 5★=>1
+        last10Avg == null ? 0.5 : clamp((last10Avg - 1) / 4, 0, 1);
 
         const confidence = clamp(countConf * (0.5 + 0.5 * ratingNorm), 0.2, 1);
 

@@ -2,10 +2,12 @@ import { useState } from "react";
 import Card from "../Card";
 import Button from "../Button";
 import { useLanguage } from "../../hooks/useLanguage";
+import styles from "./SaveTimeModal.module.css";
 
 export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSaveConfirm }) {
-  const { t } = useLanguage();
-  const [mode, setMode] = useState("confirmSave"); // confirmSave | confirmDiscard
+    const { t } = useLanguage();
+  const [mode, setMode] = useState("confirmSave"); // confirmSave | confirmDiscard | rateSession
+
 
   if (!isOpen) return null;
 
@@ -22,8 +24,7 @@ export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSav
                 variant="start"
                 disabled={seconds === 0}
                 onClick={() => {
-                  setMode("confirmSave"); // reset for next open
-                  onSaveConfirm();
+                  setMode("rateSession"); // skickar vidare till rating
                 }}
               />
               <Button 
@@ -58,6 +59,31 @@ export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSav
             </div>
           </Card>
         )}
+
+          {mode === "rateSession" && (
+            <Card title="How did it feel?">
+              <div className={styles.emojiRow}>
+                {[
+                  { value: 1, emoji: "😩" },
+                  { value: 2, emoji: "😕" },
+                  { value: 3, emoji: "😐" },
+                  { value: 4, emoji: "🙂" },
+                  { value: 5, emoji: "🔥" },
+                ].map(e => (
+                  <button
+                    key={e.value}
+                    className={styles.emojiButton}
+                    onClick={() => {
+                      onSaveConfirm(e.value);
+                      setMode("confirmSave");
+                    }}
+                  >
+                    {e.emoji}
+                  </button>
+                ))}
+              </div>
+            </Card>
+          )}
       </div>
     </div>
   );

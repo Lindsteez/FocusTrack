@@ -1,0 +1,19 @@
+.emojiRow {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.emojiButton {
+  font-size: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.emojiButton:hover {
+  transform: scale(1.3);
+  filter: brightness(1.2);
+}

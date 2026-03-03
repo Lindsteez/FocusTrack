@@ -1,9 +1,11 @@
 import FocusModeSelector from "../FocusModeSelector";
 import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Button from "../Button";
 import { useLanguage } from "../../hooks/useLanguage";
+import { buildRecommendations } from "../../utils/recommendations";
+
 
 export default function StartSessionModal({
 
@@ -38,6 +40,10 @@ export default function StartSessionModal({
       : Number(initialValues.energyLevel),
   );
 
+  const rec = useMemo(() => {
+  return buildRecommendations({ energyLevel, focusMode });
+  }, [energyLevel, focusMode]);
+
   if (!isOpen) return null;
 
   const uiFocusMode = isEdit ? editFocusMode : focusMode;
@@ -48,7 +54,7 @@ export default function StartSessionModal({
   const uiSetEnergyLevel = isEdit
     ? (n) => setEditEnergyLevel(Number(n))
     : onChangeEnergyLevel;
-  console.log("editEnergyLevel", editEnergyLevel);
+  // console.log("editEnergyLevel", editEnergyLevel);
   const uiSetLabel = isEdit ? setEditLabel : onChangeLabel;
 
   const canSubmit = Boolean(uiFocusMode) && uiEnergyLevel != null && String(uiLabel).trim().length > 0;
@@ -77,6 +83,13 @@ export default function StartSessionModal({
           value={uiEnergyLevel}
           onChange={uiSetEnergyLevel}
         />
+
+        <div className={styles.recommendation}>
+          Recommended time: <b>{rec.recommendedMinutes} min</b>
+          <span style={{ opacity: 0.7 }}>
+            {" "} (confidence {Math.round(rec.confidence * 100)}%)
+          </span>
+        </div>
 
         <label style={{ display: "block", marginTop: 12 }}>
           <h2>{t('timer.wwyd')}</h2>

@@ -50,4 +50,6 @@
 
   /* by default: no scroll. We'll enable per-card in media.css when needed */
   overflow: hidden;
+  flex:1;
+min-height: 0;
 }

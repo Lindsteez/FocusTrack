@@ -6,7 +6,9 @@ function MobileLayout({ children }) {
         <div className="mobile-layout">
             <LogoImport />
             <main>
-                {children}
+                
+                <main className="mobile-main">{children}</main>
+
             </main>
             <NavbarMobile />
         </div>

@@ -1,3 +1,22 @@
+/* ---------- Standalone page wrapper (used in ToDo page route) ---------- */
+.todo {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+
+  /* Keep layout predictable */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  gap: 12px;
+}
+
+/* Make the Card (direct child) able to stretch when needed */
+.todo > * {
+  min-height: 0;
+}
+
+/* ---------- Inside the Card ---------- */
 .page {
   display: flex;
   flex-direction: column;
@@ -5,9 +24,11 @@
 
   flex: 1;
   min-height: 0;
-  height: 100%;
 }
 
+.page > * {
+  min-height: 0; /* important for nested scrolling */
+}
 /* ===== Toolbar (input + buttons) ===== */
 .toolbar {
   display: flex;
@@ -15,7 +36,7 @@
   gap: 12px;
 
   width: 100%;
-  flex: 0 0 auto; 
+  flex: 0 0 auto;
 }
 
 .input {
@@ -54,9 +75,9 @@
 
 /* ===== Scrollable list area ===== */
 .list {
-  flex: 1 1 auto;     
-  min-height: 150px;      
-  overflow: auto;     /* scroll only here */
+  flex: 1 1 auto;
+  min-height: 150px; /* desktop-friendly minimum */
+  overflow: auto;    /* scroll only here */
 
   display: flex;
   flex-direction: column;
@@ -128,9 +149,32 @@
   transform: scale(0.95);
 }
 
-/* ===== Mobile ===== */
+/* ToDo.module.css */
+
+/* -------------------- Mobile (0–767px) -------------------- */
 @media (max-width: 767px) {
+  .page {
+    padding-top: 110px;
+    padding-bottom: 100px;
+
+    height: 100dvh;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .page > * {
+    flex: 1 1 auto;
+    min-height: 0;  
+  }
+
   .toolbar {
+    flex: 0 0 auto;
     flex-direction: column;
     align-items: stretch;
   }
@@ -140,7 +184,7 @@
   }
 
   .input {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     min-width: 0;
     width: 100%;
     height: 40px;
@@ -152,5 +196,17 @@
     height: 40px;
     min-width: 80px;
     font-size: 0.85rem;
+  }
+
+  .list {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+    .content {
+    align-items: stretch;      /* instead of center -> let children take full width */
+    justify-content: flex-start; /* instead of space-between -> remove huge empty gap */
+    min-height: 0;             /* keep this so inner scroll works */
   }
 }

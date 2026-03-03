@@ -122,6 +122,25 @@
   padding: 8px 16px;
   font-size: 0.9rem;
   }
+
+  .mobile-layout {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* prevents whole page scroll */
+}
+
+.mobile-main {
+  flex: 1 1 auto;
+  min-height: 0; /* CRITICAL for inner scroll to work */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 16px;
+
+  /* space above bottom navbar */
+  padding-bottom: 110px;
+}
 }
 
 /* Tablet (768–1023px) */

@@ -42,6 +42,14 @@ function median(nums: number[]): number | null {
     return a.length % 2 ? a[mid] : (a[mid - 1] + a[mid]) / 2;
 }
 
+function lastNAvgRated(dataRated: Array<Session & { rating: number }>, n: number): number | null {
+  const sorted = [...dataRated].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+  const lastN = sorted.slice(0, n).map(s => s.rating);
+  return avg(lastN);
+}
+
 // bucketa minuter till närmaste preset
 function bucketMinutes(minutes: number): PresetMinute {
     let best: PresetMinute = PRESET_MINUTES[0];
@@ -76,7 +84,7 @@ export interface Recommendations {
     recommendedMinutes: number;
     baseRecommendedMinutes: number;
     streak4: number;
-    last5Avg: number | null;
+    last10Avg: number | null;
     burnout: boolean;
     confidence: number;
     tips: string[];
@@ -178,7 +186,13 @@ export function buildRecommendations(
     return bestMins;
     }
 
-        let recommendedMinutes = recommendDurationForm(modeEnergyRated);
+    let last10Avg =
+        lastNAvgRated(modeEnergyRated, 10) ??
+        lastNAvgRated(energyRated, 10) ??
+        lastNAvgRated(modeRated, 10) ??
+        lastNAvgRated(rated, 10);
+
+    let recommendedMinutes = recommendDurationForm(modeEnergyRated);
 
         if (recommendedMinutes === null) {
         recommendedMinutes = recommendDurationForm(energyRated);
@@ -191,13 +205,18 @@ export function buildRecommendations(
         }
 
     // confidence hur mycket relevant data vi har (10+ sessions = 100%)  
-    const confidence = clamp((modeEnergyRated.length || 0) / 10, 0.2, 1);
+        const countConf = clamp((modeEnergyRated.length) / 10, 0.2, 1);
+
+        const ratingNorm =
+        last10Avg == null ? 0.5 : clamp((last10Avg - 1) / 4, 0, 1); // 1★=>0, 5★=>1
+
+        const confidence = clamp(countConf * (0.5 + 0.5 * ratingNorm), 0.2, 1);
 
     return {
     recommendedMinutes,
     baseRecommendedMinutes: recommendedMinutes,
     streak4: 0,
-    last5Avg: null,
+    last10Avg: null,
     burnout: false,
     confidence,
     tips: [],

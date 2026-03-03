@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import useLocalStorage from '../../hooks/useLocalStorage'
+import { useLanguage } from '../../hooks/useLanguage'
 import './themeContext.css'
 
 function ThemeContextCard() {
+  const { t } = useLanguage();
   const [theme, setTheme] = useLocalStorage('theme', 'dark') // dark | light | auto
 
   // Apply theme + listen to system changes when auto
@@ -27,11 +29,11 @@ function ThemeContextCard() {
 
   return (
     <section className="settings">
-      <h2 className="settings__title">Settings</h2>
+      <h2 className="settings__title">{t('settings.title')}</h2>
 
       <div className="settings__card">
         <div className="settings__row">
-          <span className="settings__label">Theme</span>
+          <span className="settings__label">{t('settings.theme')}</span>
 
           <div className="segmented">
             <button
@@ -39,7 +41,7 @@ function ThemeContextCard() {
               className={`segmented__btn ${theme === 'dark' ? 'is-active' : ''}`}
               onClick={() => setTheme('dark')}
             >
-              🌙 Dark
+              🌙 {t('settings.dark')}
             </button>
 
             <button
@@ -47,7 +49,7 @@ function ThemeContextCard() {
               className={`segmented__btn ${theme === 'light' ? 'is-active' : ''}`}
               onClick={() => setTheme('light')}
             >
-              🌞 Light
+              🌞 {t('settings.light')}
             </button>
 
             <button

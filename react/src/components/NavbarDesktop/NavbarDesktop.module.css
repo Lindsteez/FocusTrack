@@ -17,6 +17,7 @@
 
   .navbar img {
     margin-right: auto; 
+    width: 14rem;
   }
 
   .navbar a {
@@ -46,6 +47,7 @@
     display: flex;
     flex-direction: column;
     font-size: 12px;
+    text-align: right;
   }
   
 }

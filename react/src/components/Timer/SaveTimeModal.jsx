@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Card from "../Card";
 import Button from "../Button";
+import { useLanguage } from "../../hooks/useLanguage";
 
 export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSaveConfirm }) {
+  const { t } = useLanguage();
   const [mode, setMode] = useState("confirmSave"); // confirmSave | confirmDiscard
 
   if (!isOpen) return null;
@@ -11,12 +13,12 @@ export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSav
     <div className="modalOverlay" role="dialog" aria-modal="true">
       <div className="modalBox">
         {mode === "confirmSave" && (
-          <Card title="Save time?">
-            <p>Would you like to save this time?</p>
+          <Card title={t('timer.modalTitle')}>
+            <p>{t('timer.saveTime')}</p>
 
             <div className="modalButtons">
               <Button
-                label="Yes"
+                label={t('timer.yes')}
                 variant="start"
                 disabled={seconds === 0}
                 onClick={() => {
@@ -24,18 +26,24 @@ export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSav
                   onSaveConfirm();
                 }}
               />
-              <Button label="No" variant="stop" onClick={() => setMode("confirmDiscard")} />
+              <Button 
+                label={t('timer.no')} 
+                variant="stop" 
+                onClick={() => 
+                  setMode("confirmDiscard")
+                } 
+              />
             </div>
           </Card>
         )}
 
         {mode === "confirmDiscard" && (
-          <Card title="Are you sure?">
-            <p>This will discard the time.</p>
+          <Card title={t('timer.youSure')}>
+            <p>{t('timer.discard')}</p>
 
             <div className="modalButtons">
               <Button
-                label="Yes"
+                label={t('timer.yes')}
                 variant="start"
                 onClick={() => {
                   setMode("confirmSave"); // reset for next open
@@ -43,7 +51,7 @@ export default function SaveTimeModal({ isOpen, seconds, onDiscardConfirm, onSav
                 }}
               />
               <Button
-                label="No"
+                label={t('timer.no')}
                 variant="stop"
                 onClick={() => setMode("confirmSave")}
               />

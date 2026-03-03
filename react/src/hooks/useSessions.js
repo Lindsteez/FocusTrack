@@ -6,7 +6,25 @@ import { getSessions,
       
 
 export default function useSessions() {
-  const [sessions, setSessions] = useState(() => getSessions());
+  // Engångsmigrering: konvertera gamla svenska focusMode till engelska
+  const migrateFocusMode = (sessions) => {
+    let changed = false;
+    const map = { 'jobb': 'work', 'möte': 'meeting', 'rast': 'break' };
+    const migrated = sessions.map(s => {
+      if (s.focusMode && map[s.focusMode]) {
+        changed = true;
+        return { ...s, focusMode: map[s.focusMode] };
+      }
+      return s;
+    });
+    if (changed) {
+      // Spara tillbaka till localStorage
+      window.localStorage.setItem('focustrack.sessions', JSON.stringify(migrated));
+    }
+    return migrated;
+  };
+
+  const [sessions, setSessions] = useState(() => migrateFocusMode(getSessions()));
    
   /* Modale state */
   const [editOpen, setEditOpen] = useState(false);

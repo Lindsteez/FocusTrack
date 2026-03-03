@@ -29,11 +29,12 @@ export function subscribeSessions(callback) {
 function emitSessionsChanged() {
   window.dispatchEvent(new Event(EVENT_NAME));
 }
+function normalizeFocusMode(focusMode) {
+  if (!focusMode) return null;
+  const map = { 'jobb': 'work', 'möte': 'meeting', 'rast': 'break', 'work': 'work', 'meeting': 'meeting', 'break': 'break' };
+  return map[focusMode.toLowerCase()] ?? 'work';
+}
 
-
-// Extended shape (backwards compatible):
-// - Existing UI uses: id, seconds, description, category, note, createdAt
-// - New fields added: focusMode, energyLevel, label
 export function makeSessionEntry({
   seconds,
   description,
@@ -52,7 +53,7 @@ export function makeSessionEntry({
     createdAt: new Date().toISOString(),
 
     // New structured fields saved to localStorage:
-    focusMode: focusMode ?? null,
+    focusMode: normalizeFocusMode(focusMode),
     energyLevel: energyLevel ?? null,
     label: label ?? "",
   };
@@ -79,8 +80,6 @@ export function addSession({
 
 
   const prev = loadSessions();
-
-  // FIX: spread prev correctly (the old code would crash)
   const next = [entry, ...prev].slice(0, 200);
 
   saveSessions(next);
@@ -127,8 +126,14 @@ export function deleteSessionById(id) {
 /* Redigera en sparad session */ 
 export function updateSessionById(id, patch) {
   const sessions = getSessions();
-  const updated = sessions.map(s => s.id === id ? { ...s, ...patch } : s);
+  const updated = sessions.map(s => {
+    if (s.id === id) {
+      // Normalisera focusMode även vid uppdatering
+      return { ...s, ...patch, focusMode: normalizeFocusMode(patch.focusMode ?? s.focusMode) };
+    }
+    return s;
+  });
   saveSessions(updated);
   emitSessionsChanged();
-return updated;
+  return updated;
 }

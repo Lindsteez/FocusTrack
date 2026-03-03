@@ -4,8 +4,9 @@ import Button from "../Button";
 import Timer from "./Timer.tsx";
 import SaveTimeModal from "./SaveTimeModal";
 import StartSessionModal from "./StartSessionModal";
-import { addSession } from "../../utils/sessionsStore";
 import { clearTimerState, loadTimerState, saveTimerState } from "../../utils/timerStore";
+import { addSession } from "../../utils/sessionsStore";
+import { useLanguage } from "../../hooks/useLanguage.tsx";
 import styles from "./Timer.module.css";
 
 // Calculate total seconds based on timestamps
@@ -18,6 +19,9 @@ function computeSeconds({ isRunning, startedAt, accumulatedSeconds }, nowMs) {
 export default function TimerSection() {
   // Load persisted timer state once
   const stored = loadTimerState();
+
+  // i18n
+  const { t } = useLanguage();
 
   const [isRunning, setIsRunning] = useState(stored?.isRunning ?? false);
   const [startedAt, setStartedAt] = useState(() => stored?.startedAt ?? Date.now());
@@ -91,7 +95,7 @@ export default function TimerSection() {
 
   return (
     <>
-      <Card title="Timer">
+      <Card title={t("timer.title") || "Timer"}>
         <div className={styles.timerLayout}>
           {/* Ring (left) */}
           <div className={styles.ringCol}>
@@ -105,21 +109,24 @@ export default function TimerSection() {
             <div className={styles.buttonRow}>
               <div className={styles.actions}>
                 <Button
-                  label={isRunning ? "⏸ Pause" : "► Start"}
+                  label={isRunning ? `⏸ ${t("timer.pause")}` : `► ${t("timer.start")}`}
                   variant={isRunning ? "pause" : "start"}
                   onClick={() => {
                     if (isRunning) {
+                      // PAUSE
                       setAccumulatedSeconds(seconds);
                       setIsRunning(false);
                       return;
                     }
 
+                    // RESUME (if already has time)
                     if (seconds > 0) {
                       setStartedAt(Date.now());
                       setIsRunning(true);
                       return;
                     }
 
+                    // New session -> open start modal
                     setEnergyLevel(null);
                     setSessionLabel("");
                     setIsStartModalOpen(true);
@@ -127,7 +134,7 @@ export default function TimerSection() {
                 />
 
                 <Button
-                  label="■ Stop"
+                  label={`■ ${t("timer.stop")}`}
                   variant="stop"
                   onClick={stopAndOpenModal}
                   disabled={seconds === 0}
@@ -136,7 +143,8 @@ export default function TimerSection() {
             </div>
 
             <div className={styles.timerMeta}>
-              Mode: <b>{focusMode}</b> • Energy: <b>{energyLevel ?? "-"}</b>
+              {t("timer.mode")}: <b>{focusMode}</b> • {t("timer.energy")}:{" "}
+              <b>{energyLevel ?? "-"}</b>
             </div>
           </div>
         </div>

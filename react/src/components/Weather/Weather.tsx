@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../../hooks/useLanguage";
-import overcast from "../../assets/imgs/weather/overcast.gif";
 import styles from "./weather.module.css";
+
+import overcast from "../../assets/imgs/weather/overcast.gif";
+import rain from "../../assets/imgs/weather/rain.gif";
+import drizzle from "../../assets/imgs/weather/drizzle.gif";
+import hail from "../../assets/imgs/weather/hail.gif";
+import sun from "../../assets/imgs/weather/sun.gif";
+
 
 type WeatherState =
   | { status: "idle" }
@@ -38,18 +44,19 @@ type NominatimReverseResponse = {
 
 function codeToLabel(code: number): React.ReactNode {
   // Open-Meteo WMO weather interpretation codes.
-  if (code === 0) return "Clear";
+  if (code === 0) return <img src={sun} alt="Sun" className={styles.weatherSun} />;
   if (code === 1) return "Mainly clear";
-  if (code === 2) return "Partly cloudy";
+  if (code === 2) 
+    return "Partly cloudy";
   if (code === 3)
     return <img src={overcast} alt="Overcast" className={styles.weather} />;
   if (code === 45 || code === 48) return "Fog";
-  if (code === 51 || code === 53 || code === 55) return "Drizzle";
+  if (code === 51 || code === 53 || code === 55) return <img src={drizzle} alt="Drizzle" className={styles.weather} />;
   if (code === 56 || code === 57) return " Freezingdrizzle";
-  if (code === 61 || code === 63 || code === 65) return "Rain";
+  if (code === 61 || code === 63 || code === 65) return <img src={rain} alt="Rain" className={styles.weather} />;
   if (code === 66 || code === 67) return "Freezing rain";
   if (code === 71 || code === 73 || code === 75) return "Snow";
-  if (code === 77) return "Snow grains";
+  if (code === 77) return <img src={hail} alt="Hail" className={styles.weather} />;
   if (code === 80 || code === 81 || code === 82) return "Rain showers";
   if (code === 85 || code === 86) return "Snow showers";
   if (code === 95) return "Thunderstorm";
@@ -58,8 +65,20 @@ function codeToLabel(code: number): React.ReactNode {
 }
 
 function codeToIcon(code) {
+  if (code === 0) {
+    return <img src={sun} alt="Sun" className={styles.weatherIcon} />
+  }
   if (code === 3) {
-    return <img src={overcast} alt="Overcast" className={styles.weatherIcon} />;
+    return <img src={sun} alt="Overcast" className={styles.weatherIcon} />;
+  }
+  if (code === 51 || code === 53 || code === 55) {
+    return <img src={drizzle} alt="Drizzle" className={styles.weatherIcon} />
+  }
+  if (code === 61 || code === 63 || code === 65){ 
+    return <img src={rain} alt="Rain" className={styles.weatherIcon} />
+  }
+  if (code === 77) {
+    return <img src={hail} alt="Hail" className={styles.weatherIcon} />
   }
   return null;
 }

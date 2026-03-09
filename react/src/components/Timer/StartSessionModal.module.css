@@ -4,7 +4,10 @@
   background: rgba(0, 0, 0, 0.5);
   display: grid;
   place-items: center;
-  z-index: 1000;
+  z-index: 1400;
+  padding: 12px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal {
@@ -12,6 +15,10 @@
   border-radius: 12px;
   padding: 16px;
   color: var(--text-primary);
+  width: min(640px, 100%);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .actions {
@@ -73,4 +80,15 @@
   border-radius: 8px;
   box-sizing: border-box;
   min-height: 40px;
+}
+
+@media (max-width: 767px) {
+  .backdrop {
+    padding: 10px;
+  }
+
+  .modal {
+    max-height: calc(100dvh - 20px);
+    border-radius: 10px;
+  }
 }

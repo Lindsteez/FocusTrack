@@ -112,15 +112,16 @@ body[data-theme="light"] .segmented__btn.is-active {
 
 @media (max-width: 767px) {
   .settings {
-    padding: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .settings:first-of-type {
     padding-top: 90px;
   }
 
-  .settings:not(:first-of-type) {
-    padding-top: 8px;
+  .settings + .settings {
+    margin-top: 10px;
   }
 
   .settings:last-of-type {
@@ -128,44 +129,53 @@ body[data-theme="light"] .segmented__btn.is-active {
   }
 
   .settings__title {
-    margin: 0 0 12px;
+    margin: 0 0 10px;
     padding-top: 0;
-    font-size: 1.6rem;
+    font-size: 1.45rem;
   }
 
   .settings__card {
     border-radius: 14px;
-    padding: 14px;
+    padding: 12px;
   }
 
   .settings__row {
-    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
   }
 
   .settings__row--danger {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+    gap: 8px;
   }
 
   .settings__label {
-    font-size: 1.15rem;
+    font-size: 1rem;
+  }
+
+  .settings__description {
+    margin-top: 4px;
+    font-size: 0.82rem;
   }
 
   .segmented {
+    width: 100%;
     padding: 4px;
     gap: 4px;
   }
 
   .segmented__btn {
+    min-height: 40px;
     padding: 8px 10px;
     border-radius: 10px;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
   }
 
   .clear-storage-btn {
     width: 100%;
-    display: inline-flex;
-    justify-content: center;
   }
 }

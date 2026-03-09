@@ -6,11 +6,32 @@
   padding-top: 20px;
 }
 
+.historyPanel {
+  min-height: 0;
+}
+
 
 @media (max-width: 767px) {
   .history {
-  padding: 24px;
-  padding-top: 105px;
-  padding-bottom: 100px;
-}
+    padding: 16px;
+    padding-top: 105px;
+    padding-bottom: 0;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .historyPanel {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .historyPanel > * {
+    flex: 1;
+    min-height: 0;
+  }
 }

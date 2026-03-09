@@ -1,4 +1,5 @@
 export default {
+    'timer.title': 'Timer',
     'timer.start': 'Starta',
     'timer.stop': 'Stoppa',
     'timer.pause': 'Pausa',

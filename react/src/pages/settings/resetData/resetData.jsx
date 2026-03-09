@@ -15,7 +15,7 @@ function ClearStorageCard() {
 
   return (
       <div className="settings__card">
-        <div className="settings__row">
+        <div className="settings__row settings__row--danger">
           <div>
             <span className="settings__label">{t('settings.clearStorage')}</span>
             <p className="settings__description">

@@ -32,10 +32,20 @@ body[data-theme="light"] .settings__card {
   gap: 16px;
 }
 
+.settings__row--danger {
+  align-items: flex-start;
+}
+
 .settings__label {
   margin: 0;
   font-size: 1.5rem;
   color: var(--text-secondary);
+}
+
+.settings__description {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
 }
 
 /* Segmented control */
@@ -61,6 +71,17 @@ body[data-theme="light"] .segmented {
   cursor: pointer;
   font-weight: 600;
   transition: transform 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.clear-storage-btn {
+  border: 1px solid color-mix(in srgb, var(--btn-danger) 45%, transparent);
+  background: color-mix(in srgb, var(--btn-danger) 16%, transparent);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.clear-storage-btn:hover {
+  background: color-mix(in srgb, var(--btn-danger) 28%, transparent);
 }
 
 .segmented__btn:hover {
@@ -121,6 +142,12 @@ body[data-theme="light"] .segmented__btn.is-active {
     gap: 10px;
   }
 
+  .settings__row--danger {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
   .settings__label {
     font-size: 1.15rem;
   }
@@ -134,5 +161,11 @@ body[data-theme="light"] .segmented__btn.is-active {
     padding: 8px 10px;
     border-radius: 10px;
     font-size: 0.9rem;
+  }
+
+  .clear-storage-btn {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
   }
 }

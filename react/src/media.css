@@ -1,70 +1,238 @@
+/* ============================
+   Responsive layout (Mobile → Desktop)
+   ============================ */
+@media (max-width: 560px) {
+  /* Keep row layout (ring left, controls right) */
+  .timerLayout {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    /* Smaller gap between ring and buttons */
+    gap: 10px;
+
+    /* A bit tighter padding so nothing overflows */
+    padding: 10px 12px;
+  }
+
+  /* Push the ring slightly away from the left edge */
+  .ringCol {
+    padding-left: 10px;
+  }
+
+  /* Make the ring a bit bigger on mobile, but still safe */
+  .wrap {
+    width: clamp(165px, 46vw, 210px);
+  }
+
+  /* Let controls shrink so they stay inside the card */
+  .controlsCol {
+    min-width: 0;
+    flex: 1;
+    gap: 8px;
+  }
+
+  /* Slightly tighter action row */
+  .actions {
+    gap: 10px;
+  }
+
+  /* Make buttons slightly smaller on mobile */
+  .actions :global(button) {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+
+  /* Meta text a bit smaller */
+  .timerMeta {
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+   .todoToolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .todoInput {
+    height: 44px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .todoActions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .todoActions button {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    width: auto;
+    min-width: 96px;
+  }
+
+ 
+  .todo .todoList {
+    max-height: 340px;
+    overflow: auto;
+  }
+  
+}
+
+/* Mobile (0–767px) */
 @media (max-width: 767px) {
-  .grid {
-    grid-template-columns: 33% 33% 33%;
-    justify-content: center;
+  body {
+    overflow: auto;
   }
 
-  .timer { grid-column: 1; }
-  .recent { grid-column: 2; }
-  .stats { grid-column: 1; }
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    padding-top: 110px;
+    padding-bottom: 90px;
+    height: auto;
+  }
 
   .dashboardStack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+   .todo textarea {
+  min-height: 110px;
+  max-height: 140px;
+  resize: none;
+  }
+
+  .todo .actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+  }
+
+  .todo button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  }
+
+  .mobile-layout {
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding-top: 90px;
-  padding-bottom: 90px;
+  overflow: hidden; /* prevents whole page scroll */
 }
 
+.mobile-main {
+  flex: 1 1 auto;
+  min-height: 0; /* CRITICAL for inner scroll to work */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 16px;
+
+  /* space above bottom navbar */
+  padding-bottom: 110px;
+}
 }
 
+/* Tablet (768–1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
+  body {
+    overflow: auto;
+  }
+
   .grid {
-    grid-template-columns: 33% 33% 33%;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 75px;
+    padding-bottom: 90px;
+    height: auto;
   }
 
   .dashboardStack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-bottom: 90px;
-}
-}
-
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .grid {
-    grid-template-columns: 33% 33% 33%;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
   }
 }
 
-@media (min-width: 1280px) {
-  .grid {
-    grid-template-columns: 30% 30% 30%;
-    justify-content: center;
+/* Desktop (>=1024px) */
+@media (min-width: 1024px) {
+  body {
+    overflow: hidden;
   }
-}
 
-@media (max-width: 376px) {
-      .dashboardStack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-top: 80px;
-  padding-bottom: 90px;
-}
+  .grid {
+    height: calc(100vh - 90px);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "timer  todo"
+      "recent chart";
+    gap: 24px;
+    padding: 24px;
+    align-items: stretch;
+    min-height: 0;
+  }
 
-}
+  .timer  { grid-area: timer;  min-height: 0; }
+  .todo   { grid-area: todo;   min-height: 0; }
+  .recent { grid-area: recent; min-height: 0; }
+  .chart  { grid-area: chart;  min-height: 0; }
 
+  /* Every box must stretch fully */
+  .box {
+    min-height: 0;
+    height: 100%;
+    display: flex;
+  }
 
-@media (max-width: 320px) {
-      .dashboardStack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-top: 65px;
-  padding-bottom: 90px;
-}
+  /* Card must fill the grid cell */
+  .box > * {
+    flex: 1;
+    min-height: 0;
+  }
 
+  /* Recent scroll */
+  .recent .content {
+    overflow: auto;
+    min-height: 0;
+  }
+
+  /* FIX: ToDo must fully stretch */
+  .todo .content {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* Chart */
+  .chart .content {
+    overflow: hidden;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chartWrap {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  .app {
+    padding-bottom: 0;
+  }
 }

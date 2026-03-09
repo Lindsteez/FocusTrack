@@ -98,8 +98,9 @@ export default function Timer({ seconds }: TimerProps) {
   const cycleSeconds = seconds % CYCLE_SECONDS; // 0..3599
   const progress = cycleSeconds / CYCLE_SECONDS;
 
-  const size = 250;
-  const stroke = 15;
+  // Use a fixed viewBox size and scale via CSS (responsive)
+  const size = 240;
+  const stroke = 14;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
 
@@ -118,9 +119,7 @@ export default function Timer({ seconds }: TimerProps) {
     if (!el) return;
 
     el.classList.remove(styles.animate);
-
-    // tvinga reflow
-    el.getBoundingClientRect();
+    el.getBoundingClientRect(); // force reflow
 
     requestAnimationFrame(() => {
       el.classList.add(styles.animate);
@@ -128,9 +127,15 @@ export default function Timer({ seconds }: TimerProps) {
   }, [cycleSeconds]);
 
   return (
-    <div className={styles.wrap} style={{ width: size, height: size }}>
-      <svg className={styles.svg} width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        <circle className={styles.track} cx={size / 2} cy={size / 2} r={r} strokeWidth={stroke} />
+    <div className={styles.wrap}>
+      <svg className={styles.svg} viewBox={`0 0 ${size} ${size}`} aria-label="Timer ring">
+        <circle
+          className={styles.track}
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          strokeWidth={stroke}
+        />
 
         <circle
           ref={progressRef}

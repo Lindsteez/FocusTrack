@@ -1,41 +1,52 @@
+/* ===============================
+   Global reset
+================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ===============================
+   Theme tokens (Dark default)
+================================ */
 :root {
-   /* Typography */
-  --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, Arial, sans-serif;
+
+  /* Typography */
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Inter, Arial, sans-serif;
 
   /* Backgrounds */
-  --bg-page: #0F1A1F;        /* page background */
-  --bg-app: #2A2F42;         /* app container */
+  --bg-page: #0F1A1F;
+  --bg-app: #2A2F42;
 
   /* Cards / surfaces */
-  --card-primary: #2A2F42;   /* main cards */
-  --card-secondary: #15202e; /* elevated cards */
+  --card-primary: #2A2F42;
+  --card-secondary: #15202e;
   --card-third: #15202e65;
-  --card-hover: #587074;     /* hover / active */
+  --card-hover: #587074;
 
   /* Buttons */
-  --btn-success: #76A076;    /* green */
-  --btn-danger: #D36460;     /* red */
+  --btn-success: #76A076;
+  --btn-danger: #D36460;
   --btn-pause: #d3c865;
-  --btn-visited: #76A076;    /* green */
+  --btn-visited: #76A076;
 
-  /* Text colors */
-  --text-primary: #E8F1F2;   /* main text */
-  --text-secondary: #a1a7b5; /* secondary text */
-  --text-muted: #6b7280;     /* muted / labels */
+  /* Text */
+  --text-primary: #E8F1F2;
+  --text-secondary: #a1a7b5;
+  --text-muted: #6b7280;
 
-  /* Timetracker colors */
+  /* Timer */
   --timer-background: rgba(255, 255, 255, 0.08);
   --timer-forground: rgba(255, 255, 255, 0.55);
 }
 
-/* Light mode overrides */
+/* ===============================
+   Light mode overrides
+================================ */
 body[data-theme="light"] {
+
   --bg-page: #f3f3f3;
   --bg-app: #ffffff;
 
@@ -47,55 +58,61 @@ body[data-theme="light"] {
   --btn-success: #76A076;
   --btn-danger: #D36460;
   --btn-pause: #d3c865;
-  --btn-visited: #76A076; 
+  --btn-visited: #76A076;
 
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
 
-  /* Timetracker colors */
-  --timer-background: #cbd5e1;   /* mjuk ljusgrå */
-  --timer-forground: #81b1ff;   /* ren blå */
+  --timer-background: #cbd5e1;
+  --timer-forground: #81b1ff;
 }
 
-html, body, #root {
-  min-height: 100vh;
-  background: var(--bg-page);
+/* ===============================
+   Base structure
+================================ */
+html,
+body,
+#root {
+  height: 100%;
 }
 
-body, html {
-  margin: 0;
+body {
   font-family: var(--font-main);
   color: var(--text-primary);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ========== Grid layout ========== */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto auto;
+/* ===============================
+   Utility classes
+================================ */
+.buttonRow {
+  display: flex;
   justify-content: center;
+  width: 100%;
 }
 
-.timer {
-  grid-column: 2;
-  grid-row: 1;
+.chartWrap {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
 }
 
-.recent {
-  grid-column: 2;
-  grid-row: 2;
+.timerLayout {
+  height: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
 }
 
-.todo {
-  grid-column: 3;
-  grid-row: 2;
+.timerMeta {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  text-align: center;
 }
-
-.chart
-{
-  grid-column: 1;
-  grid-row: 2;
-}
-

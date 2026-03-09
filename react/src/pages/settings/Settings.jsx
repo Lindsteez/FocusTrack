@@ -8,7 +8,9 @@ export default function Settings() {
     <>
     <ThemeContextCard />
     <LanguageSwitch />
-    <ClearStorageCard />
+    <section className="settings">
+      <ClearStorageCard />
+    </section>
     </>
   )
 }

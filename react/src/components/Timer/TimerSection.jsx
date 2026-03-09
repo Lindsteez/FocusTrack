@@ -4,9 +4,10 @@ import Button from "../Button";
 import Timer from "./Timer.tsx";
 import SaveTimeModal from "./SaveTimeModal";
 import StartSessionModal from "./StartSessionModal";
-import { addSession } from "../../utils/sessionsStore";
 import { clearTimerState, loadTimerState, saveTimerState } from "../../utils/timerStore";
+import { addSession } from "../../utils/sessionsStore";
 import { useLanguage } from "../../hooks/useLanguage.tsx";
+import styles from "./Timer.module.css";
 
 
 // Calculate total seconds based on timestamps
@@ -19,6 +20,8 @@ function computeSeconds({ isRunning, startedAt, accumulatedSeconds }, nowMs) {
 export default function TimerSection() {
   // Load persisted timer state once
   const stored = loadTimerState();
+
+  // i18n
   const { t } = useLanguage();
 
   const [isRunning, setIsRunning] = useState(stored?.isRunning ?? false);
@@ -36,13 +39,12 @@ export default function TimerSection() {
   // "now" is only for re-rendering the UI; correctness comes from timestamps.
   const [nowMs, setNowMs] = useState(() => Date.now());
 
-  // Update now periodically while running (frequency not important for correctness)
+  // Update now periodically while running
   useEffect(() => {
     if (!isRunning) return;
 
     const id = setInterval(() => setNowMs(Date.now()), 250);
 
-    // Also update immediately when tab becomes visible again
     const onVis = () => {
       if (document.visibilityState === "visible") setNowMs(Date.now());
     };
@@ -61,15 +63,20 @@ export default function TimerSection() {
 
   // Persist whenever the core timer state changes
   useEffect(() => {
-    saveTimerState({ isRunning, startedAt, accumulatedSeconds, focusMode, energyLevel, sessionLabel, });
+    saveTimerState({
+      isRunning,
+      startedAt,
+      accumulatedSeconds,
+      focusMode,
+      energyLevel,
+      sessionLabel,
+    });
   }, [isRunning, startedAt, accumulatedSeconds, focusMode, energyLevel, sessionLabel]);
 
   function stopAndOpenModal() {
-    // Calculate seconds (avoid waiting for UI tick)
     const snapSeconds = computeSeconds({ isRunning, startedAt, accumulatedSeconds }, Date.now());
     if (snapSeconds === 0) return;
 
-    // Freeze time into accumulatedSeconds and stop
     setAccumulatedSeconds(snapSeconds);
     setIsRunning(false);
     setIsModalOpen(true);
@@ -82,7 +89,6 @@ export default function TimerSection() {
     clearTimerState();
     setNowMs(Date.now());
 
-    // Reset session metadata for next NEW session
     setEnergyLevel(null);
     setSessionLabel("");
     setFocusMode("-");
@@ -90,46 +96,58 @@ export default function TimerSection() {
 
   return (
     <>
-      <Card title="Timer">
-        <Timer seconds={seconds} />
+      <Card title={t("timer.title") || "Timer"}>
+        <div className={styles.timerLayout}>
+          {/* Ring (left) */}
+          <div className={styles.ringCol}>
+            <div className={styles.ringBox}>
+              <Timer seconds={seconds} />
+            </div>
+          </div>
 
-        <div className="buttonRow">
-          <Button
-            label={isRunning ? `⏸ ${t('timer.pause')}` : `► ${t('timer.start')}`}
-            variant={isRunning ? "pause" : "start"}
-            onClick={() => {
-              if (isRunning) {
-                // PAUSE
-                setAccumulatedSeconds(seconds);
-                setIsRunning(false);
-                return;
-              }
+          {/* Controls (right) */}
+          <div className={styles.controlsCol}>
+            <div className={styles.buttonRow}>
+              <div className={styles.actions}>
+                <Button
+                  label={isRunning ? `⏸ ${t("timer.pause")}` : `► ${t("timer.start")}`}
+                  variant={isRunning ? "pause" : "start"}
+                  onClick={() => {
+                    if (isRunning) {
+                      // PAUSE
+                      setAccumulatedSeconds(seconds);
+                      setIsRunning(false);
+                      return;
+                    }
 
-              if (seconds > 0) {
-                // RESUME paused timer
-                setStartedAt(Date.now());
-                setIsRunning(true);
-                return;
-              }
+                    // RESUME (if already has time)
+                    if (seconds > 0) {
+                      setStartedAt(Date.now());
+                      setIsRunning(true);
+                      return;
+                    }
 
-              // NEW session → open start modal
-              setEnergyLevel(null);
-              setSessionLabel("");
-              setIsStartModalOpen(true);
-            }}
-          />
+                    // New session -> open start modal
+                    setEnergyLevel(null);
+                    setSessionLabel("");
+                    setIsStartModalOpen(true);
+                  }}
+                />
 
-          <Button
-            label={`■ ${t('timer.stop')}`}
-            variant="stop"
-            onClick={stopAndOpenModal}
-            disabled={seconds === 0}
-          />
-        </div>
+                <Button
+                  label={`■ ${t("timer.stop")}`}
+                  variant="stop"
+                  onClick={stopAndOpenModal}
+                  disabled={seconds === 0}
+                />
+              </div>
+            </div>
 
-        {/* Show selected mode and energy while running */}
-        <div style={{ marginTop: 8, opacity: 0.8 }}>
-          {t('timer.mode')}: <b>{focusMode}</b> • {t('timer.energy')}: <b>{energyLevel ?? "-"}</b>
+            <div className={styles.timerMeta}>
+              {t("timer.mode")}: <b>{focusMode}</b> • {t("timer.energy")}:{" "}
+              <b>{energyLevel ?? "-"}</b>
+            </div>
+          </div>
         </div>
       </Card>
 

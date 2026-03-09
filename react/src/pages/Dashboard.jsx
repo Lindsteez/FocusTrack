@@ -3,8 +3,8 @@ import RecentSessions from "../components/RecentSessions";
 import EnergyLog from "../components/EnergyLog/EnergyLog";
 import Last5DaysBarChart from "../components/Last5DaysBarChart";
 import StatsSummary from "../components/StatsSummary";
-import ToDo from "../components/ToDo/ToDo";
-import ToDoDesktopOnly from "../components/ToDo/ToDoDesktopOnly";
+import ToDo from "./ToDo/ToDo";
+import ToDoDesktopOnly from "./ToDo/ToDoDesktopOnly";
 import "../App.css";
 
 export default function Dashboard() {

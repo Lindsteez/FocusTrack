@@ -13,17 +13,29 @@ import { getSessions } from "../utils/sessionsStore";
 import Card from "./Card";
 import { useLanguage } from "../hooks/useLanguage";
 
+/**
+ * Maps energy level to a dot color (used in the line chart dots).
+ */
 function energyToColor(energyRounded) {
   switch (energyRounded) {
-    case 1: return "#D36460";
-    case 2: return "#da9944";
-    case 3: return "#ebdf73";
-    case 4: return "#76A076";
-    case 5: return "#27a525";
-    default: return "#9ca3af";
+    case 1:
+      return "#D36460";
+    case 2:
+      return "#da9944";
+    case 3:
+      return "#ebdf73";
+    case 4:
+      return "#76A076";
+    case 5:
+      return "#27a525";
+    default:
+      return "#9ca3af";
   }
 }
 
+/**
+ * Dot renderer: colors each dot based on average energy of that day.
+ */
 function EnergyDot(props) {
   const { cx, cy, payload } = props;
   if (cx == null || cy == null) return null;
@@ -40,9 +52,13 @@ function EnergyDot(props) {
   );
 }
 
+/**
+ * Tooltip (dev version): shows total time + avg energy + list of sessions (if provided).
+ */
 function CustomTooltip({ active, payload, label }) {
   const { t } = useLanguage();
   if (!active || !payload?.length) return null;
+
   const d = payload[0].payload;
   const isLight = document.body.getAttribute("data-theme") === "light";
 
@@ -58,10 +74,18 @@ function CustomTooltip({ active, payload, label }) {
       }}
     >
       <div style={{ fontWeight: 700, marginBottom: 6 }}>{label}</div>
-      <div>{t('prev.totalTime')} <b>{d.totalLabel}</b></div>
-      <div>{t('timer.energy')} ({t('prev.avarage')}): <b>{d.energy > 0 ? d.energy : "-"}</b></div>
 
-      <div style={{ marginTop: 8, fontWeight: 700 }}>{t('stats.sessions')}</div>
+      <div>
+        {t("prev.totalTime")} <b>{d.totalLabel}</b>
+      </div>
+
+      <div>
+        {t("timer.energy")} ({t("prev.avarage")}):{" "}
+        <b>{d.energy > 0 ? d.energy : "-"}</b>
+      </div>
+
+      <div style={{ marginTop: 8, fontWeight: 700 }}>{t("stats.sessions")}</div>
+
       {d.sessions?.length ? (
         <div style={{ marginTop: 4, display: "grid", gap: 4 }}>
           {d.sessions.map((s, idx) => (
@@ -81,58 +105,80 @@ function CustomTooltip({ active, payload, label }) {
           ))}
         </div>
       ) : (
-        <div style={{ marginTop: 4, opacity: 0.85 }}>{t('prev.noSessions')}</div>
+        <div style={{ marginTop: 4, opacity: 0.85 }}>{t("prev.noSessions")}</div>
       )}
     </div>
   );
 }
 
-export default function Last5DaysLineChart() {
+/**
+ * Builds Y-axis ticks and "zoom out" scaling:
+ * - adds headroom (so the line isn't glued to the top)
+ * - chooses a readable step (60s, 10m, 1h, etc.)
+ */
+function buildYAxisConfig(data) {
+  const max = Math.max(0, ...data.map((d) => d.totalSeconds ?? 0));
+
+  // Add headroom so it "zooms out" nicely
+  const padded = max === 0 ? 60 : Math.ceil(max * 1.25);
+
+  let step;
+  if (padded <= 120) step = 15; // up to 2m -> 15s
+  else if (padded <= 300) step = 30; // up to 5m -> 30s
+  else if (padded <= 600) step = 60; // up to 10m -> 1m
+  else if (padded <= 1800) step = 300; // up to 30m -> 5m
+  else if (padded <= 3600) step = 600; // up to 1h -> 10m
+  else if (padded <= 12 * 3600) step = 3600; // up to 12h -> 1h
+  else step = 2 * 3600; // 2h
+
+  const maxRounded = Math.max(step, Math.ceil(padded / step) * step);
+
+  const ticks = [];
+  for (let t = 0; t <= maxRounded; t += step) ticks.push(t);
+
+  return { ticks, maxRounded, step };
+}
+
+/**
+ * Formats Y-axis labels based on step.
+ */
+function formatYAxisTick(value, step) {
+  if (step < 60) return `${value}s`;
+  if (step < 3600) return `${Math.floor(value / 60)}m`;
+  return `${Math.floor(value / 3600)}h`;
+}
+
+export default function Last5DaysBarChart() {
   const { t } = useLanguage();
+
   const data = useMemo(() => {
     const sessions = getSessions?.() ?? [];
     return buildLast5DaysData(sessions);
   }, []);
 
-  const yConfig = useMemo(() => {
-    const max = Math.max(0, ...data.map((d) => d.totalSeconds ?? 0));
-
-    let step;
-    if (max >= 24 * 3600) step = 4 * 3600;
-    else if (max >= 12 * 3600) step = 2 * 3600;
-    else if (max >= 3600) step = 3600;
-    else if (max >= 600) step = 600;
-    else step = 60;
-
-    const maxRounded = Math.ceil(max / step) * step;
-
-    const ticks = [];
-    for (let t = 0; t <= maxRounded; t += step) ticks.push(t);
-
-    return { ticks, maxRounded, step };
-  }, [data]);
+  const yConfig = useMemo(() => buildYAxisConfig(data), [data]);
 
   return (
-    <Card title={`${t('prev.title')}`}>
+    <Card title={`${t("prev.title")}`}>
       <div style={{ width: "100%", height: 347 }}>
         <ResponsiveContainer>
           <LineChart data={data} margin={{ top: 10, right: 16, left: 0, bottom: 10 }}>
-            <XAxis dataKey="date" tickMargin={8} />
-            <YAxis
-              domain={[0, yConfig.maxRounded]}
-              ticks={yConfig.ticks}
-              tickFormatter={(v) => {
-                if (yConfig.step >= 3600) return `${Math.floor(v / 3600)}h`;
-                return `${Math.floor(v / 60)}m`;
-              }}
-              width={40}
-            />
-            <Tooltip content={<CustomTooltip />} />
             <CartesianGrid
-              stroke="rgba(128,128,128,0.2)"
+              stroke="rgba(128,128,128,0.18)"
               strokeDasharray="3 3"
               vertical={false}
             />
+
+            <XAxis dataKey="date" tickMargin={8} />
+
+            <YAxis
+              domain={[0, yConfig.maxRounded]}
+              ticks={yConfig.ticks}
+              tickFormatter={(v) => formatYAxisTick(v, yConfig.step)}
+              width={44}
+            />
+
+            <Tooltip content={<CustomTooltip />} />
 
             <Line
               type="linear"

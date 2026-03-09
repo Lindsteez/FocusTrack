@@ -1,4 +1,3 @@
-
 // import { useEffect, useMemo, useRef } from "react";
 // import styles from "./Timer.module.css";
 
@@ -38,7 +37,7 @@
 //     el.classList.remove(styles.animate);
 
 //     // 2) tvinga en reflow så att borttagningen “tar”
-    
+
 //     const _ = el.getBoundingClientRect();
 
 //     // 3) slå på transition igen nästa frame
@@ -77,7 +76,6 @@
 //   );
 // }
 
-
 import { useEffect, useMemo, useRef } from "react";
 import styles from "./Timer.module.css";
 
@@ -87,16 +85,21 @@ function pad2(n: number): string {
 
 type TimerProps = {
   seconds: number;
+  progressRatio?: number;
 };
 
-export default function Timer({ seconds }: TimerProps) {
+export default function Timer({ seconds, progressRatio }: TimerProps) {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const secs = seconds % 60;
 
   const CYCLE_SECONDS = 60 * 60; // 3600
   const cycleSeconds = seconds % CYCLE_SECONDS; // 0..3599
-  const progress = cycleSeconds / CYCLE_SECONDS;
+  const fallbackProgress = cycleSeconds / CYCLE_SECONDS;
+  const progress =
+    progressRatio == null
+      ? fallbackProgress
+      : Math.max(0, Math.min(1, progressRatio));
 
   // Use a fixed viewBox size and scale via CSS (responsive)
   const size = 240;
@@ -127,8 +130,13 @@ export default function Timer({ seconds }: TimerProps) {
   }, [cycleSeconds]);
 
   return (
-    <div className={styles.wrap}>
-      <svg className={styles.svg} viewBox={`0 0 ${size} ${size}`} aria-label="Timer ring">
+    <div className={styles.wrap} style={{ width: size, height: size }}>
+      <svg
+        className={styles.svg}
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+      >
         <circle
           className={styles.track}
           cx={size / 2}

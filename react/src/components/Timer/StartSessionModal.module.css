@@ -11,7 +11,7 @@
   background: var(--card-primary);
   border-radius: 12px;
   padding: 16px;
-  color: var(--text-primary);  
+  color: var(--text-primary);
 }
 
 .actions {
@@ -25,4 +25,52 @@
   text-align: center;
   margin-top: 12px;
   opacity: 0.9;
+}
+
+.confidence {
+  opacity: 0.7;
+}
+
+.timerTypeSection {
+  margin-top: 12px;
+}
+
+.timerTypeButtons {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  justify-content: center;
+}
+
+.alarmSection {
+  margin-top: 10px;
+}
+
+.alarmGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.alarmInput {
+  width: 100%;
+  margin-top: 4px;
+  padding: 7px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.labelBlock {
+  display: block;
+  margin-top: 12px;
+}
+
+.labelInput {
+  width: 100%;
+  margin-top: 6px;
+  padding: 7px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  min-height: 40px;
 }

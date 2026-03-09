@@ -155,9 +155,9 @@
 @media (max-width: 767px) {
   .page {
     padding-top: 110px;
-    padding-bottom: 100px;
+    padding-bottom: 0;
 
-    height: 100dvh;
+    height: 100%;
     box-sizing: border-box;
 
     display: flex;
@@ -199,8 +199,9 @@
   }
 
   .list {
-    flex: 1;
+    flex: 1 1 auto;
     min-height: 0;
+    max-height: none;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }

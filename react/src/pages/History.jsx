@@ -9,7 +9,13 @@ export default function History() {
   return (
     <section className={styles.history}>
       <Card title={`${t('nav.history')}`}>
-        <SessionsList limit={200} emptyText="No sessions in history yet." showLoadMore pageSize={10} />
+        <SessionsList
+          limit={200}
+          emptyText="No sessions in history yet."
+          showLoadMore
+          pageSize={10}
+          pageScrollOnMobile
+        />
       </Card>
     </section>
   );

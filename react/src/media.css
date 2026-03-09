@@ -76,7 +76,7 @@
   }
 
  
-  .todoList {
+  .todo .todoList {
     max-height: 340px;
     overflow: auto;
   }

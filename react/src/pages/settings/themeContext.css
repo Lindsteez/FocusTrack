@@ -91,7 +91,48 @@ body[data-theme="light"] .segmented__btn.is-active {
 
 @media (max-width: 767px) {
   .settings {
-  padding: 24px;
-  padding-top: 90px;
-}
+    padding: 16px;
+  }
+
+  .settings:first-of-type {
+    padding-top: 90px;
+  }
+
+  .settings:not(:first-of-type) {
+    padding-top: 8px;
+  }
+
+  .settings:last-of-type {
+    padding-bottom: 100px;
+  }
+
+  .settings__title {
+    margin: 0 0 12px;
+    padding-top: 0;
+    font-size: 1.6rem;
+  }
+
+  .settings__card {
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .settings__row {
+    gap: 10px;
+  }
+
+  .settings__label {
+    font-size: 1.15rem;
+  }
+
+  .segmented {
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .segmented__btn {
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
 }

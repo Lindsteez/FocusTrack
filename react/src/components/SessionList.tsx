@@ -29,6 +29,7 @@ interface SessionsListProps {
   emptyText?: string;
   showLoadMore?: boolean;
   pageSize?: number;
+  pageScrollOnMobile?: boolean;
 }
 
 function focusDotStyle(focusMode?: string) {
@@ -46,6 +47,7 @@ export default function SessionsList({
   emptyText = "No sessions yet.",
   showLoadMore = false,
   pageSize = 20,
+  pageScrollOnMobile = false,
 }: SessionsListProps) {
   const { t } = useLanguage();
 
@@ -78,7 +80,13 @@ export default function SessionsList({
         <p className={styles.empty}>{emptyText}</p>
       ) : (
         <>
-          <div className={styles.cardBody}>
+          <div
+            className={
+              pageScrollOnMobile
+                ? `${styles.cardBody} ${styles.pageScrollOnMobile}`
+                : styles.cardBody
+            }
+          >
             {list.map((s) => {
               const modeKey = (s.focusMode ?? "").toString().toLowerCase();
 

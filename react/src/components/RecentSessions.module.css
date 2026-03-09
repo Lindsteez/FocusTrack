@@ -22,6 +22,8 @@
   padding-right: 4px;
 }
 
+.pageScrollOnMobile {}
+
 .row {
   width: 100%;
   display: flex;
@@ -146,4 +148,11 @@
 
 .loadMoreBtn:hover {
   background: rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 767px) {
+  .pageScrollOnMobile {
+    overflow: visible;
+    padding-right: 0;
+  }
 }

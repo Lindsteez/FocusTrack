@@ -5,11 +5,7 @@ function MobileLayout({ children }) {
     return (
         <div className="mobile-layout">
             <LogoImport />
-            <main>
-                
-                <main className="mobile-main">{children}</main>
-
-            </main>
+            <main className="mobile-main">{children}</main>
             <NavbarMobile />
         </div>
     );

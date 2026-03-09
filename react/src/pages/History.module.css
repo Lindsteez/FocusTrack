@@ -10,6 +10,29 @@
   min-height: 0;
 }
 
+@media (min-width: 768px) {
+  .history {
+    height: calc(100vh - 76px);
+    padding: 18px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .historyPanel {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+  }
+
+  .historyPanel > * {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
 
 @media (max-width: 767px) {
   .history {

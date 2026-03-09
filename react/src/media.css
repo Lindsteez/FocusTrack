@@ -9,10 +9,10 @@
     justify-content: center;
 
     /* Smaller gap between ring and buttons */
-    gap: 10px;
+    gap: 8px;
 
     /* A bit tighter padding so nothing overflows */
-    padding: 10px 12px;
+    padding: 8px 10px;
   }
 
   /* Push the ring slightly away from the left edge */
@@ -29,50 +29,50 @@
   .controlsCol {
     min-width: 0;
     flex: 1;
-    gap: 8px;
+    gap: 6px;
   }
 
   /* Slightly tighter action row */
   .actions {
-    gap: 10px;
+    gap: 8px;
   }
 
   /* Make buttons slightly smaller on mobile */
   .actions :global(button) {
-    padding: 10px 14px;
+    padding: 9px 12px;
     font-size: 0.95rem;
   }
 
   /* Meta text a bit smaller */
   .timerMeta {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     opacity: 0.9;
   }
-   .todoToolbar {
+  .todoToolbar {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     align-items: stretch;
   }
 
   .todoInput {
-    height: 44px;
-    padding: 10px 12px;
-    font-size: 0.95rem;
+    height: 42px;
+    padding: 10px 11px;
+    font-size: 0.9rem;
   }
 
   .todoActions {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
   }
 
   .todoActions button {
-    padding: 10px 14px;
-    font-size: 0.95rem;
-    border-radius: 12px;
+    padding: 9px 12px;
+    font-size: 0.88rem;
+    border-radius: 10px;
     width: auto;
-    min-width: 96px;
+    min-width: 88px;
   }
 
  
@@ -92,17 +92,17 @@
   .grid {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 24px;
-    padding-top: 110px;
-    padding-bottom: 90px;
+    gap: 14px;
+    padding: 12px;
+    padding-top: 96px;
+    padding-bottom: 98px;
     height: auto;
   }
 
   .dashboardStack {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
   }
 
    .todo textarea {
@@ -114,32 +114,29 @@
   .todo .actions {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: 12px;
+  gap: 8px;
+  margin-top: 8px;
   }
 
   .todo button {
-  padding: 8px 16px;
-  font-size: 0.9rem;
+  padding: 8px 12px;
+  font-size: 0.85rem;
   }
 
   .mobile-layout {
   height: 100dvh;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* prevents whole page scroll */
+  overflow: hidden;
 }
 
 .mobile-main {
   flex: 1 1 auto;
-  min-height: 0; /* CRITICAL for inner scroll to work */
+  min-height: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-
-  padding: 16px;
-
-  /* space above bottom navbar */
-  padding-bottom: 110px;
+  padding: 10px;
+  padding-bottom: 108px;
 }
 }
 
@@ -172,6 +169,14 @@
     overflow: hidden;
   }
 
+  .dashboardViewport {
+    height: calc(100vh - 76px);
+    padding: 0 18px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .grid {
     height: calc(100vh - 90px);
     display: grid;
@@ -184,6 +189,12 @@
     padding: 24px;
     align-items: stretch;
     min-height: 0;
+  }
+
+  .dashboardFixed {
+    width: min(100%, 1220px);
+    height: min(calc(100vh - 118px), 760px);
+    margin: 0 auto;
   }
 
   .timer  { grid-area: timer;  min-height: 0; }

@@ -12,7 +12,7 @@ export default function History() {
         <Card title={`${t('nav.history')}`}>
           <SessionsList
             limit={200}
-            emptyText="No sessions in history yet."
+            emptyText={t("recent.noSessions")}
             showLoadMore
             pageSize={10}
           />

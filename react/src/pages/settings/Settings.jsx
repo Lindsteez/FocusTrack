@@ -5,12 +5,12 @@ import ClearStorageCard from "./resetData/resetData";
 
 export default function Settings() {
   return(
-    <>
-    <ThemeContextCard />
-    <LanguageSwitch />
-    <section className="settings">
-      <ClearStorageCard />
-    </section>
-    </>
+    <div className="settingsPage">
+      <ThemeContextCard />
+      <LanguageSwitch />
+      <section className="settings">
+        <ClearStorageCard />
+      </section>
+    </div>
   )
 }

@@ -12,6 +12,7 @@ import { buildLast5DaysData } from "../utils/chartsData";
 import { getSessions } from "../utils/sessionsStore";
 import Card from "./Card";
 import { useLanguage } from "../hooks/useLanguage";
+import "./Last5DaysBarChart.css";
 
 /**
  * Maps energy level to a dot color (used in the line chart dots).
@@ -128,6 +129,7 @@ function buildYAxisConfig(data) {
   else if (padded <= 600) step = 60; // up to 10m -> 1m
   else if (padded <= 1800) step = 300; // up to 30m -> 5m
   else if (padded <= 3600) step = 600; // up to 1h -> 10m
+  else if (padded <= 3 * 3600) step = 1800; // up to 3h -> 30m
   else if (padded <= 12 * 3600) step = 3600; // up to 12h -> 1h
   else step = 2 * 3600; // 2h
 
@@ -144,7 +146,14 @@ function buildYAxisConfig(data) {
  */
 function formatYAxisTick(value, step) {
   if (step < 60) return `${value}s`;
-  if (step < 3600) return `${Math.floor(value / 60)}m`;
+  if (step < 3600) {
+    const mins = value / 60;
+    if (mins >= 60) {
+      const hours = mins / 60;
+      return Number.isInteger(hours) ? `${hours}h` : `${hours.toFixed(1)}h`;
+    }
+    return `${mins}m`;
+  }
   return `${Math.floor(value / 3600)}h`;
 }
 
@@ -160,8 +169,8 @@ export default function Last5DaysBarChart() {
 
   return (
     <Card title={`${t("prev.title")}`}>
-      <div style={{ width: "100%", height: 347 }}>
-        <ResponsiveContainer>
+      <div className="chartCanvas">
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 10, right: 16, left: 0, bottom: 10 }}>
             <CartesianGrid
               stroke="rgba(128,128,128,0.18)"

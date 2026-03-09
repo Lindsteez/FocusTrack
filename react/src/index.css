@@ -1,71 +1,106 @@
 /* ===============================
    Global reset
 ================================ */
-* {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 /* ===============================
-   Theme tokens (Dark default)
+   Theme + design tokens
 ================================ */
 :root {
-
   /* Typography */
-  --font-main: system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, Inter, Arial, sans-serif;
+  --font-main: "Sora", "Avenir Next", "Segoe UI", sans-serif;
+  --font-title: "Space Grotesk", "Sora", sans-serif;
 
-  /* Backgrounds */
-  --bg-page: #0F1A1F;
-  --bg-app: #2A2F42;
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
 
-  /* Cards / surfaces */
-  --card-primary: #2A2F42;
-  --card-secondary: #15202e;
-  --card-third: #15202e65;
-  --card-hover: #587074;
+  /* Radius scale */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+
+  /* Shadows */
+  --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.22);
+  --shadow-strong: 0 18px 40px rgba(0, 0, 0, 0.36);
+
+  /* Backgrounds / surfaces */
+  --bg-page: #111218;
+  --bg-app: #1b1e28;
+  --surface-1: #1b1e28;
+  --surface-2: #252a38;
+  --surface-3: rgba(27, 30, 40, 0.66);
+  --surface-hover: #343b4f;
+
+  /* Existing aliases kept for compatibility */
+  --card-primary: var(--surface-1);
+  --card-secondary: var(--surface-2);
+  --card-third: var(--surface-3);
+  --card-hover: var(--surface-hover);
+  --glass: color-mix(in srgb, var(--surface-1) 86%, transparent);
+  --shadow: var(--shadow-soft);
 
   /* Buttons */
-  --btn-success: #76A076;
-  --btn-danger: #D36460;
-  --btn-pause: #d3c865;
-  --btn-visited: #76A076;
+  --btn-success: #34d399;
+  --btn-danger: #fb7185;
+  --btn-pause: #f59e0b;
+  --btn-visited: #34d399;
 
   /* Text */
-  --text-primary: #E8F1F2;
-  --text-secondary: #a1a7b5;
-  --text-muted: #6b7280;
+  --text-primary: #f2f4f8;
+  --text-secondary: #aeb4c2;
+  --text-muted: #828b9f;
 
   /* Timer */
-  --timer-background: rgba(255, 255, 255, 0.08);
-  --timer-forground: rgba(255, 255, 255, 0.55);
+  --timer-background: rgba(174, 180, 194, 0.24);
+  --timer-forground: #6ee7b7;
 }
 
 /* ===============================
    Light mode overrides
 ================================ */
 body[data-theme="light"] {
-
-  --bg-page: #f3f3f3;
+  --bg-page: #edf5ff;
   --bg-app: #ffffff;
+  --surface-1: #ffffff;
+  --surface-2: #e5efff;
+  --surface-3: rgba(239, 246, 255, 0.9);
+  --surface-hover: #c9dcf5;
 
-  --card-primary: #ffffff;
-  --card-secondary: #d2edffc7;
-  --card-third: #f2f8ff;
-  --card-hover: #b9cbce;
+  --card-primary: var(--surface-1);
+  --card-secondary: var(--surface-2);
+  --card-third: var(--surface-3);
+  --card-hover: var(--surface-hover);
+  --glass: color-mix(in srgb, #ffffff 90%, transparent);
+  --shadow-soft: 0 12px 28px rgba(15, 23, 42, 0.11);
+  --shadow-strong: 0 18px 34px rgba(15, 23, 42, 0.14);
+  --shadow: var(--shadow-soft);
 
-  --btn-success: #76A076;
-  --btn-danger: #D36460;
-  --btn-pause: #d3c865;
-  --btn-visited: #76A076;
+  --btn-success: #10b981;
+  --btn-danger: #f43f5e;
+  --btn-pause: #f59e0b;
+  --btn-visited: #10b981;
 
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
+  --text-primary: #122034;
+  --text-secondary: #2f455f;
+  --text-muted: #667f9a;
 
-  --timer-background: #cbd5e1;
-  --timer-forground: #81b1ff;
+  --timer-background: #c8d8ec;
+  --timer-forground: #0f9f95;
 }
 
 /* ===============================
@@ -80,8 +115,26 @@ body,
 body {
   font-family: var(--font-main);
   color: var(--text-primary);
-  background: var(--bg-page);
+  background:
+    radial-gradient(860px 430px at -15% -20%, rgba(251, 113, 133, 0.16), transparent 70%),
+    radial-gradient(720px 340px at 118% 0%, rgba(52, 211, 153, 0.14), transparent 72%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-page) 90%, #05070d) 0%, var(--bg-page) 100%);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body[data-theme="light"] {
+  background:
+    radial-gradient(860px 430px at -15% -20%, rgba(14, 165, 233, 0.18), transparent 70%),
+    radial-gradient(760px 360px at 118% 0%, rgba(251, 113, 133, 0.13), transparent 72%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-page) 92%, #ffffff) 0%, var(--bg-page) 100%);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  letter-spacing: -0.01em;
 }
 
 /* ===============================
@@ -102,17 +155,15 @@ body {
 .timerLayout {
   height: 100%;
   min-height: 0;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .timerMeta {
   font-size: 0.95rem;
-  opacity: 0.85;
+  opacity: 0.88;
   text-align: center;
 }

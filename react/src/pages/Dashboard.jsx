@@ -9,32 +9,29 @@ import "../App.css";
 
 export default function Dashboard() {
   return (
-    <div className="dashboardStack grid">
-      {/* ========= Vänster kolumn ========= */}
+    <div className="dashboardViewport">
+      <div className="dashboardStack grid dashboardFixed">
+        {/* ========= Vänster kolumn ========= */}
         <div className="box timer">
           <TimerSection />
         </div>
 
-      {/* ========= Mitten kolumn ========= */}   
-      
-      <div className="box chart">
+        {/* ========= Mitten kolumn ========= */}
+        <div className="box chart">
           <Last5DaysBarChart />
         </div>
-      <div className="box recent">
-        <RecentSessions />
-      </div>
+        <div className="box recent">
+          <RecentSessions />
+        </div>
 
- 
-
-    {/* ========= Höger kolumn ========= */}   
-      
-         <div className="box todo">
-        <ToDoDesktopOnly>  
+        {/* ========= Höger kolumn ========= */}
+        <div className="box todo">
+          <ToDoDesktopOnly>
             <ToDo />
-        </ToDoDesktopOnly>
-        </div>   
+          </ToDoDesktopOnly>
+        </div>
+      </div>
     </div>
   );
 }
-
 

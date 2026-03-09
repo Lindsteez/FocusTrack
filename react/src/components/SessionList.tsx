@@ -141,19 +141,17 @@ export default function SessionsList({
           </div>
 
           {canLoadMore && (
-            <div style={{ display: "flex", justifyContent: "center", marginTop: 10 }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 8,
+              }}
+            >
               <button
                 type="button"
                 onClick={() => setVisibleCount((c) => Math.min(c + pageSize, limit))}
-                style={{
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  background: "transparent",
-                  padding: "8px 12px",
-                  borderRadius: 12,
-                  cursor: "pointer",
-                  fontSize: 13,
-                  opacity: 0.9,
-                }}
+                className={styles.loadMoreBtn}
               >
                 {t("recent.loadMore") ?? "Load more"}
               </button>

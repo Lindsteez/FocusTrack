@@ -3,7 +3,7 @@
 .history {
   max-width: 600px;
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 18px;
 }
 
 .historyPanel {
@@ -13,8 +13,8 @@
 
 @media (max-width: 767px) {
   .history {
-    padding: 16px;
-    padding-top: 105px;
+    padding: 12px;
+    padding-top: 94px;
     padding-bottom: 0;
     height: 100%;
     box-sizing: border-box;
@@ -28,6 +28,7 @@
     min-height: 0;
     display: flex;
     overflow: hidden;
+    border-radius: var(--radius-md);
   }
 
   .historyPanel > * {

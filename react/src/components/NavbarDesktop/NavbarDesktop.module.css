@@ -1,53 +1,58 @@
 @media screen and (min-width: 767px) {
-
   .navbar {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--bg-page);
-    padding: 0 2rem;
-    gap: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 10px;
+    min-height: 76px;
+    padding: 0 20px;
+    background: color-mix(in srgb, var(--card-primary) 84%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
   }
 
-  /* Light mode navbar border */
-  body[data-theme="light"] .navbar {
-    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  .logo {
+    margin-right: auto;
+    width: 12.6rem;
+    max-width: 36vw;
+    height: auto;
   }
 
-  .navbar img {
-    margin-right: auto; 
-    width: 14rem;
-  }
-
-  .navbar a {
-    color: var(--text-primary);
+  .link {
+    color: var(--text-secondary);
     text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: bold;
-    padding: 6px 10px;
-    border-radius: 8px;
-    transition: background 150ms ease, color 150ms ease;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    transition: background 120ms ease, color 120ms ease, transform 120ms ease;
   }
 
-  .navbar a:hover {
-    background: var(--card-hover);
+  .link:hover {
+    color: var(--text-primary);
+    background: color-mix(in srgb, var(--card-hover) 26%, transparent);
   }
 
-  .navbar a:active {
+  .link:active {
     transform: scale(0.98);
   }
 
-  /* Optional active state if using NavLink */
-  .navbar a.active {
-    background: var(--card-secondary);
+  .active {
+    color: var(--text-primary);
+    background: color-mix(in srgb, var(--card-secondary) 66%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 12%, transparent);
   }
 
   .weather {
+    margin-left: auto;
     display: flex;
     flex-direction: column;
     font-size: 12px;
     text-align: right;
+    color: var(--text-secondary);
+    line-height: 1.15;
+    max-width: 190px;
   }
-  
 }

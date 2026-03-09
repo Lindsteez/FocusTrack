@@ -1,21 +1,22 @@
 
 
 .settings__title {
-  margin: 0 0 16px;
-  font-size: 2rem;
+  margin: 0 0 var(--space-3);
+  font-size: 1.6rem;
+  font-family: var(--font-title);
   letter-spacing: -0.02em;
   color: var(--text-primary);
-  padding-top: 20px;
+  padding-top: 0;
 }
 
 .settings__card {
-  background: color-mix(in srgb, var(--card-primary) 80%, transparent);
+  background: color-mix(in srgb, var(--card-primary) 86%, transparent);
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
-  border-radius: 18px;
-  padding: 18px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  box-shadow: var(--shadow-soft);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -29,7 +30,7 @@ body[data-theme="light"] .settings__card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 
 .settings__row--danger {
@@ -38,13 +39,14 @@ body[data-theme="light"] .settings__card {
 
 .settings__label {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--text-secondary);
 }
 
 .settings__description {
-  margin: 6px 0 0;
-  font-size: 0.88rem;
+  margin: 4px 0 0;
+  font-size: 0.84rem;
   color: var(--text-muted);
 }
 
@@ -52,10 +54,10 @@ body[data-theme="light"] .settings__card {
 .segmented {
   background: color-mix(in srgb, var(--card-secondary) 85%, transparent);
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
-  border-radius: 14px;
-  padding: 6px;
+  border-radius: var(--radius-md);
+  padding: 5px;
   display: flex;
-  gap: 6px;
+  gap: 5px;
 }
 
 body[data-theme="light"] .segmented {
@@ -66,10 +68,12 @@ body[data-theme="light"] .segmented {
   border: 0;
   background: transparent;
   color: var(--text-secondary);
-  padding: 10px 14px;
-  border-radius: 12px;
+  min-height: 40px;
+  padding: 8px 11px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 600;
+  font-size: 0.88rem;
   transition: transform 150ms ease, background 150ms ease, color 150ms ease;
 }
 
@@ -78,6 +82,7 @@ body[data-theme="light"] .segmented {
   background: color-mix(in srgb, var(--btn-danger) 16%, transparent);
   color: var(--text-primary);
   white-space: nowrap;
+  min-width: 132px;
 }
 
 .clear-storage-btn:hover {
@@ -112,30 +117,30 @@ body[data-theme="light"] .segmented__btn.is-active {
 
 @media (max-width: 767px) {
   .settings {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .settings:first-of-type {
-    padding-top: 90px;
+    padding-top: 94px;
   }
 
   .settings + .settings {
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   .settings:last-of-type {
-    padding-bottom: 100px;
+    padding-bottom: 106px;
   }
 
   .settings__title {
-    margin: 0 0 10px;
+    margin: 0 0 8px;
     padding-top: 0;
-    font-size: 1.45rem;
+    font-size: 1.34rem;
   }
 
   .settings__card {
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     padding: 12px;
   }
 
@@ -150,12 +155,12 @@ body[data-theme="light"] .segmented__btn.is-active {
   }
 
   .settings__label {
-    font-size: 1rem;
+    font-size: 0.96rem;
   }
 
   .settings__description {
     margin-top: 4px;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
 
   .segmented {
@@ -165,10 +170,10 @@ body[data-theme="light"] .segmented__btn.is-active {
   }
 
   .segmented__btn {
-    min-height: 40px;
-    padding: 8px 10px;
-    border-radius: 10px;
-    font-size: 0.88rem;
+    min-height: 38px;
+    padding: 8px 9px;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -177,5 +182,11 @@ body[data-theme="light"] .segmented__btn.is-active {
 
   .clear-storage-btn {
     width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .settingsPage {
+    padding-top: 14px;
   }
 }

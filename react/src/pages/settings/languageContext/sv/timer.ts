@@ -1,37 +1,42 @@
 export default {
-    'timer.start': 'Starta',
-    'timer.stop': 'Stoppa',
-    'timer.pause': 'Pausa',
-    'timer.mode': 'Läge',
-    'timer.energy': 'Energi',
+  "timer.start": "Starta",
+  "timer.stop": "Stoppa",
+  "timer.pause": "Pausa",
+  "timer.mode": "Läge",
+  "timer.energy": "Energi",
+  "timer.timerType": "Timer-typ",
+  "timer.countUp": "Räkna upp",
+  "timer.countDown": "Räkna ner",
+  "timer.alarmTime": "Alarmtid",
+  "timer.hours": "Timmar",
+  "timer.minutes": "Minuter",
+  "timer.seconds": "Sekunder",
+  "timer.timeUp": "Tiden är ute!",
+  "timer.playJingle": "Spela jingle",
 
-//modal Savetime
-    'timer.modalTitle': 'Spara tiden?',
-    'timer.saveTime': 'Vill du spara tiden?',
-    'timer.yes': 'Ja',
-    'timer.no': 'Nej',
-    'timer.youSure': 'Är du säker?',
-    'timer.discard': 'Tiden kommer inte att sparas.',
+  //modal Savetime
+  "timer.modalTitle": "Spara tiden?",
+  "timer.saveTime": "Vill du spara tiden?",
+  "timer.yes": "Ja",
+  "timer.no": "Nej",
+  "timer.youSure": "Är du säker?",
+  "timer.discard": "Tiden kommer inte att sparas.",
 
-//modal
-    'timer.startSession': 'Starta Session',
-    'timer.editSession': 'Redigera Session',
-    'timer.wwyd': 'Vad ska du göra?',
-    'timer.eg': 'ex. "läsa"',
-    'timer.save': 'Spara',
-    'timer.cancel': 'Avbryt',
+  //modal
+  "timer.startSession": "Starta Session",
+  "timer.editSession": "Redigera Session",
+  "timer.wwyd": "Vad ska du göra?",
+  "timer.eg": 'ex. "läsa"',
+  "timer.save": "Spara",
+  "timer.cancel": "Avbryt",
 
-//energy
-    'timer.energyTitle': 'Energi Nivå',
+  //energy
+  "timer.energyTitle": "Energi Nivå",
 
-//focus
-    'timer.focusTitle': 'Fokus Läge',
-    'timer.work': 'Jobb',
-    'timer.meeting': 'Möte',
-    'timer.break': 'Rast',
-    'timer.activeMode': 'Aktivt läge:',
-
-
-
-
-} as const
+  //focus
+  "timer.focusTitle": "Fokus Läge",
+  "timer.work": "Jobb",
+  "timer.meeting": "Möte",
+  "timer.break": "Rast",
+  "timer.activeMode": "Aktivt läge:",
+} as const;

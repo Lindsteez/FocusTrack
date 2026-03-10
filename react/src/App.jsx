@@ -8,7 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Stats from "./pages/Stats";
 import Settings from "./pages/settings/Settings";
-import ToDo from "./pages/ToDo";
+import ToDo from "./pages/ToDo/ToDo.jsx";
 
 export default function App() {
   return (

@@ -2,11 +2,13 @@
 .stats {
   max-width: 600px;
   margin: 0 auto;
+  padding-top: 18px;
 }
 
 @media (max-width: 767px) {
   .stats {
-  padding: 24px;
-  padding-top: 90px;
-}
+    padding: 12px;
+    padding-top: 94px;
+    padding-bottom: 106px;
+  }
 }

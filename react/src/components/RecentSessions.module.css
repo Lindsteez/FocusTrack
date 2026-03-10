@@ -1,51 +1,57 @@
-.cardBody {
+.body {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  color: var(--text-primary);
-  width: 98%;
-  height: auto;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
-/* Empty state */
-.empty {
-  opacity: 0.7;
-  text-align: center;
-  padding: 10px 0;
-  color: var(--text-secondary);
+.cardBody {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  overflow: auto;
+  padding-right: 2px;
 }
 
-/* One session row */
+.pageScrollOnMobile {}
+
 .row {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
 
-  padding: 0 14px 12px 14px;
-  border-radius: 12px;
-  background: var(--card-third);
+  background: color-mix(in srgb, var(--card-third) 92%, transparent);
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
+  border-radius: var(--radius-md);
+
+  padding: 10px 11px;
 }
 
-/* Left side (title + category) */
 .left {
-  min-width: 0; /* allows ellipsis */
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-top: 2rem;
+  gap: 6px;
+  min-width: 0;
 }
 
 .title {
+  font-size: 0.95rem;
   font-weight: 700;
-  font-size: 1rem;
-
-  white-space: normal;
-  overflow: visible;
-  text-overflow: unset;
-  overflow-wrap: anywhere;
   color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
 }
 
 .metaRow {
@@ -58,132 +64,125 @@
   width: 10px;
   height: 10px;
   border-radius: 999px;
-  opacity: 0.9;
-  background: color-mix(in srgb, var(--text-primary) 24%, transparent);
+  flex: 0 0 auto;
 }
 
 .category {
-  opacity: 0.5;
-  font-size: 0.8rem;
+  font-size: 0.84rem;
   color: var(--text-secondary);
 }
 
 .note {
   font-size: 0.8rem;
-  margin-left: 1.5em;
-  max-width: 90%;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  opacity: 0.5;
   color: var(--text-muted);
-}
-
-/* Right side (duration) */
-.time {
-  font-weight: 800;
-    font-size: 0.8rem;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-  text-align: end;
-  color: var(--text-primary);
-}
-
-/* Optional: subtle hover */
-.row:hover {
-  border-color: color-mix(in srgb, var(--text-primary) 18%, transparent);
-}
-
-.date {
-  opacity: 0.5;
-  font-size: 0.8rem;
-  text-align: end;
-  color: var(--text-secondary);
 }
 
 .timeBlock {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  gap: 4px;
+  flex: 0 0 auto;
 }
 
-/* Match height of the dot+focus line (metaRow) */
-.timeSpacer {
-  height: 1.35em;
-}
-
-/* Edit and Delete */
 .editDelete {
   display: flex;
   align-items: center;
-  height: 100%;
+  gap: 6px;
 }
 
-.editBtn, .deleteBtn {
-  background-color: var(--card-secondary);
-  color: var(--text-primary);
+.editBtn,
+.deleteBtn {
+  height: 25px;
+  width: 25px;
+  border-radius: 9px;
 
-  border: none;
-  cursor: pointer;
-
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  width: 20px;
-  height: 20px;
-  border-radius: 8px;
-  transition: transform 150ms ease, background 150ms ease, color 150ms ease;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
+  background: color-mix(in srgb, var(--card-secondary) 46%, transparent);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.editBtn:hover,
+.deleteBtn:hover {
+  background: color-mix(in srgb, var(--card-hover) 24%, transparent);
+}
+
+.editBtn:active,
+.deleteBtn:active {
+  transform: scale(0.97);
 }
 
 .editBtn img {
-  display: block;
-  width: 15px;
-  height: 15px;
-  filter: brightness(0) saturate(100%) invert(85%);
+  width: 14px;
+  height: 14px;
+  opacity: 0.85;
 }
 
-
-body[data-theme="light"] .editBtn img {
-  filter: brightness(0) saturate(100%) invert(20%);
-}
-
-.deleteBtn:hover {
+.deleteBtn {
   font-size: 14px;
-  font-weight: bold;
+  line-height: 1;
+}
+
+.time {
+  font-size: 0.9rem;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
-.editBtn img:hover {
-  width: 16px;
-  height: 16px;
+.date {
+  font-size: 0.76rem;
+  color: var(--text-muted);
 }
 
-
-.editBtn:hover, .deleteBtn:hover {
-  background: var(--card-hover);
-}
-
-.editBtn:active, .deleteBtn:active {
-  transform: scale(0.98);
-}
-
-.editBtn:focus-visible, .deleteBtn:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--btn-success) 55%, transparent);
-  outline-offset: 2px;
+.empty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: 16px;
+  text-align: center;
+  border-radius: var(--radius-md);
+  border: 1px dashed color-mix(in srgb, var(--text-primary) 24%, transparent);
+  background: color-mix(in srgb, var(--card-third) 70%, transparent);
 }
 
 .loadMoreBtn {
-  margin-top: 12px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  background: var(--timer-background);
+  width: 100%;
+  min-height: 40px;
+  border-radius: var(--radius-sm);
+
+  border: 1px solid color-mix(in srgb, var(--text-primary) 14%, transparent);
+  background: color-mix(in srgb, var(--card-secondary) 36%, transparent);
   color: var(--text-primary);
   cursor: pointer;
-  width: 100%;
-  transition: opacity 500ms ease;
 }
 
 .loadMoreBtn:hover {
-  opacity: 0.7;
+  background: color-mix(in srgb, var(--card-hover) 25%, transparent);
+}
+
+@media (max-width: 767px) {
+  .pageScrollOnMobile {
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .row {
+    align-items: flex-start;
+    gap: 8px;
+    padding: 9px 10px;
+  }
+
+  .title {
+    max-width: 210px;
+    font-size: 0.9rem;
+  }
+
+  .timeBlock {
+    gap: 2px;
+  }
 }

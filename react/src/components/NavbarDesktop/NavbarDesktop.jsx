@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useLanguage } from "../../hooks/useLanguage";
 
 import LogoDark from "../../assets/svg/focustrack-logo.svg";
 import LogoLight from "../../assets/svg/focustrack-logo-light.svg";
@@ -9,6 +10,7 @@ import Weather from "../Weather/Weather"; // <-- add this
 import styles from "./NavbarDesktop.module.css";
 
 function NavbarDesktop() {
+  const { t } = useLanguage();
   const [theme, setTheme] = useState(() => document.body.dataset.theme || "dark");
 
   useEffect(() => {
@@ -31,12 +33,12 @@ function NavbarDesktop() {
     <nav className={styles.navbar}>
       <img className={styles.logo} src={logoSrc} alt="FocusTrack Logo" />
 
-      <NavLink to="/" end className={linkClass}>DASHBOARD</NavLink>
-      <NavLink to="/history" className={linkClass}>HISTORY</NavLink>
-      <NavLink to="/stats" className={linkClass}>STATS</NavLink>
-      <NavLink to="/settings" className={linkClass}>SETTINGS</NavLink>
-
-       <div className={styles.weather}>
+      <NavLink to="/" end className={linkClass}>{t('nav.dashboard')}</NavLink>
+      <NavLink to="/history" className={linkClass}>{t('nav.history')}</NavLink>
+      {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
+      <NavLink to="/stats" className={linkClass}>{t('nav.stats')}</NavLink>
+      <NavLink to="/settings" className={linkClass}>{t('nav.settings')}</NavLink>
+           <div className={styles.weather}>
         <Weather />
       </div>
     </nav>

@@ -1,5 +1,7 @@
 import Card from "./Card";
 import useStatsData from "../hooks/useStatsData";
+import { useLanguage } from "../hooks/useLanguage";
+import "./StatsSummary.css";
 
 function formatSeconds(sec) {
   if (!sec) return "0m";
@@ -10,6 +12,7 @@ function formatSeconds(sec) {
 }
 
 export default function StatsSummary() {
+  const { t } = useLanguage();
   const {
     last30DaysDuration,
     last30DaysSessions,
@@ -18,59 +21,18 @@ export default function StatsSummary() {
   } = useStatsData();
 
   const items = [
-    { label: "Last 30 days", value: formatSeconds(last30DaysDuration) },
-    { label: "Total time", value: formatSeconds(totalDuration) },
-    { label: "Sessions", value: String(last30DaysSessions ?? 0) },
+    { label: `${t('stats.lastDays')}`, value: formatSeconds(last30DaysDuration) },
+    { label: `${t('stats.totalTime')}`, value: formatSeconds(totalDuration) },
+    { label: `${t('stats.sessions')}`, value: String(last30DaysSessions ?? 0) },
   ];
-  const isLight = document.body.getAttribute("data-theme") === "light";
-
   return (
-    <Card title="Stats">
-      <div
-        style={{
-          display: "flex",
-          gap: 14,
-          flexWrap: "wrap",
-          alignItems: "stretch",
-          paddingTop: 6,
-        }}
-      >
+    <Card title={`${t('stats.title')}`}>
+      <div className="statsSummaryGrid">
         {items.map((item) => (
-          <div
-            key={item.label}
-            style={{
-              flex: "1 1 160px",
-              minWidth: 160,
-              padding: "14px 14px 12px",
-              borderRadius: 14,
-              border: "1px solid color-mix(in srgb, var(--text-primary) 12%, transparent)",
-              background: isLight ? "#f2f8ff" : "#15202e65",
-              backdropFilter: "blur(6px)",
-              textAlign: "left",
-            }}
-          >
-            <div
-              style={{
-                fontSize: 12,
-                opacity: 0.7,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                marginBottom: 6,
-              }}
-            >
-              {item.label}
-            </div>
-
-            <div
-              style={{
-                fontSize: 16,
-                fontWeight: 650,
-                lineHeight: 1.1,
-              }}
-            >
-              {item.value}
-            </div>
-          </div>
+          <article key={item.label} className="statsSummaryItem">
+            <div className="statsSummaryLabel">{item.label}</div>
+            <div className="statsSummaryValue">{item.value}</div>
+          </article>
         ))}
       </div>
     </Card>

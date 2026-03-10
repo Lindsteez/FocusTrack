@@ -13,6 +13,11 @@ function labelMMDD(ms) {
   return `${pad2(d.getDate())}/${pad2(d.getMonth() + 1)}`;
 }
 
+function labelHHMM(ms) {
+  const d = new Date(ms);
+  return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+}
+
 function formatDuration(seconds) {
   const s = Number(seconds);
   if (!Number.isFinite(s) || s <= 0) return "0m";
@@ -22,7 +27,6 @@ function formatDuration(seconds) {
   const m = Math.floor((whole % 3600) / 60);
   const sec = whole % 60;
 
-  // Visa sekunder när det är korta pass
   if (h > 0) return `${h}h ${m}m`;
   if (m > 0) return `${m}m ${sec}s`;
   return `${sec}s`;
@@ -33,10 +37,8 @@ function toMs(createdAt) {
   if (typeof createdAt === "number") return createdAt;
 
   const str = String(createdAt);
-
   if (/^\d+$/.test(str)) return Number(str);
 
-  // ISO eller annat datumformat
   const parsed = Date.parse(str);
   return Number.isFinite(parsed) ? parsed : null;
 }
@@ -44,7 +46,7 @@ function toMs(createdAt) {
 export function buildLast5DaysData(sessions) {
   const today = startOfDayMs(Date.now());
 
-  // Skapa exakt 5 dagar (inkl idag)
+  // Exakt 5 dagar (inkl idag)
   const days = Array.from({ length: 5 }, (_, i) => {
     const dayMs = today - (4 - i) * 24 * 60 * 60 * 1000;
     return {
@@ -53,6 +55,7 @@ export function buildLast5DaysData(sessions) {
       totalSeconds: 0,
       weightedEnergySum: 0,
       energyWeightSeconds: 0,
+      sessions: [], // <-- NYTT: pass för tooltip
     };
   });
 
@@ -71,7 +74,7 @@ export function buildLast5DaysData(sessions) {
     // Energi: ta från fältet (nya sessions)
     let e = Number(s.energyLevel) || 0;
 
-    // Fallback
+    // Fallback från description
     if (!e) {
       const m = String(s.description ?? "").match(/Energy:\s*([1-5])/i);
       if (m) e = Number(m[1]);
@@ -83,6 +86,21 @@ export function buildLast5DaysData(sessions) {
       row.weightedEnergySum += e * sec;
       row.energyWeightSeconds += sec;
     }
+
+    // Spara passet med klockslag (createdAt antas vara “när du klockade”)
+    row.sessions.push({
+      atMs: createdAtMs,
+      time: labelHHMM(createdAtMs),
+      seconds: sec,
+      durationLabel: formatDuration(sec),
+      energy: e || 0,
+      title: String(s.title ?? s.description ?? "").trim(),
+    });
+  }
+
+  // Sortera pass i tidsordning per dag (för tooltip)
+  for (const d of days) {
+    d.sessions.sort((a, b) => a.atMs - b.atMs);
   }
 
   return days.map((d) => {
@@ -97,6 +115,7 @@ export function buildLast5DaysData(sessions) {
       totalLabel: formatDuration(d.totalSeconds),
       energy: Math.round(avgEnergy * 10) / 10,
       energyRounded: avgEnergy > 0 ? Math.round(avgEnergy) : 0,
+      sessions: d.sessions, // <-- NYTT: används i tooltip
     };
   });
 }

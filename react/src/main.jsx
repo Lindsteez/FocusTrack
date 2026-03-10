@@ -1,10 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { LanguageProvider } from "./hooks/useLanguage.tsx";
 import "./index.css";
 import "./media.css";
 import App from "./App.jsx";
-
 
 function getSavedTheme() {
   const raw = localStorage.getItem("theme");
@@ -32,10 +32,10 @@ applyThemeFromStorage();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <LanguageProvider>
     <BrowserRouter>
-     
-        <App />
-
+      <App />
     </BrowserRouter>
+    </LanguageProvider>
   </StrictMode>
 );

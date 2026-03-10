@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
+import { useLanguage } from "../../hooks/useLanguage"
 import styles from "./ToDo.module.css";
-import Card from "../Card";
-import Button from "../Button";
+import Card from "../../components/Card";
+import Button from "../../components/Button";
 
 function makeId() {
   if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
@@ -9,6 +10,7 @@ function makeId() {
 }
 
 export default function ToDo() {
+      const { t } = useLanguage();
   const [text, setText] = useState("");
 
   const [todos, setTodos] = useState(() => {
@@ -24,7 +26,7 @@ export default function ToDo() {
     try {
       localStorage.setItem("todos_v1", JSON.stringify(todos));
     } catch {
-        //localStorage may be unavailable
+      // localStorage may be unavailable
     }
   }, [todos]);
 
@@ -54,29 +56,29 @@ export default function ToDo() {
   }, [todos]);
 
   return (
-    <div className={styles.page}>
-      <Card title={`ToDo (${stats.left} left)`}>
-        <div className={styles.toolbar}>
+    <div className={`${styles.page} todoPage`}>
+  <Card title={`${t('todo.title')} (${stats.left} ${t('todo.left')})`}>
+    <div className={`${styles.toolbar} todoToolbar`}>
           <input
-            className={styles.input}
+            className={`${styles.input} todoInput`}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Add a task…"
+            placeholder={t('todo.addTask')}
             onKeyDown={(e) => {
               if (e.key === "Enter") addTodo();
             }}
           />
 
-          <div className={styles.actions}>
+          <div className={`${styles.actions} todoActions`}>
             <Button
-              label="Add"
+              label={t('todo.add')}
               variant="start"
               onClick={addTodo}
               disabled={!text.trim()}
               className={styles.addBtn}
             />
             <Button
-              label="Clear"
+              label={t('todo.clear')}
               variant="stop"
               onClick={clearCompleted}
               disabled={stats.done === 0}
@@ -85,7 +87,7 @@ export default function ToDo() {
           </div>
         </div>
 
-        <div className={styles.list}>
+        <div className={`${styles.list} todoList`}>
           {todos.length === 0 ? (
             <div className={styles.empty}>No tasks yet.</div>
           ) : (

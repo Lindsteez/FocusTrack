@@ -1,0 +1,23 @@
+.chartCanvas {
+  width: 100%;
+  height: clamp(260px, 45vh, 360px);
+  min-height: 260px;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+@media (max-width: 767px) {
+  .chartCanvas {
+    height: 270px;
+    min-height: 270px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .chartCanvas {
+    flex: 1 1 auto;
+    height: 100%;
+    min-height: 0;
+    padding-top: 0;
+  }
+}

@@ -1,26 +1,90 @@
+/* ===== Layout for TimerSection ===== */
+
+.timerLayout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  /* Reduce the gap between ring and controls */
+  gap: 12px;
+
+  /* Keep content nicely centered in the card */
+  height: 100%;
+  min-height: 0;
+  padding: 8px 14px;
+}
+
+.ringCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.ringBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controlsCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 230px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.timerMeta {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.2;
+  max-width: 38ch;
+}
+
+/* ===== Ring / SVG ===== */
+
 .wrap {
   position: relative;
   display: grid;
   place-items: center;
-  margin: 2.5rem 0;
+  margin: 0;
+
+  /* Slightly smaller ring so it fits with buttons + meta */
+  width: clamp(148px, 30vw, 188px);
+  aspect-ratio: 1 / 1;
 }
 
 .svg {
   display: block;
-  /* Starta uppe vid kl 12 istället för kl 3 */
+  width: 100%;
+  height: 100%;
   transform: rotate(-90deg);
 }
 
 .track {
   fill: none;
-  stroke: var(--timer-background); /*bakgrundsfärg på t rackern*/
+  stroke: var(--timer-background);
   stroke-linecap: round;
 }
 
 .progress {
   fill: none;
-  stroke: var(--timer-forground); /* “fyllfärg” (kan bytas senare) */
-  /* stroke: #22c55e; */
+  stroke: var(--timer-forground);
   stroke-linecap: round;
 }
 
@@ -30,8 +94,37 @@
 
 .time {
   position: absolute;
-  font-size: 2rem;
   font-variant-numeric: tabular-nums;
   color: var(--text-primary);
   line-height: 1;
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .timerLayout {
+    flex-direction: column;
+    gap: 8px;
+    padding: 6px 8px;
+  }
+
+  .controlsCol {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .timerMeta {
+    font-size: 0.83rem;
+    max-width: 100%;
+  }
+
+  .wrap {
+    width: clamp(150px, 45vw, 196px);
+  }
 }

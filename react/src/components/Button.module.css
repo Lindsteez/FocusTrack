@@ -1,39 +1,82 @@
 .btnBase {
-    color: var(--text-primary);
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 1rem;
-    margin: 0 10px;
-    border: none;
-    cursor: pointer;
-    transition: transform 120ms ease, opacity 120ms ease;
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
 }
 
 .btnBase:hover {
-  opacity: 0.95;
+  filter: brightness(1.04);
 }
 
 .btnBase:active {
   transform: scale(0.98);
 }
 
+.btnBase:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--text-primary) 50%, transparent);
+  outline-offset: 2px;
+}
+
+.btnBase:disabled {
+  background: color-mix(in srgb, var(--text-muted) 40%, transparent) !important;
+  border-color: color-mix(in srgb, var(--text-primary) 10%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 56%, transparent);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .start {
-  background-color: var(--btn-success);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--btn-success) 84%, #ffffff 16%),
+    var(--btn-success)
+  );
   color: white;
+  border-color: color-mix(in srgb, var(--btn-success) 60%, #102214);
 }
 
 .pause {
-  background-color: var(--btn-pause);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--btn-pause) 86%, #ffffff 14%),
+    var(--btn-pause)
+  );
   color: var(--bg-page);
+  border-color: color-mix(in srgb, var(--btn-pause) 62%, #3a3615);
 }
 
 .stop {
-  background-color: var(--btn-danger);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--btn-danger) 84%, #ffffff 16%),
+    var(--btn-danger)
+  );
   color: white;
+  border-color: color-mix(in srgb, var(--btn-danger) 60%, #3b1514);
 }
 
 .disabledStart {
-  background: #999 !important;
-  cursor: not-allowed;
-  opacity: 0.6;
+  background: color-mix(in srgb, var(--text-muted) 40%, transparent) !important;
+  border-color: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+@media (max-width: 767px) {
+  .btnBase {
+    min-height: 40px;
+    padding: 9px 13px;
+    font-size: 0.85rem;
+  }
 }

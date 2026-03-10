@@ -1,15 +1,24 @@
+import styles from "./Button.module.css";
 
-import styles from './Button.module.css'
+function Button({
+  label,
+  variant = "start",
+  onClick,
+  disabled,
+  className = "",
+}) {
+  const btnClass = `${styles.btnBase} ${styles[variant] || ""} ${className}`.trim();
 
-function Button({label, variant, onClick, disabled}) {
-    return <button 
-    className={`${styles.btnBase} ${styles[variant]}`} 
-    onClick={onClick} 
-    disabled={disabled} 
-    type="button">
-        {label}
-    
-    </button>;
+  return (
+    <button
+      className={btnClass}
+      onClick={onClick}
+      disabled={disabled}
+      type="button"
+    >
+      {label}
+    </button>
+  );
 }
 
 export default Button;

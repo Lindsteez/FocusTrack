@@ -1,20 +1,19 @@
+import styles from "./Card.module.css";
 
-import { Children } from 'react'
-import styles from './Card.module.css'
+function Card({ title, children, className = "" }) {
+  const cardClass = `${styles.card} card ${className}`.trim();
 
-function Card({title, children}) {
+  return (
+    <section className={cardClass}>
+      {title ? (
+        <header className={`${styles.header} cardHeader`}>
+          <h3>{title}</h3>
+        </header>
+      ) : null}
 
-    return (
-        <div className={styles.card}>
-            <div className={styles.header}>{title}</div>
-
-            <div className={styles.content}>
-                {children}
-            </div>
-        </div>
-    )
-
+      <div className={`${styles.content} content`}>{children}</div>
+    </section>
+  );
 }
 
-
-export default Card
+export default Card;

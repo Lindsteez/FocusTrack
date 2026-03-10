@@ -3,13 +3,59 @@
 .history {
   max-width: 600px;
   margin: 0 auto;
+  padding-top: 18px;
+}
+
+.historyPanel {
+  min-height: 0;
+}
+
+@media (min-width: 768px) {
+  .history {
+    height: calc(100vh - 76px);
+    padding: 18px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .historyPanel {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+  }
+
+  .historyPanel > * {
+    flex: 1;
+    min-height: 0;
+  }
 }
 
 
 @media (max-width: 767px) {
   .history {
-  padding: 24px;
-  padding-top: 95px;
-  padding-bottom: 100px;
-}
+    padding: 12px;
+    padding-top: 94px;
+    padding-bottom: 0;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .historyPanel {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+  }
+
+  .historyPanel > * {
+    flex: 1;
+    min-height: 0;
+  }
 }

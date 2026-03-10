@@ -92,7 +92,7 @@
     flex-direction: column;
     gap: 14px;
     padding: 12px;
-    padding-top: 74px;
+    padding-top: 88px;
     padding-bottom: 98px;
     height: auto;
   }
@@ -148,7 +148,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding-top: 75px;
+    padding-top: 86px;
     padding-bottom: 90px;
     height: auto;
   }
@@ -169,7 +169,7 @@
 
   .dashboardViewport {
     height: calc(100vh - 76px);
-    padding: 0 18px 18px;
+    padding: 12px 18px 18px;
     display: flex;
     align-items: center;
     justify-content: center;

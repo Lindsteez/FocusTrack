@@ -1,42 +1,41 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import { LanguageProvider } from './hooks/useLanguage.js'
-import './index.css'
-import './media.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { LanguageProvider } from "./hooks/useLanguage.tsx";
+import "./index.css";
+import "./media.css";
+import App from "./App.jsx";
 
 function getSavedTheme() {
-  const raw = localStorage.getItem('theme')
-  if (!raw) return 'dark'
+  const raw = localStorage.getItem("theme");
+  if (!raw) return "dark";
 
-  // because useLocalStorage stores JSON.stringify(value)
   try {
-    return JSON.parse(raw)
+    return JSON.parse(raw);
   } catch {
-    return raw
+    return raw;
   }
 }
 
 function applyThemeFromStorage() {
-  const theme = getSavedTheme()
+  const theme = getSavedTheme();
 
-  if (theme === 'auto') {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    document.body.dataset.theme = prefersDark ? 'dark' : 'light'
+  if (theme === "auto") {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.body.dataset.theme = prefersDark ? "dark" : "light";
   } else {
-    document.body.dataset.theme = theme
+    document.body.dataset.theme = theme;
   }
 }
 
-applyThemeFromStorage()
+applyThemeFromStorage();
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <LanguageProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
     </LanguageProvider>
-  </StrictMode>,
-)
+  </StrictMode>
+);

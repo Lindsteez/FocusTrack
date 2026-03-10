@@ -32,6 +32,9 @@ export default function StartSessionModal({
 }) {
   const { t } = useLanguage();
 
+  const HOUR_OPTIONS = Array.from({ length: 100 }, (_, i) => i);
+  const MIN_SEC_OPTIONS = Array.from({ length: 60 }, (_, i) => i);
+
   // Edit mode
   const isEdit = mode === "edit";
   const [editLabel, setEditLabel] = useState(
@@ -74,15 +77,8 @@ export default function StartSessionModal({
     String(uiLabel).trim().length > 0 &&
     (isEdit || timerMode === "up" || alarmTotalSeconds > 0);
 
-  function clamp(n, min, max) {
-    return Math.max(min, Math.min(max, n));
-  }
-
-  function parseNumberInput(value, min, max) {
-    if (value === "") return min;
-    const parsed = Number(value);
-    if (!Number.isFinite(parsed)) return min;
-    return clamp(Math.floor(parsed), min, max);
+  function toPaddedString(value) {
+    return String(value).padStart(2, "0");
   }
 
   function handlePrimaryAction() {
@@ -143,52 +139,55 @@ export default function StartSessionModal({
               <div className={styles.alarmSection}>
                 <h2>{t("timer.alarmTime")}</h2>
                 <div className={styles.alarmGrid}>
-                  <label>
-                    {t("timer.hours")}
-                    <input
-                      type="number"
-                      min={0}
-                      max={99}
-                      value={alarmHours}
+                  <label className={styles.alarmField}>
+                    <span>{t("timer.hours")}</span>
+                    <select
+                      value={Number(alarmHours)}
                       onChange={(e) =>
-                        onChangeAlarmHours?.(
-                          parseNumberInput(e.target.value, 0, 99),
-                        )
+                        onChangeAlarmHours?.(Number(e.target.value))
                       }
                       className={styles.alarmInput}
-                    />
+                    >
+                      {HOUR_OPTIONS.map((hour) => (
+                        <option key={hour} value={hour}>
+                          {toPaddedString(hour)}
+                        </option>
+                      ))}
+                    </select>
                   </label>
 
-                  <label>
-                    {t("timer.minutes")}
-                    <input
-                      type="number"
-                      min={0}
-                      max={59}
-                      value={alarmMinutes}
+                  <label className={styles.alarmField}>
+                    <span>{t("timer.minutes")}</span>
+                    <select
+                      value={Number(alarmMinutes)}
                       onChange={(e) =>
-                        onChangeAlarmMinutes?.(
-                          parseNumberInput(e.target.value, 0, 59),
-                        )
+                        onChangeAlarmMinutes?.(Number(e.target.value))
                       }
                       className={styles.alarmInput}
-                    />
+                    >
+                      {MIN_SEC_OPTIONS.map((minute) => (
+                        <option key={minute} value={minute}>
+                          {toPaddedString(minute)}
+                        </option>
+                      ))}
+                    </select>
                   </label>
 
-                  <label>
-                    {t("timer.seconds")}
-                    <input
-                      type="number"
-                      min={0}
-                      max={59}
-                      value={alarmSeconds}
+                  <label className={styles.alarmField}>
+                    <span>{t("timer.seconds")}</span>
+                    <select
+                      value={Number(alarmSeconds)}
                       onChange={(e) =>
-                        onChangeAlarmSeconds?.(
-                          parseNumberInput(e.target.value, 0, 59),
-                        )
+                        onChangeAlarmSeconds?.(Number(e.target.value))
                       }
                       className={styles.alarmInput}
-                    />
+                    >
+                      {MIN_SEC_OPTIONS.map((second) => (
+                        <option key={second} value={second}>
+                          {toPaddedString(second)}
+                        </option>
+                      ))}
+                    </select>
                   </label>
                 </div>
               </div>

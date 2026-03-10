@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 
   /* Reduce the gap between ring and controls */
   gap: 12px;
@@ -34,7 +35,8 @@
   justify-content: center;
 
   gap: 8px;
-  min-width: 0px;
+  min-width: 0;
+  flex: 1 1 230px;
 }
 
 .actions {
@@ -51,6 +53,7 @@
   font-size: 0.88rem;
   color: var(--text-secondary);
   line-height: 1.2;
+  max-width: 38ch;
 }
 
 /* ===== Ring / SVG ===== */
@@ -62,7 +65,7 @@
   margin: 0;
 
   /* Slightly smaller ring so it fits with buttons + meta */
-  width: min(178px, 40vw);
+  width: clamp(148px, 30vw, 188px);
   aspect-ratio: 1 / 1;
 }
 
@@ -94,7 +97,34 @@
   font-variant-numeric: tabular-nums;
   color: var(--text-primary);
   line-height: 1;
-  font-size: clamp(1.25rem, 2.05vw, 1.86rem);
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .timerLayout {
+    flex-direction: column;
+    gap: 8px;
+    padding: 6px 8px;
+  }
+
+  .controlsCol {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .timerMeta {
+    font-size: 0.83rem;
+    max-width: 100%;
+  }
+
+  .wrap {
+    width: clamp(150px, 45vw, 196px);
+  }
 }

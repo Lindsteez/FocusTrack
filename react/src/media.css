@@ -75,12 +75,10 @@
     min-width: 88px;
   }
 
- 
   .todo .todoList {
     max-height: 340px;
     overflow: auto;
   }
-  
 }
 
 /* Mobile (0–767px) */
@@ -94,7 +92,7 @@
     flex-direction: column;
     gap: 14px;
     padding: 12px;
-    padding-top: 96px;
+    padding-top: 74px;
     padding-bottom: 98px;
     height: auto;
   }
@@ -105,39 +103,39 @@
     gap: 14px;
   }
 
-   .todo textarea {
-  min-height: 110px;
-  max-height: 140px;
-  resize: none;
+  .todo textarea {
+    min-height: 110px;
+    max-height: 140px;
+    resize: none;
   }
 
   .todo .actions {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
   }
 
   .todo button {
-  padding: 8px 12px;
-  font-size: 0.85rem;
+    padding: 8px 12px;
+    font-size: 0.85rem;
   }
 
   .mobile-layout {
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-.mobile-main {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 10px;
-  padding-bottom: 108px;
-}
+  .mobile-main {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 10px 0;
+    padding-bottom: 108px;
+  }
 }
 
 /* Tablet (768–1023px) */
@@ -197,10 +195,22 @@
     margin: 0 auto;
   }
 
-  .timer  { grid-area: timer;  min-height: 0; }
-  .todo   { grid-area: todo;   min-height: 0; }
-  .recent { grid-area: recent; min-height: 0; }
-  .chart  { grid-area: chart;  min-height: 0; }
+  .timer {
+    grid-area: timer;
+    min-height: 0;
+  }
+  .todo {
+    grid-area: todo;
+    min-height: 0;
+  }
+  .recent {
+    grid-area: recent;
+    min-height: 0;
+  }
+  .chart {
+    grid-area: chart;
+    min-height: 0;
+  }
 
   /* Every box must stretch fully */
   .box {

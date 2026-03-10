@@ -167,3 +167,16 @@ h3 {
   opacity: 0.88;
   text-align: center;
 }
+
+/* Desktop: keep scrolling, hide native scrollbar visuals */
+@media (min-width: 768px) {
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}

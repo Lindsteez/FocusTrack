@@ -7,6 +7,12 @@ import rain from "../../assets/imgs/weather/rain.gif";
 import drizzle from "../../assets/imgs/weather/drizzle.gif";
 import hail from "../../assets/imgs/weather/hail.gif";
 import sun from "../../assets/imgs/weather/sun.gif";
+import snow from "../../assets/imgs/weather/snow.gif";
+import thunderstorms from "../../assets/imgs/weather/thunderstorms.gif";
+import partlyCloudy from "../../assets/imgs/weather/partlyCloudy.gif";
+import mainlySun from "../../assets/imgs/weather/mainlySun.gif";
+import mist from "../../assets/imgs/weather/mist.gif";
+import snowRain from "../../assets/imgs/weather/snowRain.gif";
 
 
 type WeatherState =
@@ -44,23 +50,37 @@ type NominatimReverseResponse = {
 
 function codeToLabel(code: number): React.ReactNode {
   // Open-Meteo WMO weather interpretation codes.
-  if (code === 0) return <img src={sun} alt="Sun" className={styles.weatherSun} />;
-  if (code === 1) return "Mainly clear";
-  if (code === 2) 
-    return "Partly cloudy";
+  if (code === 0) return <img src={sun} alt="Sun" className={styles.weatherIcon} />;
+
+  if (code === 1) return <img src={mainlySun} alt="Mainly Sun" className={styles.weatherIcon} />;
+
+  if (code === 2) return <img src={partlyCloudy} alt="Partly cloud" className={styles.weatherIcon} />;
+
   if (code === 3)
-    return <img src={overcast} alt="Overcast" className={styles.weather} />;
-  if (code === 45 || code === 48) return "Fog";
-  if (code === 51 || code === 53 || code === 55) return <img src={drizzle} alt="Drizzle" className={styles.weather} />;
-  if (code === 56 || code === 57) return " Freezingdrizzle";
-  if (code === 61 || code === 63 || code === 65) return <img src={rain} alt="Rain" className={styles.weather} />;
-  if (code === 66 || code === 67) return "Freezing rain";
-  if (code === 71 || code === 73 || code === 75) return "Snow";
-  if (code === 77) return <img src={hail} alt="Hail" className={styles.weather} />;
-  if (code === 80 || code === 81 || code === 82) return "Rain showers";
-  if (code === 85 || code === 86) return "Snow showers";
-  if (code === 95) return "Thunderstorm";
-  if (code === 96 || code === 99) return "Thunderstorm (hail)";
+    return <img src={overcast} alt="Overcast" className={styles.weatherIcon} />;
+
+  if (code === 45 || code === 48) return <img src={mist} alt="Mist" className={styles.weatherIcon} />;
+
+  if (code === 51 || code === 53 || code === 55) return <img src={drizzle} alt="Drizzle" className={styles.weatherIcon} />;
+
+  if (code === 56 || code === 57) return <img src={snowRain} alt="Freezing drizzle" className={styles.weatherIcon} />;
+
+  if (code === 61 || code === 63 || code === 65) return <img src={rain} alt="Rain" className={styles.weatherIcon} />;
+
+  if (code === 66 || code === 67) return <img src={snowRain} alt="Freezing rain" className={styles.weatherIcon} />;
+
+  if (code === 71 || code === 73 || code === 75) return <img src={snow} alt="Snow" className={styles.weatherIcon} />;
+
+  if (code === 77) return <img src={hail} alt="Hail" className={styles.weatherIcon} />;
+
+  if (code === 80 || code === 81 || code === 82) return <img src={rain} alt="Rain shower" className={styles.weatherIcon} />;
+
+  if (code === 85 || code === 86) return <img src={snow} alt="Snow shower" className={styles.weatherIcon} />;
+
+  if (code === 95) return <img src={thunderstorms} alt="Thunderstorms" className={styles.weatherIcon} />;
+  
+  if (code === 96 || code === 99) return <img src={thunderstorms} alt="Thunderstorms hail" className={styles.weatherIcon} />;
+
   return `Code ${code}`;
 }
 
@@ -68,17 +88,47 @@ function codeToIcon(code) {
   if (code === 0) {
     return <img src={sun} alt="Sun" className={styles.weatherIcon} />
   }
+  if (code === 1) {
+    return <img src={mainlySun} alt="Mainly Sun" className={styles.weatherIcon} />
+  };
+  if (code === 2) {
+    return <img src={partlyCloudy} alt="Partly cloud" className={styles.weatherIcon} />
+  };
   if (code === 3) {
     return <img src={sun} alt="Overcast" className={styles.weatherIcon} />;
   }
+  if (code === 45 || code === 48) {
+    return <img src={mist} alt="Mist" className={styles.weatherIcon} />
+  };
   if (code === 51 || code === 53 || code === 55) {
     return <img src={drizzle} alt="Drizzle" className={styles.weatherIcon} />
   }
-  if (code === 61 || code === 63 || code === 65){ 
+  if (code === 56 || code === 57) {
+    return <img src={snowRain} alt="Freezing drizzle" className={styles.weatherIcon} />
+  }
+  if (code === 61 || code === 63 || code === 65) { 
     return <img src={rain} alt="Rain" className={styles.weatherIcon} />
+  }
+  if (code === 66 || code === 67) {
+    return <img src={snowRain} alt="Freezing rain" className={styles.weatherIcon} />
+  }
+  if (code === 71 || code === 73 || code === 75) {
+    return <img src={snow} alt="Snow" className={styles.weatherIcon} />
   }
   if (code === 77) {
     return <img src={hail} alt="Hail" className={styles.weatherIcon} />
+  }
+  if (code === 80 || code === 81 || code === 82) {
+    return <img src={rain} alt="Rain Shower" className={styles.weatherIcon} />
+  }
+  if (code === 85 || code === 86) {
+    return <img src={snow} alt="Snow shower" className={styles.weatherIcon} />
+  }
+  if (code === 95) {
+    return <img src={thunderstorms} alt="Thunderstorms" className={styles.weatherIcon} />
+  };
+  if (code === 96 || code === 99) {
+    return <img src={thunderstorms} alt="Thunderstorms hail" className={styles.weatherIcon} />
   }
   return null;
 }

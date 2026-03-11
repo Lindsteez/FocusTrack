@@ -1,8 +1,8 @@
-.weather {
+/* .weather {
   width: 30px !important;
   height: auto;
   filter: brightness(0.6);
-}
+} */
 
 .viewTemp {
   display: flex;
@@ -27,8 +27,8 @@
 
 .weatherIcon {
   display: block;
-  width: 48px;
-  height: 48px;
+  width: 35px;
+  height: 35px;
 }
 
 .bottomRow {

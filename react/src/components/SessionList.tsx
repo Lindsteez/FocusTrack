@@ -3,7 +3,8 @@ import { useLanguage } from "../hooks/useLanguage";
 import styles from "./RecentSessions.module.css"; 
 import useSessions from "../hooks/useSessions";
 import { formatDuration, formatDate } from "../utils/sessionsStore";
-import penIcon from "../assets/imgs/pen.png";
+import penIcon from "../assets/svg/pen.svg";
+import penIconDark from "../assets/imgs/pen.png";
 import StartSessionModal from "./Timer/StartSessionModal";
 
 type FocusMode = "work" | "break" | "meeting";
@@ -89,6 +90,7 @@ export default function SessionsList({
           >
             {list.map((s) => {
               const modeKey = (s.focusMode ?? "").toString().toLowerCase();
+              const isLight = document.body.getAttribute("data-theme") === "light";
 
               return (
                 <div key={s.id} className={styles.row}>
@@ -119,7 +121,7 @@ export default function SessionsList({
                         className={styles.editBtn}
                         aria-label="Edit session"
                       >
-                        <img src={penIcon} alt="" />
+                        <img src={isLight ? penIcon : penIconDark} alt="" />
                       </button>
 
                       <button

@@ -59,6 +59,28 @@ export default function StartSessionModal({
   const hoursRef = useRef(null);
   const minutesRef = useRef(null);
   const secondsRef = useRef(null);
+  const draftHoursRef = useRef(draftHours);
+  const draftMinutesRef = useRef(draftMinutes);
+  const draftSecondsRef = useRef(draftSeconds);
+
+  const hoursDragRef = useRef({
+    isDragging: false,
+    startY: 0,
+    startScrollTop: 0,
+    pointerId: null,
+  });
+  const minutesDragRef = useRef({
+    isDragging: false,
+    startY: 0,
+    startScrollTop: 0,
+    pointerId: null,
+  });
+  const secondsDragRef = useRef({
+    isDragging: false,
+    startY: 0,
+    startScrollTop: 0,
+    pointerId: null,
+  });
 
   const rec = useMemo(() => {
     return buildRecommendations({ energyLevel, focusMode });
@@ -108,6 +130,66 @@ export default function StartSessionModal({
     );
     const nextValue = clamp(rawIndex, 0, max);
     setValue(nextValue);
+  }
+
+  function startMouseDrag(event, viewportRef, dragRef) {
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
+
+    const el = viewportRef.current;
+    if (!el) return;
+
+    dragRef.current = {
+      isDragging: true,
+      startY: event.clientY,
+      startScrollTop: el.scrollTop,
+      pointerId: event.pointerId,
+    };
+
+    if (el.setPointerCapture) {
+      el.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function moveMouseDrag(event, viewportRef, dragRef, max, setValue) {
+    const drag = dragRef.current;
+    if (!drag.isDragging) return;
+
+    const el = viewportRef.current;
+    if (!el) return;
+
+    const deltaY = event.clientY - drag.startY;
+    el.scrollTop = drag.startScrollTop - deltaY;
+
+    const rawIndex = Math.round(el.scrollTop / WHEEL_ITEM_HEIGHT);
+    setValue(clamp(rawIndex, 0, max));
+  }
+
+  function endMouseDrag(viewportRef, dragRef, max, setValue) {
+    const drag = dragRef.current;
+    if (!drag.isDragging) return;
+
+    const el = viewportRef.current;
+    dragRef.current = {
+      isDragging: false,
+      startY: 0,
+      startScrollTop: 0,
+      pointerId: null,
+    };
+
+    if (!el) return;
+
+    if (el.releasePointerCapture && drag.pointerId != null) {
+      try {
+        el.releasePointerCapture(drag.pointerId);
+      } catch {
+        // ignore release errors
+      }
+    }
+
+    const rawIndex = Math.round(el.scrollTop / WHEEL_ITEM_HEIGHT);
+    const nextValue = clamp(rawIndex, 0, max);
+    setValue(nextValue);
+    scrollToValue(viewportRef, nextValue);
   }
 
   function openWheelPicker(shouldRevertOnClose = false) {
@@ -162,6 +244,66 @@ export default function StartSessionModal({
       scrollToValue(secondsRef, draftSeconds, "auto");
     });
   }, [isWheelOpen, draftHours, draftMinutes, draftSeconds]);
+
+  useEffect(() => {
+    draftHoursRef.current = draftHours;
+  }, [draftHours]);
+
+  useEffect(() => {
+    draftMinutesRef.current = draftMinutes;
+  }, [draftMinutes]);
+
+  useEffect(() => {
+    draftSecondsRef.current = draftSeconds;
+  }, [draftSeconds]);
+
+  useEffect(() => {
+    if (!isWheelOpen) return;
+
+    const wheelBindings = [
+      {
+        ref: hoursRef,
+        valueRef: draftHoursRef,
+        max: 99,
+        setValue: setDraftHours,
+      },
+      {
+        ref: minutesRef,
+        valueRef: draftMinutesRef,
+        max: 59,
+        setValue: setDraftMinutes,
+      },
+      {
+        ref: secondsRef,
+        valueRef: draftSecondsRef,
+        max: 59,
+        setValue: setDraftSeconds,
+      },
+    ];
+
+    const cleanups = wheelBindings
+      .map(({ ref, valueRef, max, setValue }) => {
+        const el = ref.current;
+        if (!el) return null;
+
+        const onWheel = (event) => {
+          event.preventDefault();
+          const direction = event.deltaY > 0 ? 1 : -1;
+          const nextValue = clamp(valueRef.current + direction, 0, max);
+          valueRef.current = nextValue;
+          setValue(nextValue);
+          scrollToValue(ref, nextValue, "auto");
+        };
+
+        el.addEventListener("wheel", onWheel, { passive: false });
+        return () => el.removeEventListener("wheel", onWheel);
+      })
+      .filter(Boolean);
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
+  }, [isWheelOpen]);
 
   if (!isOpen) return null;
 
@@ -223,17 +365,17 @@ export default function StartSessionModal({
               <div className={styles.alarmSection}>
                 <h2>{t("timer.alarmTime")}</h2>
                 <div className={styles.alarmInlineRow}>
-                  <div className={styles.alarmValuePreview}>
-                    {toPaddedString(alarmHours)}h :{" "}
-                    {toPaddedString(alarmMinutes)}m :{" "}
-                    {toPaddedString(alarmSeconds)}s
-                  </div>
                   <button
                     type="button"
-                    className={styles.openWheelBtn}
+                    className={styles.alarmValuePreviewBtn}
                     onClick={() => openWheelPicker(alarmTotalSeconds <= 0)}
+                    aria-label={t("timer.alarmTime")}
                   >
-                    {t("timer.alarmTime")}
+                    <span className={styles.alarmValuePreview}>
+                      {toPaddedString(alarmHours)}h :{" "}
+                      {toPaddedString(alarmMinutes)}m :{" "}
+                      {toPaddedString(alarmSeconds)}s
+                    </span>
                   </button>
                 </div>
               </div>
@@ -286,7 +428,27 @@ export default function StartSessionModal({
                     <div
                       ref={hoursRef}
                       className={styles.wheelViewport}
-                      onScroll={(e) => handleWheelScroll(e, 99, setDraftHours)}
+                      onScroll={(e) => {
+                        handleWheelScroll(e, 99, setDraftHours);
+                      }}
+                      onPointerDown={(e) =>
+                        startMouseDrag(e, hoursRef, hoursDragRef)
+                      }
+                      onPointerMove={(e) =>
+                        moveMouseDrag(
+                          e,
+                          hoursRef,
+                          hoursDragRef,
+                          99,
+                          setDraftHours,
+                        )
+                      }
+                      onPointerUp={() =>
+                        endMouseDrag(hoursRef, hoursDragRef, 99, setDraftHours)
+                      }
+                      onPointerCancel={() =>
+                        endMouseDrag(hoursRef, hoursDragRef, 99, setDraftHours)
+                      }
                     >
                       <div className={styles.wheelSpacer} />
                       {HOUR_OPTIONS.map((hour) => (
@@ -317,8 +479,36 @@ export default function StartSessionModal({
                     <div
                       ref={minutesRef}
                       className={styles.wheelViewport}
-                      onScroll={(e) =>
-                        handleWheelScroll(e, 59, setDraftMinutes)
+                      onScroll={(e) => {
+                        handleWheelScroll(e, 59, setDraftMinutes);
+                      }}
+                      onPointerDown={(e) =>
+                        startMouseDrag(e, minutesRef, minutesDragRef)
+                      }
+                      onPointerMove={(e) =>
+                        moveMouseDrag(
+                          e,
+                          minutesRef,
+                          minutesDragRef,
+                          59,
+                          setDraftMinutes,
+                        )
+                      }
+                      onPointerUp={() =>
+                        endMouseDrag(
+                          minutesRef,
+                          minutesDragRef,
+                          59,
+                          setDraftMinutes,
+                        )
+                      }
+                      onPointerCancel={() =>
+                        endMouseDrag(
+                          minutesRef,
+                          minutesDragRef,
+                          59,
+                          setDraftMinutes,
+                        )
                       }
                     >
                       <div className={styles.wheelSpacer} />
@@ -350,8 +540,36 @@ export default function StartSessionModal({
                     <div
                       ref={secondsRef}
                       className={styles.wheelViewport}
-                      onScroll={(e) =>
-                        handleWheelScroll(e, 59, setDraftSeconds)
+                      onScroll={(e) => {
+                        handleWheelScroll(e, 59, setDraftSeconds);
+                      }}
+                      onPointerDown={(e) =>
+                        startMouseDrag(e, secondsRef, secondsDragRef)
+                      }
+                      onPointerMove={(e) =>
+                        moveMouseDrag(
+                          e,
+                          secondsRef,
+                          secondsDragRef,
+                          59,
+                          setDraftSeconds,
+                        )
+                      }
+                      onPointerUp={() =>
+                        endMouseDrag(
+                          secondsRef,
+                          secondsDragRef,
+                          59,
+                          setDraftSeconds,
+                        )
+                      }
+                      onPointerCancel={() =>
+                        endMouseDrag(
+                          secondsRef,
+                          secondsDragRef,
+                          59,
+                          setDraftSeconds,
+                        )
                       }
                     >
                       <div className={styles.wheelSpacer} />

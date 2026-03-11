@@ -58,9 +58,8 @@
   margin-top: 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .alarmValuePreview {
@@ -70,19 +69,21 @@
   color: var(--text-primary);
 }
 
-.openWheelBtn {
+.alarmValuePreviewBtn {
   border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
   background: color-mix(in srgb, var(--card-secondary) 85%, transparent);
   color: var(--text-primary);
-  padding: 8px 12px;
-  min-height: 40px;
+  padding: 10px 16px;
+  min-height: 44px;
+  min-width: 220px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
 }
 
-.openWheelBtn:hover {
+.alarmValuePreviewBtn:hover {
   background: color-mix(in srgb, var(--card-hover) 65%, transparent);
 }
 
@@ -156,6 +157,35 @@
   position: relative;
 }
 
+.wheelViewportWrap::before,
+.wheelViewportWrap::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 2;
+}
+
+.wheelViewportWrap::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--card-primary) 90%, transparent),
+    transparent
+  );
+}
+
+.wheelViewportWrap::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--card-primary) 90%, transparent),
+    transparent
+  );
+}
+
 .wheelViewport {
   height: 156px;
   overflow-y: auto;
@@ -164,6 +194,12 @@
   border-radius: 12px;
   background: color-mix(in srgb, var(--card-secondary) 68%, transparent);
   border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+  cursor: grab;
+  user-select: none;
+}
+
+.wheelViewport:active {
+  cursor: grabbing;
 }
 
 .wheelViewport::-webkit-scrollbar {

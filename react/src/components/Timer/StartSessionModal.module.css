@@ -13,9 +13,6 @@
 .modal {
   background: var(--card-primary);
   border-radius: 12px;
-  width: min(560px, 100%);
-  max-height: min(92vh, 760px);
-  overflow-y: auto;
   padding: 16px;
   color: var(--text-primary);
   width: min(640px, 100%);
@@ -57,29 +54,211 @@
   margin-top: 10px;
 }
 
-.alarmGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-top: 6px;
-}
-
-.alarmField {
+.alarmInlineRow {
+  margin-top: 8px;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.alarmInput {
-  width: 100%;
-  margin-top: 4px;
-  padding: 7px;
-  border-radius: 8px;
-  border: 1px solid color-mix(in srgb, var(--text-primary) 20%, transparent);
+.alarmValuePreview {
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+.alarmValuePreviewBtn {
+  border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
   background: color-mix(in srgb, var(--card-secondary) 85%, transparent);
   color: var(--text-primary);
-  min-height: 42px;
-  box-sizing: border-box;
+  padding: 10px 16px;
+  min-height: 44px;
+  min-width: 220px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.alarmValuePreviewBtn:hover {
+  background: color-mix(in srgb, var(--card-hover) 65%, transparent);
+}
+
+.wheelBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2300;
+  background: rgba(7, 9, 20, 0.72);
+  display: grid;
+  place-items: center;
+  padding: 12px;
+}
+
+.wheelModal {
+  position: relative;
+  width: min(520px, 96vw);
+  background: color-mix(in srgb, var(--card-primary) 95%, #05070f 5%);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: var(--shadow-strong);
+}
+
+.wheelCloseBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-secondary) 76%, transparent);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wheelCloseBtn:hover {
+  background: color-mix(in srgb, var(--card-hover) 70%, transparent);
+}
+
+.wheelTitle {
+  margin: 0 0 10px;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.wheelGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.wheelCol {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wheelColLabel {
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.wheelViewportWrap {
+  position: relative;
+}
+
+.wheelViewportWrap::before,
+.wheelViewportWrap::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 2;
+}
+
+.wheelViewportWrap::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--card-primary) 90%, transparent),
+    transparent
+  );
+}
+
+.wheelViewportWrap::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--card-primary) 90%, transparent),
+    transparent
+  );
+}
+
+.wheelViewport {
+  height: 156px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-snap-type: y mandatory;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--card-secondary) 68%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+  cursor: grab;
+  user-select: none;
+}
+
+.wheelViewport:active {
+  cursor: grabbing;
+}
+
+.wheelViewport::-webkit-scrollbar {
+  display: none;
+}
+
+.wheelSpacer {
+  height: 52px;
+}
+
+.wheelItem {
+  width: 100%;
+  height: 52px;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--text-secondary) 80%, transparent);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  scroll-snap-align: center;
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease,
+    color 120ms ease;
+  opacity: 0.42;
+  cursor: pointer;
+}
+
+.wheelItemActive {
+  color: var(--text-primary);
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+.wheelUnit {
+  margin-left: 2px;
+  font-size: 0.75em;
+  opacity: 0.85;
+}
+
+.wheelFocusBand {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 52px;
+  height: 52px;
+  border-top: 1px solid color-mix(in srgb, var(--text-primary) 20%, transparent);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--text-primary) 20%, transparent);
+  background: color-mix(in srgb, var(--card-hover) 32%, transparent);
+}
+
+.wheelActions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .labelBlock {
@@ -107,5 +286,19 @@
   .modal {
     max-height: calc(100dvh - 20px);
     border-radius: 10px;
+  }
+
+  .wheelModal {
+    width: min(100%, 430px);
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .wheelGrid {
+    gap: 6px;
+  }
+
+  .wheelItem {
+    font-size: 0.96rem;
   }
 }

@@ -1,5 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../../hooks/useLanguage";
+import styles from "./weather.module.css";
+
+import overcast from "../../assets/imgs/weather/overcast.gif";
+import rain from "../../assets/imgs/weather/rain.gif";
+import drizzle from "../../assets/imgs/weather/drizzle.gif";
+import hail from "../../assets/imgs/weather/hail.gif";
+import sun from "../../assets/imgs/weather/sun.gif";
+import snow from "../../assets/imgs/weather/snow.gif";
+import thunderstorms from "../../assets/imgs/weather/thunderstorms.gif";
+import partlyCloudy from "../../assets/imgs/weather/partlyCloudy.gif";
+import mainlySun from "../../assets/imgs/weather/mainlySun.gif";
+import mist from "../../assets/imgs/weather/mist.gif";
+import snowRain from "../../assets/imgs/weather/snowRain.gif";
+
 
 type WeatherState =
   | { status: "idle" }
@@ -34,27 +48,95 @@ type NominatimReverseResponse = {
   display_name?: string;
 };
 
-function codeToLabel(code: number): string {
+function codeToLabel(code: number): React.ReactNode {
   // Open-Meteo WMO weather interpretation codes.
-  if (code === 0) return "Clear";
-  if (code === 1) return "Mainly clear";
-  if (code === 2) return "Partly cloudy";
-  if (code === 3) return "Overcast";
-  if (code === 45 || code === 48) return "Fog";
-  if (code === 51 || code === 53 || code === 55) return "Drizzle";
-  if (code === 56 || code === 57) return " Freezingdrizzle";
-  if (code === 61 || code === 63 || code === 65) return "Rain";
-  if (code === 66 || code === 67) return "Freezing rain";
-  if (code === 71 || code === 73 || code === 75) return "Snow";
-  if (code === 77) return "Snow grains";
-  if (code === 80 || code === 81 || code === 82) return "Rain showers";
-  if (code === 85 || code === 86) return "Snow showers";
-  if (code === 95) return "Thunderstorm";
-  if (code === 96 || code === 99) return "Thunderstorm (hail)";
+  if (code === 0) return <img src={sun} alt="Sun" className={styles.weatherIcon} />;
+
+  if (code === 1) return <img src={mainlySun} alt="Mainly Sun" className={styles.weatherIcon} />;
+
+  if (code === 2) return <img src={partlyCloudy} alt="Partly cloud" className={styles.weatherIcon} />;
+
+  if (code === 3)
+    return <img src={overcast} alt="Overcast" className={styles.weatherIcon} />;
+
+  if (code === 45 || code === 48) return <img src={mist} alt="Mist" className={styles.weatherIcon} />;
+
+  if (code === 51 || code === 53 || code === 55) return <img src={drizzle} alt="Drizzle" className={styles.weatherIcon} />;
+
+  if (code === 56 || code === 57) return <img src={snowRain} alt="Freezing drizzle" className={styles.weatherIcon} />;
+
+  if (code === 61 || code === 63 || code === 65) return <img src={rain} alt="Rain" className={styles.weatherIcon} />;
+
+  if (code === 66 || code === 67) return <img src={snowRain} alt="Freezing rain" className={styles.weatherIcon} />;
+
+  if (code === 71 || code === 73 || code === 75) return <img src={snow} alt="Snow" className={styles.weatherIcon} />;
+
+  if (code === 77) return <img src={hail} alt="Hail" className={styles.weatherIcon} />;
+
+  if (code === 80 || code === 81 || code === 82) return <img src={rain} alt="Rain shower" className={styles.weatherIcon} />;
+
+  if (code === 85 || code === 86) return <img src={snow} alt="Snow shower" className={styles.weatherIcon} />;
+
+  if (code === 95) return <img src={thunderstorms} alt="Thunderstorms" className={styles.weatherIcon} />;
+  
+  if (code === 96 || code === 99) return <img src={thunderstorms} alt="Thunderstorms hail" className={styles.weatherIcon} />;
+
   return `Code ${code}`;
 }
 
-async function reverseGeocodeCity(latitude: number, longitude: number): Promise<string> {
+function codeToIcon(code) {
+  if (code === 0) {
+    return <img src={sun} alt="Sun" className={styles.weatherIcon} />
+  }
+  if (code === 1) {
+    return <img src={mainlySun} alt="Mainly Sun" className={styles.weatherIcon} />
+  };
+  if (code === 2) {
+    return <img src={partlyCloudy} alt="Partly cloud" className={styles.weatherIcon} />
+  };
+  if (code === 3) {
+    return <img src={sun} alt="Overcast" className={styles.weatherIcon} />;
+  }
+  if (code === 45 || code === 48) {
+    return <img src={mist} alt="Mist" className={styles.weatherIcon} />
+  };
+  if (code === 51 || code === 53 || code === 55) {
+    return <img src={drizzle} alt="Drizzle" className={styles.weatherIcon} />
+  }
+  if (code === 56 || code === 57) {
+    return <img src={snowRain} alt="Freezing drizzle" className={styles.weatherIcon} />
+  }
+  if (code === 61 || code === 63 || code === 65) { 
+    return <img src={rain} alt="Rain" className={styles.weatherIcon} />
+  }
+  if (code === 66 || code === 67) {
+    return <img src={snowRain} alt="Freezing rain" className={styles.weatherIcon} />
+  }
+  if (code === 71 || code === 73 || code === 75) {
+    return <img src={snow} alt="Snow" className={styles.weatherIcon} />
+  }
+  if (code === 77) {
+    return <img src={hail} alt="Hail" className={styles.weatherIcon} />
+  }
+  if (code === 80 || code === 81 || code === 82) {
+    return <img src={rain} alt="Rain Shower" className={styles.weatherIcon} />
+  }
+  if (code === 85 || code === 86) {
+    return <img src={snow} alt="Snow shower" className={styles.weatherIcon} />
+  }
+  if (code === 95) {
+    return <img src={thunderstorms} alt="Thunderstorms" className={styles.weatherIcon} />
+  };
+  if (code === 96 || code === 99) {
+    return <img src={thunderstorms} alt="Thunderstorms hail" className={styles.weatherIcon} />
+  }
+  return null;
+}
+
+async function reverseGeocodeCity(
+  latitude: number,
+  longitude: number,
+): Promise<string> {
   // Nominatim reverse geocoding docs. :contentReference[oaicite:7]{index=7}
   const url =
     "https://nominatim.openstreetmap.org/reverse" +
@@ -101,7 +183,10 @@ export default function Weather() {
       setState({ status: "loading" });
 
       if (!("geolocation" in navigator)) {
-        setState({ status: "error", message: "Geolocation is not supported in this browser." });
+        setState({
+          status: "error",
+          message: "Geolocation is not supported in this browser.",
+        });
         return;
       }
 
@@ -123,14 +208,19 @@ export default function Weather() {
               `&timezone=auto`;
 
             const weatherRes = await fetch(weatherUrl);
-            if (!weatherRes.ok) throw new Error(`Open-Meteo request failed: ${weatherRes.status}`);
+            if (!weatherRes.ok)
+              throw new Error(
+                `Open-Meteo request failed: ${weatherRes.status}`,
+              );
 
             const weatherData = (await weatherRes.json()) as OpenMeteoResponse;
             const tempC = weatherData.current?.temperature_2m;
             const code = weatherData.current?.weather_code;
 
             if (typeof tempC !== "number" || typeof code !== "number") {
-              throw new Error("Open-Meteo response missing current weather data.");
+              throw new Error(
+                "Open-Meteo response missing current weather data.",
+              );
             }
 
             // 2) Reverse geocode coords -> city name (Nominatim). :contentReference[oaicite:10]{index=10}
@@ -162,7 +252,7 @@ export default function Weather() {
           enableHighAccuracy: false,
           timeout: 10_000,
           maximumAge: 10 * 60 * 1000,
-        }
+        },
       );
     }
 
@@ -176,10 +266,10 @@ export default function Weather() {
     switch (state.status) {
       case "idle":
       case "loading":
-        return { location: `${t('weather.locating')}`, temp: "—", label: "—" };
+        return { location: `${t("weather.locating")}`, temp: "—", label: "—" };
 
       case "error":
-        return { location: `${t('weather.off')}`, temp: "—", label: "—" };
+        return { location: `${t("weather.off")}`, temp: "—", label: "—" };
 
       case "ready":
         return {
@@ -190,11 +280,25 @@ export default function Weather() {
     }
   }, [state]);
 
+  // return (
+  //   <div aria-label="Current weather">
+  //     <div className="weatherLocation">{view.location}</div>
+  //     <div className="viewTemp">
+  //       {view.temp} • {view.label}
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div aria-label="Current weather">
-      <div>{view.location}</div>
-      <div>
-        {view.temp} • {view.label}
+    <div className={styles.weatherGrid} aria-label="Current weather">
+      <div className={styles.weatherLocation}>{view.location}</div>
+
+      <div className={styles.bottomRow}>
+        <div className={styles.viewTemp}>
+          {view.temp} • {view.label}
+        </div>
+
+        <div className={styles.iconSlot}>{codeToIcon(view.code)}</div>
       </div>
     </div>
   );

@@ -130,6 +130,10 @@ body[data-theme="light"] {
     linear-gradient(180deg, color-mix(in srgb, var(--bg-page) 92%, #ffffff) 0%, var(--bg-page) 100%);
 }
 
+.desktop-layout {
+  min-height: 100%;
+}
+
 h1,
 h2,
 h3 {

@@ -1,5 +1,12 @@
 
 
+.settingsPage {
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 .settings__title {
   margin: 0 0 var(--space-3);
   font-size: 1.6rem;
@@ -151,6 +158,45 @@ body[data-theme="light"] .segmented {
   background: color-mix(in srgb, var(--btn-success) 24%, transparent);
 }
 
+.goals-row {
+  align-items: flex-start;
+}
+
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.goal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.goal-input {
+  width: 100%;
+  min-height: 38px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+  background: color-mix(in srgb, var(--card-third) 85%, transparent);
+  color: var(--text-primary);
+}
+
+.goals-save-btn {
+  margin-top: 12px;
+  border: 1px solid color-mix(in srgb, var(--btn-success) 45%, transparent);
+  background: color-mix(in srgb, var(--btn-success) 16%, transparent);
+  color: var(--text-primary);
+  min-width: 136px;
+}
+
+.goals-save-btn:hover {
+  background: color-mix(in srgb, var(--btn-success) 28%, transparent);
+}
+
 .segmented__btn:hover {
   background: var(--card-hover);
   color: var(--text-primary);
@@ -255,6 +301,14 @@ body[data-theme="light"] .segmented__btn.is-active {
     width: 100%;
   }
 
+  .goals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .goals-save-btn {
+    width: 100%;
+  }
+
   .import-replace-btn,
   .import-merge-btn {
     width: 100%;
@@ -264,5 +318,6 @@ body[data-theme="light"] .segmented__btn.is-active {
 @media (min-width: 768px) {
   .settingsPage {
     padding-top: 14px;
+    padding-bottom: 18px;
   }
 }

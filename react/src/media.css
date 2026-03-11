@@ -136,6 +136,16 @@
     padding: 8px 10px 0;
     padding-bottom: 108px;
   }
+
+  .statsPage {
+    --stats-page-padding-x: 12px;
+    --stats-page-padding-top: 94px;
+    --stats-page-padding-bottom: 106px;
+  }
+
+  .goalsProgressGrid {
+    --goals-progress-cols: 1fr;
+  }
 }
 
 /* Tablet (768–1023px) */
@@ -164,6 +174,19 @@
 /* Desktop (>=1024px) */
 @media (min-width: 1024px) {
   body {
+    overflow: hidden;
+  }
+
+  .desktop-layout {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .desktop-layout > main {
+    flex: 1 1 auto;
+    min-height: 0;
     overflow: hidden;
   }
 

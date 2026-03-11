@@ -1,0 +1,51 @@
+.grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: var(--goals-progress-cols, repeat(2, minmax(0, 1fr)));
+}
+
+.item {
+  border: 1px solid color-mix(in srgb, var(--text-primary) 14%, transparent);
+  background: color-mix(in srgb, var(--card-third) 88%, transparent);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.value {
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.meta {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.track {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-hover) 72%, transparent);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--btn-success) 76%, #ffffff),
+    var(--btn-success)
+  );
+  transition: width 220ms ease;
+}

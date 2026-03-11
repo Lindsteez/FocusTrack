@@ -2,13 +2,11 @@
 .stats {
   max-width: 600px;
   margin: 0 auto;
-  padding-top: 18px;
-}
-
-@media (max-width: 767px) {
-  .stats {
-    padding: 12px;
-    padding-top: 94px;
-    padding-bottom: 106px;
-  }
+  padding-top: var(--stats-page-padding-top, 18px);
+  padding-left: var(--stats-page-padding-x, 0);
+  padding-right: var(--stats-page-padding-x, 0);
+  padding-bottom: var(--stats-page-padding-bottom, 0);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

@@ -1,0 +1,169 @@
+.card {
+  width: 100%;
+}
+
+.card :global(.content) {
+  overflow: visible;
+}
+
+.headerRow {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+  gap: 8px;
+}
+
+.dayBtn {
+  border: 1px solid color-mix(in srgb, var(--text-primary) 18%, transparent);
+  background: color-mix(in srgb, var(--card-secondary) 80%, transparent);
+  color: var(--text-primary);
+  border-radius: 10px;
+  min-height: 34px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dayInfo {
+  text-align: center;
+}
+
+.weekday {
+  margin: 0;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.date {
+  margin: 0;
+  margin-top: 2px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.emptyText {
+  margin: 0;
+  margin-top: 8px;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.planList {
+  list-style: none;
+  margin: 0;
+  margin-top: 8px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.planItem {
+  border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
+  background: color-mix(in srgb, var(--card-third) 86%, transparent);
+  border-radius: 10px;
+  padding: 7px 9px;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.planItemDone {
+  border-color: color-mix(in srgb, var(--btn-success) 40%, transparent);
+}
+
+.planCheck {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 20%, transparent);
+  background: color-mix(in srgb, var(--card-secondary) 80%, transparent);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.planCheckDone {
+  border-color: color-mix(in srgb, var(--btn-success) 50%, transparent);
+  background: color-mix(in srgb, var(--btn-success) 28%, transparent);
+  color: var(--text-primary);
+}
+
+.planTime {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.planTitle {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+.planTextDone {
+  text-decoration: line-through;
+  opacity: 0.68;
+}
+
+.planDeleteBtn {
+  border: 1px solid color-mix(in srgb, var(--btn-danger) 35%, transparent);
+  background: color-mix(in srgb, var(--btn-danger) 20%, transparent);
+  color: var(--text-primary);
+  border-radius: 8px;
+  min-height: 28px;
+  min-width: 28px;
+  padding: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.secondaryBtn {
+  border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+  background: color-mix(in srgb, var(--card-third) 85%, transparent);
+  color: var(--text-primary);
+  border-radius: 10px;
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondaryBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.linkBtn {
+  border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+  background: color-mix(in srgb, var(--card-secondary) 85%, transparent);
+  color: var(--text-primary);
+  border-radius: 10px;
+  min-height: 34px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

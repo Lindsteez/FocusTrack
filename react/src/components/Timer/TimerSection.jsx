@@ -10,6 +10,7 @@ import {
   saveTimerState,
 } from "../../utils/timerStore";
 import { addSession } from "../../utils/sessionsStore";
+import { markPlanningItemCompleted } from "../../utils/planningStore";
 import { useLanguage } from "../../hooks/useLanguage.tsx";
 import styles from "./Timer.module.css";
 import jingleUrl from "../../assets/audio/jingle.mp3";
@@ -54,6 +55,9 @@ export default function TimerSection() {
   const [focusMode, setFocusMode] = useState(stored?.focusMode ?? "-");
   const [energyLevel, setEnergyLevel] = useState(stored?.energyLevel ?? null);
   const [sessionLabel, setSessionLabel] = useState(stored?.sessionLabel ?? "");
+  const [activePlanningItemId, setActivePlanningItemId] = useState(
+    stored?.activePlanningItemId ?? null,
+  );
 
   const [nowMs, setNowMs] = useState(() => Date.now());
   const alarmAudioRef = useRef(null);
@@ -126,6 +130,7 @@ export default function TimerSection() {
       alarmHours,
       alarmMinutes,
       alarmSeconds,
+      activePlanningItemId,
     });
   }, [
     isRunning,
@@ -139,19 +144,8 @@ export default function TimerSection() {
     alarmHours,
     alarmMinutes,
     alarmSeconds,
+    activePlanningItemId,
   ]);
-
-  async function playAlarmJingle() {
-    const audio = alarmAudioRef.current;
-    if (!audio) return;
-
-    try {
-      audio.currentTime = 0;
-      await audio.play();
-    } catch {
-      // Ignore autoplay restrictions.
-    }
-  }
 
   useEffect(() => {
     if (timerMode !== "down") return;
@@ -159,12 +153,23 @@ export default function TimerSection() {
     if (seconds !== 0) return;
     if (alarmPlayed) return;
 
-    setAccumulatedSeconds(targetSeconds);
-    setIsRunning(false);
-    setAlarmPlayed(true);
-    setAlarmDoneVisible(true);
-    playAlarmJingle();
-    setIsModalOpen(true);
+    const finishId = window.setTimeout(() => {
+      setAccumulatedSeconds(targetSeconds);
+      setIsRunning(false);
+      setAlarmPlayed(true);
+      setAlarmDoneVisible(true);
+      setIsModalOpen(true);
+
+      const audio = alarmAudioRef.current;
+      if (!audio) return;
+
+      audio.currentTime = 0;
+      audio.play().catch(() => {
+        // Ignore autoplay restrictions.
+      });
+    }, 0);
+
+    return () => window.clearTimeout(finishId);
   }, [timerMode, isRunning, seconds, targetSeconds, alarmPlayed]);
 
   function stopAndOpenModal() {
@@ -205,6 +210,7 @@ export default function TimerSection() {
     setEnergyLevel(null);
     setSessionLabel("");
     setFocusMode("-");
+    setActivePlanningItemId(null);
   }
 
   return (
@@ -240,6 +246,7 @@ export default function TimerSection() {
                     setSessionLabel("");
                     setAlarmPlayed(false);
                     setAlarmDoneVisible(false);
+                    setActivePlanningItemId(null);
                     setIsStartModalOpen(true);
                   }}
                 />
@@ -288,6 +295,10 @@ export default function TimerSection() {
             rating,
           });
 
+          if (activePlanningItemId) {
+            markPlanningItemCompleted(activePlanningItemId);
+          }
+
           setIsModalOpen(false);
           resetTimer();
         }}
@@ -313,10 +324,12 @@ export default function TimerSection() {
         onConfirm={(payload = {}) => {
           const selectedMode = payload.timerMode ?? "up";
           const selectedTargetSeconds = payload.targetSeconds ?? 0;
+          const selectedPlanningItemId = payload.planningItemId ?? null;
 
           setIsStartModalOpen(false);
           setTimerMode(selectedMode);
           setTargetSeconds(selectedMode === "down" ? selectedTargetSeconds : 0);
+          setActivePlanningItemId(selectedPlanningItemId);
           setAccumulatedSeconds(0);
           setStartedAt(Date.now());
           setAlarmPlayed(false);

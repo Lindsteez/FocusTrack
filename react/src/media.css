@@ -103,6 +103,14 @@
     gap: 14px;
   }
 
+  .planningMini {
+    display: flex;
+  }
+
+  .planningMini > * {
+    flex: 1;
+  }
+
   .todo textarea {
     min-height: 110px;
     max-height: 140px;
@@ -168,6 +176,10 @@
     flex-direction: column;
     gap: 16px;
     align-items: stretch;
+  }
+
+  .planningMini {
+    display: none;
   }
 }
 
@@ -240,6 +252,10 @@
     min-height: 0;
     height: 100%;
     display: flex;
+  }
+
+  .box.planningMini {
+    display: none;
   }
 
   /* Card must fill the grid cell */

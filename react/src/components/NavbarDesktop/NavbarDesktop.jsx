@@ -35,6 +35,7 @@ function NavbarDesktop() {
 
       <NavLink to="/" end className={linkClass}>{t('nav.dashboard')}</NavLink>
       <NavLink to="/history" className={linkClass}>{t('nav.history')}</NavLink>
+      <NavLink to="/planning" className={linkClass}>{t('nav.planning')}</NavLink>
       {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
       <NavLink to="/stats" className={linkClass}>{t('nav.stats')}</NavLink>
       <NavLink to="/settings" className={linkClass}>{t('nav.settings')}</NavLink>

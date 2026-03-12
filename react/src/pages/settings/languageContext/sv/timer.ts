@@ -39,4 +39,8 @@ export default {
   "timer.meeting": "Möte",
   "timer.break": "Rast",
   "timer.activeMode": "Aktivt läge:",
+  "timer.planRecommendation": "Från dagens planering",
+  "timer.planNow": "Nu",
+  "timer.planNext": "Nästa",
+  "timer.planUse": "Använd den här planen",
 } as const;

@@ -5,6 +5,11 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import Button from "../Button";
 import { useLanguage } from "../../hooks/useLanguage";
 import { buildRecommendations } from "../../utils/recommendations";
+import {
+  getPlanningItemDurationMinutes,
+  getTodayPlanningRecommendation,
+  subscribePlanning,
+} from "../../utils/planningStore";
 
 const WHEEL_ITEM_HEIGHT = 52;
 
@@ -85,6 +90,10 @@ export default function StartSessionModal({
   const rec = useMemo(() => {
     return buildRecommendations({ energyLevel, focusMode });
   }, [energyLevel, focusMode]);
+  const [planningRec, setPlanningRec] = useState(() =>
+    getTodayPlanningRecommendation(),
+  );
+  const [planningItemId, setPlanningItemId] = useState(null);
 
   const uiFocusMode = isEdit ? editFocusMode : focusMode;
   const uiEnergyLevel = isEdit ? editEnergyLevel : energyLevel;
@@ -96,6 +105,13 @@ export default function StartSessionModal({
     : onChangeEnergyLevel;
   // console.log("editEnergyLevel", editEnergyLevel);
   const uiSetLabel = isEdit ? setEditLabel : onChangeLabel;
+  const focusModeOptions = [
+    t("timer.work"),
+    t("timer.meeting"),
+    t("timer.break"),
+  ];
+  const hasManualFocusMode = focusModeOptions.includes(uiFocusMode);
+  const isPlanningApplied = planningItemId != null;
 
   const alarmTotalSeconds =
     Number(alarmHours || 0) * 3600 +
@@ -103,7 +119,7 @@ export default function StartSessionModal({
     Number(alarmSeconds || 0);
 
   const canSubmit =
-    Boolean(uiFocusMode) &&
+    (isEdit || isPlanningApplied || hasManualFocusMode) &&
     uiEnergyLevel != null &&
     String(uiLabel).trim().length > 0 &&
     (isEdit || timerMode === "up" || alarmTotalSeconds > 0);
@@ -305,7 +321,58 @@ export default function StartSessionModal({
     };
   }, [isWheelOpen]);
 
+  useEffect(() => {
+    if (!isOpen || isEdit) return;
+
+    function syncPlanningRecommendation() {
+      setPlanningRec(getTodayPlanningRecommendation());
+    }
+
+    syncPlanningRecommendation();
+
+    const unsubscribe = subscribePlanning(syncPlanningRecommendation);
+    const intervalId = setInterval(syncPlanningRecommendation, 30000);
+
+    return () => {
+      unsubscribe();
+      clearInterval(intervalId);
+    };
+  }, [isOpen, isEdit]);
+
   if (!isOpen) return null;
+
+  function handleModalCancel() {
+    setPlanningItemId(null);
+    onCancel?.();
+  }
+
+  function handleFocusModeChange(nextMode) {
+    setPlanningItemId(null);
+    uiSetFocusMode(nextMode);
+  }
+
+  function applyPlanningRecommendation() {
+    const item = planningRec.item;
+    if (!item || isEdit) return;
+
+    const durationMinutes = getPlanningItemDurationMinutes(item);
+    if (durationMinutes <= 0) return;
+
+    const totalSeconds = durationMinutes * 60;
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    uiSetLabel(item.title);
+    uiSetFocusMode(item.title);
+    onChangeTimerMode?.("down");
+    onChangeAlarmHours?.(hours);
+    onChangeAlarmMinutes?.(minutes);
+    onChangeAlarmSeconds?.(seconds);
+    setPlanningItemId(item.id);
+    setRevertOnClose(false);
+    setIsWheelOpen(false);
+  }
 
   function handlePrimaryAction() {
     if (!canSubmit) return;
@@ -317,21 +384,24 @@ export default function StartSessionModal({
         energyLevel: editEnergyLevel,
       });
     } else {
+      const selectedPlanningItemId = planningItemId;
+      setPlanningItemId(null);
       onConfirm?.({
         timerMode,
         targetSeconds: timerMode === "down" ? alarmTotalSeconds : 0,
+        planningItemId: selectedPlanningItemId,
       });
     }
   }
 
   return (
-    <div className={styles.backdrop} onClick={onCancel}>
+    <div className={styles.backdrop} onClick={handleModalCancel}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h2>
           {isEdit ? `${t("timer.editSession")}` : `${t("timer.startSession")}`}
         </h2>
 
-        <FocusModeSelector value={uiFocusMode} onChange={uiSetFocusMode} />
+        <FocusModeSelector value={uiFocusMode} onChange={handleFocusModeChange} />
         <EnergyLevelSelector
           value={uiEnergyLevel}
           onChange={uiSetEnergyLevel}
@@ -344,6 +414,27 @@ export default function StartSessionModal({
             (confidence {Math.round(rec.confidence * 100)}%)
           </span>
         </div>
+
+        {!isEdit && planningRec.item ? (
+          <div className={styles.planHint}>
+            <p className={styles.planHintTitle}>{t("timer.planRecommendation")}</p>
+            <p className={styles.planHintMeta}>
+              {planningRec.state === "active"
+                ? t("timer.planNow")
+                : t("timer.planNext")}{" "}
+              • {planningRec.item.startTime}-{planningRec.item.endTime} •{" "}
+              {getPlanningItemDurationMinutes(planningRec.item)} min
+            </p>
+            <p className={styles.planHintName}>{planningRec.item.title}</p>
+            <button
+              type="button"
+              className={styles.planHintBtn}
+              onClick={applyPlanningRecommendation}
+            >
+              {t("timer.planUse")}
+            </button>
+          </div>
+        ) : null}
 
         {!isEdit && (
           <div className={styles.timerTypeSection}>
@@ -401,7 +492,11 @@ export default function StartSessionModal({
             disabled={!canSubmit}
           />
 
-          <Button label={t("timer.cancel")} variant="stop" onClick={onCancel} />
+          <Button
+            label={t("timer.cancel")}
+            variant="stop"
+            onClick={handleModalCancel}
+          />
         </div>
 
         {isWheelOpen ? (

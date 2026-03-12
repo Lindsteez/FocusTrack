@@ -39,4 +39,8 @@ export default {
   "timer.meeting": "Meeting",
   "timer.break": "Break",
   "timer.activeMode": "Active mode:",
+  "timer.planRecommendation": "From today's planning",
+  "timer.planNow": "Now",
+  "timer.planNext": "Next",
+  "timer.planUse": "Use this plan",
 } as const;

@@ -1,4 +1,5 @@
 import TimerSection from "../components/Timer/TimerSection";
+import PlanningMiniCard from "../components/PlanningMiniCard";
 import RecentSessions from "../components/RecentSessions";
 import EnergyLog from "../components/EnergyLog/EnergyLog";
 import Last5DaysBarChart from "../components/Last5DaysBarChart";
@@ -14,6 +15,10 @@ export default function Dashboard() {
         {/* ========= Vänster kolumn ========= */}
         <div className="box timer">
           <TimerSection />
+        </div>
+
+        <div className="box planningMini">
+          <PlanningMiniCard />
         </div>
 
         {/* ========= Mitten kolumn ========= */}
@@ -34,4 +39,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

@@ -38,13 +38,25 @@ export default function TimerSection() {
   const initialAlarm = splitToHms(stored?.targetSeconds ?? 0);
 
   const [isRunning, setIsRunning] = useState(stored?.isRunning ?? false);
-  const [startedAt, setStartedAt] = useState(() => stored?.startedAt ?? Date.now());
-  const [accumulatedSeconds, setAccumulatedSeconds] = useState(stored?.accumulatedSeconds ?? 0);
+  const [startedAt, setStartedAt] = useState(
+    () => stored?.startedAt ?? Date.now(),
+  );
+  const [accumulatedSeconds, setAccumulatedSeconds] = useState(
+    stored?.accumulatedSeconds ?? 0,
+  );
   const [timerMode, setTimerMode] = useState(stored?.timerMode ?? "up");
-  const [targetSeconds, setTargetSeconds] = useState(stored?.targetSeconds ?? 0);
-  const [alarmHours, setAlarmHours] = useState(stored?.alarmHours ?? initialAlarm.hours);
-  const [alarmMinutes, setAlarmMinutes] = useState(stored?.alarmMinutes ?? initialAlarm.minutes);
-  const [alarmSeconds, setAlarmSeconds] = useState(stored?.alarmSeconds ?? initialAlarm.seconds);
+  const [targetSeconds, setTargetSeconds] = useState(
+    stored?.targetSeconds ?? 0,
+  );
+  const [alarmHours, setAlarmHours] = useState(
+    stored?.alarmHours ?? initialAlarm.hours,
+  );
+  const [alarmMinutes, setAlarmMinutes] = useState(
+    stored?.alarmMinutes ?? initialAlarm.minutes,
+  );
+  const [alarmSeconds, setAlarmSeconds] = useState(
+    stored?.alarmSeconds ?? initialAlarm.seconds,
+  );
   const [alarmPlayed, setAlarmPlayed] = useState(false);
   const [alarmDoneVisible, setAlarmDoneVisible] = useState(false);
 
@@ -57,16 +69,55 @@ export default function TimerSection() {
 
   const [nowMs, setNowMs] = useState(() => Date.now());
   const alarmAudioRef = useRef(null);
+  const alarmAudioBlobUrlRef = useRef(null);
 
   useEffect(() => {
-    const audio = new Audio(jingleUrl);
-    audio.preload = "auto";
-    alarmAudioRef.current = audio;
+    let cancelled = false;
+
+    async function initAlarmAudio() {
+      const audio = new Audio();
+      audio.preload = "auto";
+
+      try {
+        // Loading via blob URL avoids flaky range/caching failures (e.g. HTTP 416 in dev).
+        const response = await fetch(jingleUrl, { cache: "no-store" });
+        if (!response.ok)
+          throw new Error(`Failed to load jingle: ${response.status}`);
+
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        if (cancelled) {
+          URL.revokeObjectURL(blobUrl);
+          return;
+        }
+
+        alarmAudioBlobUrlRef.current = blobUrl;
+        audio.src = blobUrl;
+      } catch {
+        // Fallback to direct URL if fetch/blob fails for any reason.
+        if (cancelled) return;
+        audio.src = jingleUrl;
+      }
+
+      if (cancelled) return;
+      audio.load();
+      alarmAudioRef.current = audio;
+    }
+
+    initAlarmAudio();
 
     return () => {
+      cancelled = true;
+
       if (!alarmAudioRef.current) return;
       alarmAudioRef.current.pause();
       alarmAudioRef.current.currentTime = 0;
+
+      if (alarmAudioBlobUrlRef.current) {
+        URL.revokeObjectURL(alarmAudioBlobUrlRef.current);
+        alarmAudioBlobUrlRef.current = null;
+      }
     };
   }, []);
 
@@ -94,7 +145,8 @@ export default function TimerSection() {
   }, [isRunning, startedAt, accumulatedSeconds, nowMs]);
 
   const seconds = useMemo(() => {
-    if (timerMode === "down") return Math.max(targetSeconds - elapsedSeconds, 0);
+    if (timerMode === "down")
+      return Math.max(targetSeconds - elapsedSeconds, 0);
     return elapsedSeconds;
   }, [timerMode, targetSeconds, elapsedSeconds]);
 
@@ -221,7 +273,11 @@ export default function TimerSection() {
             <div className={styles.buttonRow}>
               <div className={styles.actions}>
                 <Button
-                  label={isRunning ? `⏸ ${t("timer.pause")}` : `► ${t("timer.start")}`}
+                  label={
+                    isRunning
+                      ? `⏸ ${t("timer.pause")}`
+                      : `► ${t("timer.start")}`
+                  }
                   variant={isRunning ? "pause" : "start"}
                   onClick={() => {
                     if (isRunning) {
@@ -230,7 +286,10 @@ export default function TimerSection() {
                       return;
                     }
 
-                    if (elapsedSeconds > 0 && (timerMode !== "down" || seconds > 0)) {
+                    if (
+                      elapsedSeconds > 0 &&
+                      (timerMode !== "down" || seconds > 0)
+                    ) {
                       setStartedAt(Date.now());
                       setIsRunning(true);
                       return;
@@ -254,9 +313,13 @@ export default function TimerSection() {
             </div>
 
             <div className={styles.timerMeta}>
-              {t("timer.mode")}: <b>{focusMode}</b> • {t("timer.energy")}: <b>{energyLevel ?? "-"}</b> •{" "}
-              {t("timer.timerType")}:{" "}
-              <b>{timerMode === "down" ? t("timer.countDown") : t("timer.countUp")}</b>
+              {t("timer.mode")}: <b>{focusMode}</b> • {t("timer.energy")}:{" "}
+              <b>{energyLevel ?? "-"}</b> • {t("timer.timerType")}:{" "}
+              <b>
+                {timerMode === "down"
+                  ? t("timer.countDown")
+                  : t("timer.countUp")}
+              </b>
             </div>
 
             {alarmDoneVisible && timerMode === "down" ? (

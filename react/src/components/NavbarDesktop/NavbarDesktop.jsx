@@ -42,24 +42,17 @@ function NavbarDesktop() {
       <NavLink to="/stats" className={linkClass}>{t('nav.stats')}</NavLink>
       <NavLink to="/settings" className={linkClass}>{t('nav.settings')}</NavLink>
       <div className={styles.right}>
-        <span className={styles.alarmIcon} aria-hidden="true">
-          {alarmMuted ? "🔕" : "🔔"}
-        </span>
-        <label
-          className={styles.alarmSwitch}
+        <button
+          type="button"
+          className={styles.alarmIconButton}
           aria-label={alarmMuted ? "Alarm sound muted" : "Alarm sound on"}
           title={alarmMuted ? "Alarm muted" : "Alarm on"}
+          onClick={() => setAlarmMuted((prev) => !prev)}
         >
-          <input
-            type="checkbox"
-            className={styles.alarmSwitchInput}
-            checked={alarmMuted}
-            onChange={(e) => setAlarmMuted(e.target.checked)}
-          />
-          <span className={styles.alarmSwitchTrack}>
-            <span className={styles.alarmSwitchThumb} />
+          <span className={styles.alarmIcon} aria-hidden="true">
+          {alarmMuted ? "🔕" : "🔔"}
           </span>
-        </label>
+        </button>
 
         <div className={styles.weather}>
           <Weather />

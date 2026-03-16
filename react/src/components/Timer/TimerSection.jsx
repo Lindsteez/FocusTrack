@@ -39,15 +39,28 @@ export default function TimerSection() {
   const initialAlarm = splitToHms(stored?.targetSeconds ?? 0);
 
   const [isRunning, setIsRunning] = useState(stored?.isRunning ?? false);
-  const [startedAt, setStartedAt] = useState(() => stored?.startedAt ?? Date.now());
-  const [accumulatedSeconds, setAccumulatedSeconds] = useState(stored?.accumulatedSeconds ?? 0);
+  const [startedAt, setStartedAt] = useState(
+    () => stored?.startedAt ?? Date.now(),
+  );
+  const [accumulatedSeconds, setAccumulatedSeconds] = useState(
+    stored?.accumulatedSeconds ?? 0,
+  );
   const [timerMode, setTimerMode] = useState(stored?.timerMode ?? "up");
-  const [targetSeconds, setTargetSeconds] = useState(stored?.targetSeconds ?? 0);
-  const [alarmHours, setAlarmHours] = useState(stored?.alarmHours ?? initialAlarm.hours);
-  const [alarmMinutes, setAlarmMinutes] = useState(stored?.alarmMinutes ?? initialAlarm.minutes);
-  const [alarmSeconds, setAlarmSeconds] = useState(stored?.alarmSeconds ?? initialAlarm.seconds);
+  const [targetSeconds, setTargetSeconds] = useState(
+    stored?.targetSeconds ?? 0,
+  );
+  const [alarmHours, setAlarmHours] = useState(
+    stored?.alarmHours ?? initialAlarm.hours,
+  );
+  const [alarmMinutes, setAlarmMinutes] = useState(
+    stored?.alarmMinutes ?? initialAlarm.minutes,
+  );
+  const [alarmSeconds, setAlarmSeconds] = useState(
+    stored?.alarmSeconds ?? initialAlarm.seconds,
+  );
   const [alarmPlayed, setAlarmPlayed] = useState(false);
   const [alarmDoneVisible, setAlarmDoneVisible] = useState(false);
+  const [isTimeUpPromptOpen, setIsTimeUpPromptOpen] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -61,16 +74,55 @@ export default function TimerSection() {
 
   const [nowMs, setNowMs] = useState(() => Date.now());
   const alarmAudioRef = useRef(null);
+  const alarmAudioBlobUrlRef = useRef(null);
 
   useEffect(() => {
-    const audio = new Audio(jingleUrl);
-    audio.preload = "auto";
-    alarmAudioRef.current = audio;
+    let cancelled = false;
+
+    async function initAlarmAudio() {
+      const audio = new Audio();
+      audio.preload = "auto";
+
+      try {
+        // Loading via blob URL avoids flaky range/caching failures (e.g. HTTP 416 in dev).
+        const response = await fetch(jingleUrl, { cache: "no-store" });
+        if (!response.ok)
+          throw new Error(`Failed to load jingle: ${response.status}`);
+
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        if (cancelled) {
+          URL.revokeObjectURL(blobUrl);
+          return;
+        }
+
+        alarmAudioBlobUrlRef.current = blobUrl;
+        audio.src = blobUrl;
+      } catch {
+        // Fallback to direct URL if fetch/blob fails for any reason.
+        if (cancelled) return;
+        audio.src = jingleUrl;
+      }
+
+      if (cancelled) return;
+      audio.load();
+      alarmAudioRef.current = audio;
+    }
+
+    initAlarmAudio();
 
     return () => {
+      cancelled = true;
+
       if (!alarmAudioRef.current) return;
       alarmAudioRef.current.pause();
       alarmAudioRef.current.currentTime = 0;
+
+      if (alarmAudioBlobUrlRef.current) {
+        URL.revokeObjectURL(alarmAudioBlobUrlRef.current);
+        alarmAudioBlobUrlRef.current = null;
+      }
     };
   }, []);
 
@@ -98,7 +150,8 @@ export default function TimerSection() {
   }, [isRunning, startedAt, accumulatedSeconds, nowMs]);
 
   const seconds = useMemo(() => {
-    if (timerMode === "down") return Math.max(targetSeconds - elapsedSeconds, 0);
+    if (timerMode === "down")
+      return Math.max(targetSeconds - elapsedSeconds, 0);
     return elapsedSeconds;
   }, [timerMode, targetSeconds, elapsedSeconds]);
 
@@ -147,29 +200,39 @@ export default function TimerSection() {
     activePlanningItemId,
   ]);
 
+  async function playAlarmJingle(loop = false) {
+    const audio = alarmAudioRef.current;
+    if (!audio) return;
+
+    try {
+      audio.loop = loop;
+      audio.currentTime = 0;
+      await audio.play();
+    } catch {
+      // Ignore autoplay restrictions.
+    }
+  }
+
+  function stopAlarmJingle() {
+    const audio = alarmAudioRef.current;
+    if (!audio) return;
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.loop = false;
+  }
   useEffect(() => {
     if (timerMode !== "down") return;
     if (!isRunning) return;
     if (seconds !== 0) return;
     if (alarmPlayed) return;
 
-    const finishId = window.setTimeout(() => {
-      setAccumulatedSeconds(targetSeconds);
-      setIsRunning(false);
-      setAlarmPlayed(true);
-      setAlarmDoneVisible(true);
-      setIsModalOpen(true);
-
-      const audio = alarmAudioRef.current;
-      if (!audio) return;
-
-      audio.currentTime = 0;
-      audio.play().catch(() => {
-        // Ignore autoplay restrictions.
-      });
-    }, 0);
-
-    return () => window.clearTimeout(finishId);
+    setAccumulatedSeconds(targetSeconds);
+    setIsRunning(false);
+    setAlarmPlayed(true);
+    setAlarmDoneVisible(true);
+    setIsTimeUpPromptOpen(true);
+    playAlarmJingle(true);
   }, [timerMode, isRunning, seconds, targetSeconds, alarmPlayed]);
 
   function stopAndOpenModal() {
@@ -198,14 +261,12 @@ export default function TimerSection() {
 
     setAlarmPlayed(false);
     setAlarmDoneVisible(false);
+    setIsTimeUpPromptOpen(false);
     setAlarmHours(0);
     setAlarmMinutes(0);
     setAlarmSeconds(0);
 
-    if (alarmAudioRef.current) {
-      alarmAudioRef.current.pause();
-      alarmAudioRef.current.currentTime = 0;
-    }
+    stopAlarmJingle();
 
     setEnergyLevel(null);
     setSessionLabel("");
@@ -227,7 +288,11 @@ export default function TimerSection() {
             <div className={styles.buttonRow}>
               <div className={styles.actions}>
                 <Button
-                  label={isRunning ? `⏸ ${t("timer.pause")}` : `► ${t("timer.start")}`}
+                  label={
+                    isRunning
+                      ? `⏸ ${t("timer.pause")}`
+                      : `► ${t("timer.start")}`
+                  }
                   variant={isRunning ? "pause" : "start"}
                   onClick={() => {
                     if (isRunning) {
@@ -236,7 +301,10 @@ export default function TimerSection() {
                       return;
                     }
 
-                    if (elapsedSeconds > 0 && (timerMode !== "down" || seconds > 0)) {
+                    if (
+                      elapsedSeconds > 0 &&
+                      (timerMode !== "down" || seconds > 0)
+                    ) {
                       setStartedAt(Date.now());
                       setIsRunning(true);
                       return;
@@ -261,9 +329,13 @@ export default function TimerSection() {
             </div>
 
             <div className={styles.timerMeta}>
-              {t("timer.mode")}: <b>{focusMode}</b> • {t("timer.energy")}: <b>{energyLevel ?? "-"}</b> •{" "}
-              {t("timer.timerType")}:{" "}
-              <b>{timerMode === "down" ? t("timer.countDown") : t("timer.countUp")}</b>
+              {t("timer.mode")}: <b>{focusMode}</b> • {t("timer.energy")}:{" "}
+              <b>{energyLevel ?? "-"}</b> • {t("timer.timerType")}:{" "}
+              <b>
+                {timerMode === "down"
+                  ? t("timer.countDown")
+                  : t("timer.countUp")}
+              </b>
             </div>
 
             {alarmDoneVisible && timerMode === "down" ? (
@@ -279,10 +351,12 @@ export default function TimerSection() {
         isOpen={isModalOpen}
         seconds={sessionSeconds}
         onDiscardConfirm={() => {
+          stopAlarmJingle();
           setIsModalOpen(false);
           resetTimer();
         }}
         onSaveConfirm={(rating) => {
+          stopAlarmJingle();
           const label = sessionLabel.trim();
 
           addSession({
@@ -334,6 +408,8 @@ export default function TimerSection() {
           setStartedAt(Date.now());
           setAlarmPlayed(false);
           setAlarmDoneVisible(false);
+          setIsTimeUpPromptOpen(false);
+          stopAlarmJingle();
 
           if (selectedMode === "up") {
             setAlarmHours(0);
@@ -344,6 +420,23 @@ export default function TimerSection() {
           setIsRunning(true);
         }}
       />
+
+      {isTimeUpPromptOpen ? (
+        <div className={styles.timeUpBackdrop}>
+          <div className={styles.timeUpCard}>
+            <h3>{t("timer.timeUp")}</h3>
+            <Button
+              label="OK"
+              variant="start"
+              onClick={() => {
+                stopAlarmJingle();
+                setIsTimeUpPromptOpen(false);
+                setIsModalOpen(true);
+              }}
+            />
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

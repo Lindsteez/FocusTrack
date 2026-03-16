@@ -102,6 +102,35 @@
   letter-spacing: 0.02em;
 }
 
+.timeUpBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2400;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.56);
+  padding: 16px;
+}
+
+.timeUpCard {
+  width: min(360px, 100%);
+  background: var(--card-primary);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+  border-radius: 14px;
+  box-shadow: var(--shadow-strong);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.timeUpCard h3 {
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .timerLayout {
     flex-direction: column;

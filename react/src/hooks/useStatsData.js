@@ -1,4 +1,5 @@
 // src/hooks/useStatsData.js
+import { useState } from "react";
 import useSessions from "./useSessions";
 
 function getSessionTimeMs(s) {
@@ -38,11 +39,21 @@ function getDurationSeconds(s) {
   return 0;
 }
 
+/**
+ * Aggregates session totals for dashboard and stats views.
+ *
+ * @returns {{
+ *   last30DaysDuration: number,
+ *   last30DaysSessions: number,
+ *   totalDuration: number,
+ *   totalSessions: number
+ * }}
+ */
 export default function useStatsData() {
   const { sessions } = useSessions();
   const all = sessions ?? [];
 
-  const now = Date.now();
+  const [now] = useState(() => Date.now());
   const cutoff = now - 30 * 24 * 60 * 60 * 1000;
 
   const last30 = all.filter((s) => {

@@ -162,7 +162,40 @@ export default function SessionsList({
         </>
       )}
 
-      {editOpen && editingSession && (
+        {editOpen && editingSession && (
+      <StartSessionModal
+          key={editingSession.id}
+          isOpen={editOpen}
+          mode="edit"
+          initialValues={{
+            description: editingSession.description ?? "",
+            note: editingSession.note ?? "",
+            focusMode: (editingSession.focusMode as FocusMode) ?? "work",
+            energyLevel: editingSession.energyLevel ?? null,
+          }}
+          focusMode={(editingSession.focusMode as FocusMode) ?? "work"}
+          energyLevel={editingSession.energyLevel ?? null}
+          label={editingSession.description ?? ""}
+          onChangeFocusMode={() => {}}
+          onChangeEnergyLevel={() => {}}
+          onChangeLabel={() => {}}
+          onChangeTimerMode={() => {}}
+          onChangeAlarmHours={() => {}}
+          onChangeAlarmMinutes={() => {}}
+          onChangeAlarmSeconds={() => {}}
+          onCancel={closeEdit}
+          onConfirm={() => {}}
+          onSave={(values: ValuesType) => {
+            saveEdit({
+              description: values.description,
+              focusMode: values.focusMode,
+              energyLevel: values.energyLevel,
+            });
+          }}
+  />
+)}
+
+      {/* {editOpen && editingSession && (
         <StartSessionModal
           key={editingSession.id}
           isOpen={editOpen}
@@ -189,7 +222,7 @@ export default function SessionsList({
             });
           }}
         />
-      )}
+      )} */}
     </>
   );
 }

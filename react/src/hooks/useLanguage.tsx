@@ -15,6 +15,9 @@ type ContextType = {
 
 const Language = createContext < ContextType | null > (null)
 
+/**
+ * Provides locale state and translation lookup to descendant components.
+ */
 export function LanguageProvider ({
     children,
     defaultLocale = 'en',
@@ -57,6 +60,11 @@ export function LanguageProvider ({
     )
 }
 
+/**
+ * Returns the active language context.
+ *
+ * @returns {ContextType}
+ */
 export function useLanguage() {
     const ctx = useContext(Language);
     if (!ctx) {

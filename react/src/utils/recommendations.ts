@@ -94,6 +94,12 @@ export interface Recommendations {
 type BucketStats = { sum: number; count: number; recency: number };
 
 // huvudfunktionen som bygger rekommendation baserat på tidigare sessioner, energy level och focus mode
+/**
+ * Builds a recommended session duration from historical ratings and context.
+ *
+ * @param {{ energyLevel?: EnergyLevel; focusMode?: string | null }} [params]
+ * @returns {Recommendations}
+ */
 export function buildRecommendations(
     params: { energyLevel?: EnergyLevel; focusMode?: string | null } = {}
 ): Recommendations {

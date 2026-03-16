@@ -84,6 +84,11 @@ function dedupeById(sessions) {
   return unique;
 }
 
+/**
+ * Exports all saved sessions as a downloadable JSON file.
+ *
+ * @returns {void}
+ */
 export function exportSessionsAsJson() {
   const sessions = getSessions() ?? [];
 
@@ -111,6 +116,13 @@ export function exportSessionsAsJson() {
   URL.revokeObjectURL(url);
 }
 
+/**
+ * Imports sessions from a JSON file and merges or replaces existing data.
+ *
+ * @param {File} file
+ * @param {"merge" | "replace"} [mode="merge"]
+ * @returns {Promise<{mode: "merge" | "replace", importedCount: number, savedCount: number}>}
+ */
 export async function importSessionsFromJsonFile(file, mode = "merge") {
   if (!(file instanceof File)) {
     throw new Error("No file selected.");

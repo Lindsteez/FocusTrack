@@ -5,6 +5,19 @@ import { getSessions,
         updateSessionById } from "../utils/sessionsStore";
       
 
+/**
+ * Provides reactive access to saved sessions and exposes edit/delete actions.
+ *
+ * @returns {{
+ *   sessions: Array<object>,
+ *   deleteSession: (id: string) => void,
+ *   editOpen: boolean,
+ *   editingSession: object | null,
+ *   openEdit: (id: string) => void,
+ *   closeEdit: () => void,
+ *   saveEdit: (patch: object) => void
+ * }}
+ */
 export default function useSessions() {
   // Engångsmigrering: konvertera gamla svenska focusMode till engelska
   const migrateFocusMode = (sessions) => {

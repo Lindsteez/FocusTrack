@@ -110,6 +110,28 @@ function normalizeGoals(goals) {
   };
 }
 
+/**
+ * Calculates daily and weekly goal progress together with streak metrics.
+ *
+ * @param {{
+ *   sessions?: Array<object>,
+ *   goals?: {dailyMinutes?: number, weeklyMinutes?: number} | null,
+ *   now?: Date | string | number
+ * }} [params]
+ * @returns {{
+ *   goals: {dailyMinutes: number, weeklyMinutes: number},
+ *   todaySeconds: number,
+ *   weekSeconds: number,
+ *   dailyGoalSeconds: number,
+ *   weeklyGoalSeconds: number,
+ *   todayPercent: number,
+ *   weekPercent: number,
+ *   todayDone: boolean,
+ *   weekDone: boolean,
+ *   currentStreakDays: number,
+ *   bestStreakDays: number
+ * }}
+ */
 export function buildGoalsProgress({ sessions = [], goals = null, now = new Date() } = {}) {
   const safeNow = toDateOrNull(now) ?? new Date();
   const safeGoals = normalizeGoals(goals);

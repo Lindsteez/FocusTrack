@@ -43,6 +43,19 @@ function toMs(createdAt) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+/**
+ * Transforms session history into chart data for the latest five days.
+ *
+ * @param {Array<object>} sessions
+ * @returns {Array<{
+ *   date: string,
+ *   totalSeconds: number,
+ *   totalLabel: string,
+ *   energy: number,
+ *   energyRounded: number,
+ *   sessions: Array<object>
+ * }>}
+ */
 export function buildLast5DaysData(sessions) {
   const today = startOfDayMs(Date.now());
 

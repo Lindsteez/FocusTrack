@@ -1,6 +1,11 @@
 const SESSIONS_KEY = "focustrack.sessions";
 const EVENT_NAME = "focustrack:sessions-changed";
 
+/**
+ * Loads all saved sessions from localStorage.
+ *
+ * @returns {Array<object>}
+ */
 export function loadSessions() {
   try {
     const raw = localStorage.getItem(SESSIONS_KEY);
@@ -10,14 +15,31 @@ export function loadSessions() {
   }
 }
 
+/**
+ * Saves the complete session collection to localStorage.
+ *
+ * @param {Array<object>} sessions
+ * @returns {void}
+ */
 export function saveSessions(sessions) {
   localStorage.setItem(SESSIONS_KEY, JSON.stringify(sessions));
 }
 
+/**
+ * Returns the current list of saved sessions.
+ *
+ * @returns {Array<object>}
+ */
 export function getSessions() {
   return loadSessions();
 }
 
+/**
+ * Subscribes to the custom session change event.
+ *
+ * @param {() => void} callback
+ * @returns {() => void}
+ */
 export function subscribeSessions(callback) {
   function handler() {
     callback();
@@ -35,6 +57,21 @@ function normalizeFocusMode(focusMode) {
   return map[focusMode.toLowerCase()] ?? 'work';
 }
 
+/**
+ * Creates a normalized session entry before persistence.
+ *
+ * @param {{
+ *   seconds: number,
+ *   description?: string,
+ *   category?: string,
+ *   note?: string,
+ *   focusMode?: string | null,
+ *   energyLevel?: number | null,
+ *   label?: string,
+ *   rating?: number | null
+ * }} params
+ * @returns {object}
+ */
 export function makeSessionEntry({
   seconds,
   description,
@@ -61,6 +98,20 @@ export function makeSessionEntry({
   };
 }
 
+/**
+ * Adds a new session, persists it and emits a change event.
+ *
+ * @param {{
+ *   seconds: number,
+ *   description?: string,
+ *   category?: string,
+ *   note?: string,
+ *   focusMode?: string | null,
+ *   energyLevel?: number | null,
+ *   label?: string
+ * }} params
+ * @returns {object}
+ */
 export function addSession({
   seconds,
   description,
@@ -90,11 +141,22 @@ export function addSession({
   return entry;
 }
 
+/**
+ * Removes every persisted session.
+ *
+ * @returns {void}
+ */
 export function clearSessions() {
   localStorage.removeItem(SESSIONS_KEY);
   emitSessionsChanged();
 }
 
+/**
+ * Formats a duration in seconds for UI display.
+ *
+ * @param {number} seconds
+ * @returns {string}
+ */
 export function formatDuration(seconds) {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
@@ -105,6 +167,12 @@ export function formatDuration(seconds) {
   return `${s}s`;
 }
 
+/**
+ * Formats an ISO timestamp as a locale date string.
+ *
+ * @param {string} isoString
+ * @returns {string}
+ */
 export function formatDate(isoString) {
   const d = new Date(isoString);
 
@@ -117,6 +185,12 @@ export function formatDate(isoString) {
 
 
 /* Tar bort från localstorage */
+/**
+ * Deletes a single saved session by id.
+ *
+ * @param {string} id
+ * @returns {Array<object>}
+ */
 export function deleteSessionById(id) {
   const sessions = getSessions();
   const updated = sessions.filter( s => s.id !== id)
@@ -126,6 +200,13 @@ export function deleteSessionById(id) {
 }
 
 /* Redigera en sparad session */ 
+/**
+ * Updates a saved session by id and persists the result.
+ *
+ * @param {string} id
+ * @param {object} patch
+ * @returns {Array<object>}
+ */
 export function updateSessionById(id, patch) {
   const sessions = getSessions();
   const updated = sessions.map(s => {

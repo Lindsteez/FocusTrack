@@ -15,6 +15,11 @@ function toIntegerMinutes(value) {
   return Math.floor(numeric)
 }
 
+/**
+ * Returns the default goal configuration.
+ *
+ * @returns {{dailyMinutes: number, weeklyMinutes: number}}
+ */
 export function getDefaultGoals() {
   return {
     dailyMinutes: DEFAULT_DAILY_MINUTES,
@@ -22,6 +27,12 @@ export function getDefaultGoals() {
   }
 }
 
+/**
+ * Checks whether a value can be used as a positive minute goal.
+ *
+ * @param {unknown} value
+ * @returns {boolean}
+ */
 export function isValidGoalMinutes(value) {
   const minutes = toIntegerMinutes(value)
   return minutes !== null && minutes >= 1
@@ -48,6 +59,11 @@ function normalizeGoals(raw) {
   return { dailyMinutes, weeklyMinutes }
 }
 
+/**
+ * Loads normalized goal values from localStorage.
+ *
+ * @returns {{dailyMinutes: number, weeklyMinutes: number}}
+ */
 export function getGoals() {
   try {
     const raw = localStorage.getItem(GOALS_KEY)
@@ -60,6 +76,12 @@ export function getGoals() {
   }
 }
 
+/**
+ * Subscribes to goal updates within the app.
+ *
+ * @param {() => void} callback
+ * @returns {() => void}
+ */
 export function subscribeGoals(callback) {
   function handler() {
     callback()
@@ -69,6 +91,12 @@ export function subscribeGoals(callback) {
   return () => window.removeEventListener(GOALS_CHANGED_EVENT, handler)
 }
 
+/**
+ * Saves normalized daily and weekly goals.
+ *
+ * @param {{dailyMinutes: number, weeklyMinutes: number}} goals
+ * @returns {{dailyMinutes: number, weeklyMinutes: number}}
+ */
 export function saveGoals({ dailyMinutes, weeklyMinutes }) {
   const next = normalizeGoals({ dailyMinutes, weeklyMinutes })
   localStorage.setItem(GOALS_KEY, JSON.stringify(next))

@@ -2,6 +2,7 @@ import FocusModeSelector from "../FocusModeSelector";
 import EnergyLevelSelector from "../EnergyLog/EnergyLevelSelector";
 import styles from "./StartSessionModal.module.css";
 import { useState, useMemo, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Button from "../Button";
 import { useLanguage } from "../../hooks/useLanguage";
 import { buildRecommendations } from "../../utils/recommendations";
@@ -394,7 +395,7 @@ export default function StartSessionModal({
     }
   }
 
-  return (
+  const modalTree = (
     <div className={styles.backdrop} onClick={handleModalCancel}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h2>
@@ -707,4 +708,10 @@ export default function StartSessionModal({
       </div>
     </div>
   );
+
+  if (typeof document === "undefined") {
+    return modalTree;
+  }
+
+  return createPortal(modalTree, document.body);
 }

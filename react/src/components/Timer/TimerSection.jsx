@@ -33,6 +33,15 @@ function splitToHms(totalSeconds) {
   };
 }
 
+function readAlarmMutedSetting() {
+  try {
+    const mutedRaw = localStorage.getItem("timerAlarmMuted");
+    return mutedRaw !== null ? Boolean(JSON.parse(mutedRaw)) : false;
+  } catch {
+    return false;
+  }
+}
+
 export default function TimerSection() {
   const stored = loadTimerState();
   const { t } = useLanguage();
@@ -203,6 +212,7 @@ export default function TimerSection() {
   async function playAlarmJingle(loop = false) {
     const audio = alarmAudioRef.current;
     if (!audio) return;
+    if (readAlarmMutedSetting()) return;
 
     try {
       audio.loop = loop;
@@ -221,6 +231,22 @@ export default function TimerSection() {
     audio.currentTime = 0;
     audio.loop = false;
   }
+
+  useEffect(() => {
+    if (!alarmDoneVisible) return;
+
+    if (readAlarmMutedSetting()) {
+      stopAlarmJingle();
+      return;
+    }
+
+    const id = setInterval(() => {
+      if (readAlarmMutedSetting()) stopAlarmJingle();
+    }, 300);
+
+    return () => clearInterval(id);
+  }, [alarmDoneVisible]);
+
   useEffect(() => {
     if (timerMode !== "down") return;
     if (!isRunning) return;

@@ -1,118 +1,180 @@
-# FocusTrack ⏱️
+# FocusTrack
 
-FocusTrack is a modern productivity and time-tracking application built with React and TypeScript.
-The goal of the project is to help users track their working time, organize work sessions, and reflect on productivity through a clean, focused, and user-friendly interface.
+FocusTrack ar en frontend for tidsspårning och fokusplanering byggd med React och Vite. Applikationen lagrar sessioner, mal och timerdata i `localStorage` och visar statistik, historik, vader, energinivaer och maluppfoljning i ett sammanhallet gränssnitt.
 
-The application is designed with scalability in mind and serves as a foundation for both web and mobile platforms.
+## Installation
 
-# Design (Inspiration)
+### Forutsattningar
 
-Darkmode:
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/062aed29-00be-4b5c-9373-817ac0b0dbd5" />
+- Node.js 18 eller senare
+- npm 9 eller senare
 
-Lightmode:
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/6aaeb344-fd3e-4056-8e76-87e23d781bf9" />
+### Installera beroenden
 
-# ✨ Core Features
+Projektets körbara webbapp ligger i `react/`.
 
-⏱️ Time tracking with start, pause, and stop
-
-📝 Log work sessions with title and category
-
-📋 View logged work sessions
-
-🧩 Reusable and composable UI components
-
-🧭 Navigation between views
-
-🌙 Dark mode design with custom design tokens
-
-⚛️ Built using modern React patterns and hooks
-
-# 🛠️ Tech Stack
-
-React
-
-TypeScript
-
-React Router
-
-CSS (custom variables & dark theme)
-
-Vite (or CRA – adjust if needed)
-
-# 📁 Project Structure
-src/
-├── components/     # Reusable UI components
-├── pages/          # Application views
-├── hooks/          # Custom React hooks
-├── types/          # TypeScript interfaces and models
-├── styles/         # Global styles and CSS variables
-├── App.tsx
-└── main.tsx
-
-
-The structure follows a clear separation of concerns to ensure maintainability and scalability.
-
-# 🚀 Getting Started
-Prerequisites
-
-Node.js (v18 or later recommended)
-
-npm or yarn
-
-Installation
-git clone https://github.com/your-username/focustrack.git
-cd focustrack
+```bash
+cd react
 npm install
+```
 
-Run locally
+### Starta utvecklingsservern
+
+```bash
+cd react
 npm run dev
+```
 
+Vite visar lokal adress i terminalen, normalt `http://localhost:5173`.
 
-The application will be available at:
-👉 http://localhost:5173
+### Bygg for produktion
 
-# 🎨 Design Philosophy
+```bash
+cd react
+npm run build
+```
 
-Minimal and distraction-free UI
+### Forhandsgranska produktionsbygget
 
-Dark-mode first design
+```bash
+cd react
+npm run preview
+```
 
-Consistent spacing, colors, and components
+### Linting
 
-Clear visual hierarchy for focus and readability
+```bash
+cd react
+npm run lint
+```
 
-Design tokens are defined using CSS variables to make theming and future light/dark mode support simple.
+## Teknikstack
 
-# 🧠 Architecture & Patterns
+- React 19
+- Vite 7
+- React Router 7
+- Recharts
+- JavaScript och TypeScript
+- CSS Modules och globala stilfiler
 
-Functional components
+## Projektstruktur
 
-Custom hooks for reusable logic
+```text
+FocusTrack/
+|-- README.md
+|-- react/
+|   |-- package.json
+|   |-- vite.config.js
+|   |-- src/
+|   |   |-- App.jsx
+|   |   |-- main.jsx
+|   |   |-- components/
+|   |   |   |-- Timer/
+|   |   |   |-- Weather/
+|   |   |   |-- EnergyLog/
+|   |   |   |-- NavbarDesktop/
+|   |   |   |-- NavbarMobile/
+|   |   |   |-- Logo/
+|   |   |   |-- SessionList.tsx
+|   |   |   |-- RecentSessions.jsx
+|   |   |   |-- GoalsProgressCard.jsx
+|   |   |   |-- Last5DaysBarChart.jsx
+|   |   |   |-- StatsSummary.jsx
+|   |   |   |-- AppLayout.jsx
+|   |   |   |-- Card.jsx
+|   |   |   `-- Button.jsx
+|   |   |-- hooks/
+|   |   |   |-- useLanguage.tsx
+|   |   |   |-- useSessions.js
+|   |   |   |-- useStatsData.js
+|   |   |   |-- useLocalStorage.js
+|   |   |   `-- useMediaQuery.js
+|   |   |-- pages/
+|   |   |   |-- Dashboard.jsx
+|   |   |   |-- History.jsx
+|   |   |   |-- Stats.jsx
+|   |   |   |-- ToDo/
+|   |   |   `-- settings/
+|   |   |-- utils/
+|   |   |   |-- sessionsStore.js
+|   |   |   |-- sessionsTransfer.js
+|   |   |   |-- timerStore.js
+|   |   |   |-- goalsStore.js
+|   |   |   |-- goalsProgress.js
+|   |   |   |-- chartsData.js
+|   |   |   `-- recommendations.ts
+|   |   |-- assets/
+|   |   |-- index.css
+|   |   |-- App.css
+|   |   `-- media.css
+|   `-- index.html
+`-- sprint1.md
+```
 
-Strong typing with TypeScript interfaces
+## Komponentstruktur
 
-Controlled components for form handling
+### Appniva
 
-Clear component hierarchy and data flow
+- `main.jsx` monterar appen.
+- `App.jsx` satter upp routing, layouts och providers.
+- `hooks/useLanguage.tsx` hanterar oversattningar via context.
 
-# 🔮 Planned Enhancements
+### Sidor
 
-Persist data using localStorage
+- `pages/Dashboard.jsx` visar timer, vader, senaste sessioner och oversikt.
+- `pages/History.jsx` visar sessionhistorik via `SessionList`.
+- `pages/Stats.jsx` visar statistik, diagram och summeringar.
+- `pages/ToDo/ToDo.jsx` innehaller att-gora-vyn.
+- `pages/settings/Settings.jsx` samlar sprak, tema, mal, dataimport/export och rensning.
 
-Global state management with Context API
+### Domankomponenter
 
-Energy level tracking and statistics
+- `components/Timer/` innehaller timerflode, startmodal och sparmodal.
+- `components/Weather/Weather.tsx` visar vaderdata och presentation.
+- `components/EnergyLog/` hanterar energinivaval.
+- `components/GoalsProgressCard.jsx` visar progress mot dagliga och veckovisa mal.
+- `components/Last5DaysBarChart.jsx` visualiserar de senaste fem dagarnas sessioner.
+- `components/RecentSessions.jsx` och `components/SessionList.tsx` renderar sparade sessioner och redigering/radering.
+- `components/StatsSummary.jsx` sammanfattar nyckeltal for statistikvyn.
 
-Focus modes (e.g. Deep Work, Meeting, Break)
+### Layout och navigation
 
-Unit and integration tests
+- `components/AppLayout.jsx` omsluter delade sidytor.
+- `components/NavbarDesktop/` och `components/NavbarMobile/` delar upp navigation per breakpoint.
+- `components/Logo/` innehaller logotypkomponenter.
+- `components/Card.jsx` och `components/Button.jsx` ar generiska baskomponenter.
 
-Mobile app using React Native
+### Hooks och state
 
-Theme switching (light/dark)
+- `useSessions` ar huvudgranssnittet mot sessionslagring och redigering.
+- `useStatsData` bygger statistikdata fran sessioner.
+- `useLocalStorage` kapslar in enkel state-persistens.
+- `useMediaQuery` hanterar responsiva brytpunkter.
+- `useLanguage` ger oversattningsfunktion och valt sprak.
 
-# 📄 License
+### Utilities
 
-This project is developed for educational purposes.
+- `sessionsStore.js` ansvarar for CRUD mot `localStorage` for sessioner.
+- `sessionsTransfer.js` importerar och exporterar sessioner som JSON.
+- `timerStore.js` sparar timerstatus mellan sidladdningar.
+- `goalsStore.js` sparar malvarden.
+- `goalsProgress.js` raknar ut progresstal och streaks.
+- `chartsData.js` transformerar sessioner till diagramdata.
+- `recommendations.ts` bygger rekommenderad sessionslangd utifran tidigare data.
+
+## Data och persistens
+
+Applikationen anvander `localStorage` for:
+
+- sessioner
+- timerstatus
+- sprakval
+- mal
+
+Ingen extern backend kravs for lokal utveckling av den nuvarande versionen.
+
+## Kanda utvecklingsdetaljer
+
+- Kodbasen blandar `.jsx`, `.js`, `.tsx` och `.ts`.
+- Flera funktioner ar byggda kring browser-API:er som `localStorage`, `File`, `Blob` och `matchMedia`.
+- Dokumentation och JSDoc i koden beskriver publika hooks och utilities som andra komponenter bygger pa.

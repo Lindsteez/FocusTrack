@@ -47,6 +47,44 @@
   max-width: 60%;
 }
 
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.alarmIconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--card-secondary) 64%, transparent);
+  color: var(--text-secondary);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 10%, transparent);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.alarmIconButton:active {
+  transform: scale(0.96);
+}
+
+.alarmIconButton:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--btn-success) 55%, transparent);
+  outline-offset: 2px;
+}
+
+.alarmIcon {
+  font-size: 16px;
+  line-height: 1;
+}
+
 /* Old css code if needed later */
 /* .img {
   display: flex;
@@ -61,17 +99,41 @@
 
 
 @media (max-width: 376px) {
-    .logoImg {
-        display: block;
-        height: 58px;
-        width: auto;
-}
+  .logoImg {
+    display: block;
+    height: 58px;
+    width: auto;
+  }
+
+  .header {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .right {
+    gap: 6px;
+  }
+
+  .alarmIconButton {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 @media (max-width: 320px) {
-    .logoImg {
-        display: block;
-        height: 48px;
-        width: auto;
-}
+  .logoImg {
+    display: block;
+    height: 48px;
+    width: auto;
+  }
+
+  .weather {
+    font-size: 11px;
+    max-width: 52%;
+  }
+
+  .alarmIconButton {
+    width: 30px;
+    height: 30px;
+  }
 }

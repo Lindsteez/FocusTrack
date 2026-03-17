@@ -1,9 +1,9 @@
 @media screen and (min-width: 767px) {
   .navbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    gap: 12px;
     min-height: 76px;
     padding: 0 20px;
     background: color-mix(in srgb, var(--card-primary) 84%, transparent);
@@ -12,11 +12,24 @@
     border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
   }
 
+  .left {
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
   .logo {
-    margin-right: auto;
     width: 12.6rem;
     max-width: 36vw;
     height: auto;
+  }
+
+  .center {
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .link {
@@ -56,11 +69,11 @@
   }
 
   .right {
-    margin-left: auto;
+    justify-self: end;
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-right: 22px;
+    min-width: 0;
   }
 
   .alarmIcon {

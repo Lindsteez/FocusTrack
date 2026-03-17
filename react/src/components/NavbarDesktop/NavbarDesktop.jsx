@@ -33,14 +33,19 @@ function NavbarDesktop() {
 
   return (
     <nav className={styles.navbar}>
-      <img className={styles.logo} src={logoSrc} alt="FocusTrack Logo" />
+      <div className={styles.left}>
+        <img className={styles.logo} src={logoSrc} alt="FocusTrack Logo" />
+      </div>
 
-      <NavLink to="/" end className={linkClass}>{t('nav.dashboard')}</NavLink>
-      <NavLink to="/history" className={linkClass}>{t('nav.history')}</NavLink>
-      <NavLink to="/planning" className={linkClass}>{t('nav.planning')}</NavLink>
-      {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
-      <NavLink to="/stats" className={linkClass}>{t('nav.stats')}</NavLink>
-      <NavLink to="/settings" className={linkClass}>{t('nav.settings')}</NavLink>
+      <div className={styles.center}>
+        <NavLink to="/" end className={linkClass}>{t('nav.dashboard')}</NavLink>
+        <NavLink to="/history" className={linkClass}>{t('nav.history')}</NavLink>
+        <NavLink to="/planning" className={linkClass}>{t('nav.planning')}</NavLink>
+        {/* <NavLink to="/todo" className={linkClass}>TODO</NavLink> */}
+        <NavLink to="/stats" className={linkClass}>{t('nav.stats')}</NavLink>
+        <NavLink to="/settings" className={linkClass}>{t('nav.settings')}</NavLink>
+      </div>
+
       <div className={styles.right}>
         <button
           type="button"

@@ -13,7 +13,7 @@ function formatTimer(seconds: number) {
   return `${pad2(hours)}.${pad2(minutes)}.${pad2(secs)}`;
 }
 
-export default function TimerScreen() {
+export default function Index() {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);

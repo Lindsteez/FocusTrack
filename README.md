@@ -1,6 +1,6 @@
 # FocusTrack
 
-FocusTrack är en frontend for tidsspårning och fokusplanering byggd med React och Vite. Applikationen lagrar sessioner, mål och timerdata i `localStorage` och visar statistik, historik, vader, energinivåer och måluppfoljning i ett sammanhållet gränssnitt.
+FocusTrack är en frontend for tidsspårning och fokusplanering byggd med React och Vite. Applikationen lagrar sessioner, mål och timerdata i `localStorage` och visar statistik, historik, väder, energinivåer och måluppföljning i ett sammanhållet gränssnitt.
 
 ## Installation
 

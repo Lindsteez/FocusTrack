@@ -1,10 +1,10 @@
 # FocusTrack
 
-FocusTrack ar en frontend for tidsspårning och fokusplanering byggd med React och Vite. Applikationen lagrar sessioner, mal och timerdata i `localStorage` och visar statistik, historik, vader, energinivaer och maluppfoljning i ett sammanhallet gränssnitt.
+FocusTrack är en frontend for tidsspårning och fokusplanering byggd med React och Vite. Applikationen lagrar sessioner, mål och timerdata i `localStorage` och visar statistik, historik, väder, energinivåer och måluppföljning i ett sammanhållet gränssnitt.
 
 ## Installation
 
-### Forutsattningar
+### Förutsattningar
 
 - Node.js 18 eller senare
 - npm 9 eller senare
@@ -27,14 +27,14 @@ npm run dev
 
 Vite visar lokal adress i terminalen, normalt `http://localhost:5173`.
 
-### Bygg for produktion
+### Bygg för produktion
 
 ```bash
 cd react
 npm run build
 ```
 
-### Forhandsgranska produktionsbygget
+### Förhandsgranska produktionsbygget
 
 ```bash
 cd react
@@ -113,25 +113,25 @@ FocusTrack/
 
 ## Komponentstruktur
 
-### Appniva
+### Appnivå
 
 - `main.jsx` monterar appen.
-- `App.jsx` satter upp routing, layouts och providers.
-- `hooks/useLanguage.tsx` hanterar oversattningar via context.
+- `App.jsx` sätter upp routing, layouts och providers.
+- `hooks/useLanguage.tsx` hanterar översattningar via context.
 
 ### Sidor
 
-- `pages/Dashboard.jsx` visar timer, vader, senaste sessioner och oversikt.
+- `pages/Dashboard.jsx` visar timer, väder, senaste sessioner och översikt.
 - `pages/History.jsx` visar sessionhistorik via `SessionList`.
 - `pages/Stats.jsx` visar statistik, diagram och summeringar.
-- `pages/ToDo/ToDo.jsx` innehaller att-gora-vyn.
-- `pages/settings/Settings.jsx` samlar sprak, tema, mal, dataimport/export och rensning.
+- `pages/ToDo/ToDo.jsx` innehåller att-göra-vyn.
+- `pages/settings/Settings.jsx` samlar språk, tema, mål, dataimport/export och rensning.
 
-### Domankomponenter
+### Domänkomponenter
 
-- `components/Timer/` innehaller timerflode, startmodal och sparmodal.
-- `components/Weather/Weather.tsx` visar vaderdata och presentation.
-- `components/EnergyLog/` hanterar energinivaval.
+- `components/Timer/` innehåller timerflöde, startmodal och sparmodal.
+- `components/Weather/Weather.tsx` visar väderdata och presentation.
+- `components/EnergyLog/` hanterar energinivåval.
 - `components/GoalsProgressCard.jsx` visar progress mot dagliga och veckovisa mal.
 - `components/Last5DaysBarChart.jsx` visualiserar de senaste fem dagarnas sessioner.
 - `components/RecentSessions.jsx` och `components/SessionList.tsx` renderar sparade sessioner och redigering/radering.
@@ -141,40 +141,40 @@ FocusTrack/
 
 - `components/AppLayout.jsx` omsluter delade sidytor.
 - `components/NavbarDesktop/` och `components/NavbarMobile/` delar upp navigation per breakpoint.
-- `components/Logo/` innehaller logotypkomponenter.
-- `components/Card.jsx` och `components/Button.jsx` ar generiska baskomponenter.
+- `components/Logo/` innehåller logotypkomponenter.
+- `components/Card.jsx` och `components/Button.jsx` är generiska baskomponenter.
 
 ### Hooks och state
 
-- `useSessions` ar huvudgranssnittet mot sessionslagring och redigering.
-- `useStatsData` bygger statistikdata fran sessioner.
+- `useSessions` är huvudgränssnittet mot sessionslagring och redigering.
+- `useStatsData` bygger statistikdata från sessioner.
 - `useLocalStorage` kapslar in enkel state-persistens.
 - `useMediaQuery` hanterar responsiva brytpunkter.
-- `useLanguage` ger oversattningsfunktion och valt sprak.
+- `useLanguage` ger översattningsfunktion och valt språk.
 
 ### Utilities
 
-- `sessionsStore.js` ansvarar for CRUD mot `localStorage` for sessioner.
+- `sessionsStore.js` ansvarar for CRUD mot `localStorage` för sessioner.
 - `sessionsTransfer.js` importerar och exporterar sessioner som JSON.
 - `timerStore.js` sparar timerstatus mellan sidladdningar.
-- `goalsStore.js` sparar malvarden.
-- `goalsProgress.js` raknar ut progresstal och streaks.
+- `goalsStore.js` sparar målvärden.
+- `goalsProgress.js` räknar ut progresstal och streaks.
 - `chartsData.js` transformerar sessioner till diagramdata.
-- `recommendations.ts` bygger rekommenderad sessionslangd utifran tidigare data.
+- `recommendations.ts` bygger rekommenderad sessionslängd utifran tidigare data.
 
 ## Data och persistens
 
-Applikationen anvander `localStorage` for:
+Applikationen använder `localStorage` för:
 
 - sessioner
 - timerstatus
-- sprakval
-- mal
+- språkval
+- mål
 
-Ingen extern backend kravs for lokal utveckling av den nuvarande versionen.
+Ingen extern backend krävs for lokal utveckling av den nuvarande versionen.
 
-## Kanda utvecklingsdetaljer
+## Kända utvecklingsdetaljer
 
 - Kodbasen blandar `.jsx`, `.js`, `.tsx` och `.ts`.
-- Flera funktioner ar byggda kring browser-API:er som `localStorage`, `File`, `Blob` och `matchMedia`.
-- Dokumentation och JSDoc i koden beskriver publika hooks och utilities som andra komponenter bygger pa.
+- Flera funktioner är byggda kring browser-API:er som `localStorage`, `File`, `Blob` och `matchMedia`.
+- Dokumentation och JSDoc i koden beskriver publika hooks och utilities som andra komponenter bygger på.
